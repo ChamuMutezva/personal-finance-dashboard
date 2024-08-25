@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { publicSans } from "./ui/fonts";
+import SideNav from "./ui/SideNav";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -14,7 +15,11 @@ export default function RootLayout({
 }>) {
     return (
         <html lang="en">
-            <body className={`${publicSans.className} antialiased`}>
+            <body
+                className={`${publicSans.className} antialiased flex flex-col-reverse lg:flex-row`}
+            >
+                <SideNav />
+
                 {children}
             </body>
         </html>
