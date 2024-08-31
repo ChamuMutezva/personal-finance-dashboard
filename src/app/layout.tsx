@@ -16,7 +16,7 @@ export default function RootLayout({
     return (
         <html lang="en">
             <body
-                className={`${publicSans.className} antialiased flex flex-col-reverse lg:flex-row`}
+                className={`${publicSans.className} antialiased flex flex-col-reverse lg:flex-row bg-[hsl(var(--beige-100))]`}
             >
                 <SideNav />
 
