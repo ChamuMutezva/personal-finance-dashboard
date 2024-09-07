@@ -1,5 +1,14 @@
-const balances = [
+const users = [
     {
+        id: "410544b2-4001-4271-9855-fec4b6a6442a",
+        name: "User",
+        email: "user@nextmail.com",
+        password: "123456",
+    },
+];
+
+const balances = [
+    {        
         current: 4836.0,
         income: 3814.25,
         expenses: 1700.5,
@@ -515,4 +524,4 @@ const pots = [
     },
 ];
 
-export { balances, transactions, budgets, pots };
+export { balances, transactions, budgets, pots, users };
