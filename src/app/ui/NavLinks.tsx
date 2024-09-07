@@ -34,7 +34,7 @@ const links = [
     },
     {
         name: "Recurring bills",
-        href: "/recurringBills",
+        href: "/recurring-bills",
         Icon: <RecurringBillsSvg className="fill-current" />,
     },
 ];
@@ -55,9 +55,9 @@ function NavLinks() {
             )}
         >
             <div
-                className={clsx(`hidden lg:block py-8 w-full lg:pr-6`, {
-                    "m-auto": minimize,
-                    "mx-0": !minimize,
+                className={clsx(`hidden lg:block w-full`, {
+                    "m-auto lg:pr-1": minimize,
+                    "mx-0 py-8 lg:pr-6": !minimize,
                 })}
             >
                 <Link
@@ -69,8 +69,7 @@ function NavLinks() {
                      flex  items-center`,
                         {
                             "justify-center": minimize,
-                            "justify-start": !minimize,
-                            "lg:pl-6": !minimize,
+                            "justify-start lg:pl-6": !minimize,
                         }
                     )}
                 >
@@ -93,7 +92,15 @@ function NavLinks() {
                     )}
                 </Link>
             </div>
-            <div className="flex justify-center w-full lg:flex-col items-center lg:justify-start gap-1 lg:min-h-[23.5rem] lg:pr-6">
+            <div
+                className={clsx(
+                    `flex justify-center w-full lg:flex-col items-center lg:justify-start gap-1 lg:min-h-[23.5rem]`,
+                    {
+                        "lg:pr-6": !minimize,
+                        "lg:pr-1": minimize,
+                    }
+                )}
+            >
                 {links.map((link) => {
                     const Icon = () => link.Icon;
                     return (
@@ -101,27 +108,23 @@ function NavLinks() {
                             key={link.name}
                             href={link.href}
                             className={clsx(
-                                `flex w-full h-[32px] items-center justify-center gap-4 rounded-t-lg lg:rounded-t-none lg:rounded-r-xl
+                                `flex w-full h-[32px] items-center justify-center gap-4 rounded-t-lg lg:rounded-l-none lg:rounded-r-xl
                                 bg-inherit text-sm font-medium text-white hover:text-[hsl(var(--green))] hover:bg-sky-100 
-                                hover:border-[hsl(var(--green))]  focus:bg-sky-100 focus:text-[hsl(var(--grey))]
-                                 focus:border-[hsl(var(--green))] focus:outline-none p-2 lg:py-7
+                                hover:border-[hsl(var(--green))]  focus:bg-sky-100 focus:text-[hsl(var(--green))]
+                                 focus:border-[hsl(var(--green))] focus:outline-none px-2 py-5 lg:py-7 
                                  border-b-4 lg:border-b-0 lg:border-l-4 border-transparent `,
                                 {
                                     "text-[hsl(var(--green))] text-blue-600":
                                         pathname === link.href,
-                                    "lg:pl-6": !minimize,
-                                    "md:justify-start": !minimize,
+                                    "md:justify-start lg:pl-6": !minimize,
                                 }
                             )}
                         >
                             <Icon />
                             <span
-                                className={clsx(
-                                    `text-base hidden md:block`,
-                                    {
-                                        "lg:sr-only": minimize,
-                                    }
-                                )}
+                                className={clsx(`text-base hidden md:block`, {
+                                    "lg:sr-only": minimize,
+                                })}
                             >
                                 {link.name}
                             </span>
@@ -129,7 +132,11 @@ function NavLinks() {
                     );
                 })}
             </div>
-            <div className="minimise hidden lg:block mt-auto w-full lg:pr-6">
+            <div
+                className={clsx(`hidden lg:block mt-auto w-full`, {
+                    "lg:pr-6": !minimize,
+                })}
+            >
                 <button
                     type="button"
                     onClick={() => setMinimize(!minimize)}
@@ -138,9 +145,8 @@ function NavLinks() {
                      hover:outline-dashed hover:outline-1 hover:outline-[hsl(var(--white))] hover:outline-offset-[0.35em] 
                      focus:outline-dashed focus:outline-1 focus:outline-[hsl(var(--white))] focus:outline-offset-[0.35em] w-full`,
                         {
-                            "justify-start": !minimize,
-                            "justify-center": minimize,
-                            "lg:pl-6": !minimize,
+                            "justify-start lg:pl-6": !minimize,
+                            "justify-center lg:pr-1": minimize,
                         }
                     )}
                 >
