@@ -1,7 +1,7 @@
 "use client";
 
 import * as React from "react";
-import { TrendingUp } from "lucide-react";
+// import { TrendingUp } from "lucide-react";
 import { Label, Pie, PieChart } from "recharts";
 import { Budget } from "../lib/definitions";
 
@@ -24,15 +24,18 @@ export const description = "Budget representation using donut chart";
 
 interface DonutProps {
     budgets: Budget[];
+    totals: number[];
 }
 
-export function Donut({ budgets }: DonutProps) {
+export function Donut({ budgets, totals }: DonutProps) {
+    console.log(totals);
 
-    const chartData = budgets.map((budget) => ({
+    const chartData = budgets.map((budget, index) => ({
         id: budget.id,
         category: budget.category,
         maximum: budget.maximum,
         fill: budget.theme,
+        amount: totals[index],
     }));
     const chartConfig = {
         maximum: {
@@ -123,19 +126,33 @@ export function Donut({ budgets }: DonutProps) {
                     </PieChart>
                 </ChartContainer>
             </CardContent>
-            <CardFooter className="flex-col gap-2 text-sm">
-                <div className="flex items-center gap-2 font-medium leading-none">
+            <CardFooter className="flex-col gap-2 text-sm items-start">
+                <h3 className="text-left text-preset-2 font-bold py-4 text-[hsl(var(--grey-900))]">
                     Spending summary
-                </div>
-                <div className="leading-none text-muted-foreground">
-                    {budgets.map((budget) => (
-                        <div key={budget.id}>
-                            <p className="flex justify-between items-center">
-                                <span>{budget.category}</span>
-                                <span>{budget.maximum}</span>
-                            </p>
-                        </div>
-                    ))}
+                </h3>
+                <div className="flex flex-col  w-full">
+                    {chartData.map((budget) => {
+                        return (
+                            <div
+                                key={budget.id}
+                                className={`border-b-2 py-4 last:border-b-0 border-[hsl(var(--grey-100))] relative
+                            before:absolute before:-left-4 before:top-1/2 before:-translate-y-1/2 before:w-1
+                             before:h-2/5 before:bg-[hsl(var(--green))] before:rounded-t-xl before:rounded-b-xl`}
+                            >
+                                <div className="flex justify-between items-center gap-4">
+                                    <p className="text-preset-4 text-[hsl(var(--grey-500))]">
+                                        {budget.category}
+                                    </p>
+                                    <p className="text-preset-3 font-bold text-[hsl(var(--grey-900))]">
+                                        {-budget.amount}{" "}
+                                        <span className="text-preset-5 text-[hsl(var(--grey-500))] font-normal">
+                                            of {budget.maximum}
+                                        </span>
+                                    </p>
+                                </div>
+                            </div>
+                        );
+                    })}
                 </div>
             </CardFooter>
         </Card>

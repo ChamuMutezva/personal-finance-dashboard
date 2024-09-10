@@ -38,17 +38,17 @@ export default async function Page() {
     console.log(`Personal - ${totalPersonal}`);
     console.log("end of transmission");
     return (
-        <main className="flex-1 min-h-screen  p-4 lg:p-24">
+        <main className="flex-1 min-h-screen  px-4 pt-4 pb-16 lg:p-24">
             <div className="flex justify-between items-center mb-4">
                 <h1 className={`text-preset-1`}>Budgets</h1>
                 <Link
                     href={"/budgets/add-new-budget"}
                     className={`bg-[hsl(var(--grey-900))] text-[hsl(var(--white))] text-preset-4 font-bold rounded-lg p-4`}
                 >
-                    Add New Budget
+                   + Add New Budget
                 </Link>
             </div>
-            <Donut budgets={budgets} />
+            <Donut budgets={budgets} totals={[totalEntertainment, totalBills, totalDining, totalPersonal]}/>
         </main>
     );
 }
