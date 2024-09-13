@@ -1,6 +1,7 @@
 "use client";
 
 import * as React from "react";
+import clsx from "clsx";
 // import { TrendingUp } from "lucide-react";
 import { Label, Pie, PieChart } from "recharts";
 import { Budget } from "../lib/definitions";
@@ -27,7 +28,7 @@ interface DonutProps {
     totals: number[];
 }
 
-export function Donut({ budgets, totals }: DonutProps) {
+export function Donut({ budgets, totals }: Readonly<DonutProps>) {
     console.log(totals);
 
     const chartData = budgets.map((budget, index) => ({
@@ -66,6 +67,12 @@ export function Donut({ budgets, totals }: DonutProps) {
         return chartData.reduce((acc, curr) => acc + curr.maximum, 0);
     }, []);
 
+    const usage = React.useMemo(() => {
+        return chartData.reduce((acc, curr) => acc + curr.amount, 0);
+    }, []);
+
+    const colors = ["#277C78", "#82C9D7", "#F2CDAC", "#626070"];
+
     return (
         <Card className="flex flex-col">
             <CardHeader className="items-center pb-0">
@@ -75,7 +82,7 @@ export function Donut({ budgets, totals }: DonutProps) {
             <CardContent className="flex-1 pb-0">
                 <ChartContainer
                     config={chartConfig}
-                    className="mx-auto aspect-square max-h-[250px]"
+                    className="mx-auto aspect-square max-h-[310px]"
                 >
                     <PieChart>
                         <ChartTooltip
@@ -86,7 +93,7 @@ export function Donut({ budgets, totals }: DonutProps) {
                             data={chartData}
                             dataKey="maximum"
                             nameKey="category"
-                            innerRadius={60}
+                            innerRadius={70}
                             strokeWidth={5}
                         >
                             <Label
@@ -108,14 +115,15 @@ export function Donut({ budgets, totals }: DonutProps) {
                                                     y={viewBox.cy}
                                                     className="fill-foreground text-3xl font-bold"
                                                 >
-                                                    {totalBudget.toLocaleString()}
+                                                    ${usage.toLocaleString()}
                                                 </tspan>
                                                 <tspan
                                                     x={viewBox.cx}
                                                     y={(viewBox.cy || 0) + 24}
                                                     className="fill-muted-foreground"
                                                 >
-                                                    Budget
+                                                    of $
+                                                    {totalBudget.toLocaleString()}
                                                 </tspan>
                                             </text>
                                         );
@@ -135,18 +143,18 @@ export function Donut({ budgets, totals }: DonutProps) {
                         return (
                             <div
                                 key={budget.id}
-                                className={`border-b-2 py-4 last:border-b-0 border-[hsl(var(--grey-100))] relative
+                                className={clsx(`border-b-2 py-4 last:border-b-0 border-[hsl(var(--grey-100))] relative
                             before:absolute before:-left-4 before:top-1/2 before:-translate-y-1/2 before:w-1
-                             before:h-2/5 before:bg-[hsl(var(--green))] before:rounded-t-xl before:rounded-b-xl`}
+                             before:h-2/5 before:bg-[hsl(var(--green))] before:rounded-t-xl before:rounded-b-xl`)}
                             >
                                 <div className="flex justify-between items-center gap-4">
                                     <p className="text-preset-4 text-[hsl(var(--grey-500))]">
                                         {budget.category}
                                     </p>
                                     <p className="text-preset-3 font-bold text-[hsl(var(--grey-900))]">
-                                        {-budget.amount}{" "}
+                                        ${budget.amount}{" "}
                                         <span className="text-preset-5 text-[hsl(var(--grey-500))] font-normal">
-                                            of {budget.maximum}
+                                            of ${budget.maximum}
                                         </span>
                                     </p>
                                 </div>
