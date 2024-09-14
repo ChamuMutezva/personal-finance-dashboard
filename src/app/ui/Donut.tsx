@@ -74,12 +74,14 @@ export function Donut({ budgets, totals }: Readonly<DonutProps>) {
     const colors = ["#277C78", "#82C9D7", "#F2CDAC", "#626070"];
 
     return (
-        <Card className="flex flex-col">
+        <Card className="flex flex-col md:flex-row lg:flex-col lg:flex-1">
+            {/*
             <CardHeader className="items-center pb-0">
                 <CardTitle>Summary of expenses</CardTitle>
                 <CardDescription>August - September 2024</CardDescription>
             </CardHeader>
-            <CardContent className="flex-1 pb-0">
+            */}
+            <CardContent className="flex-1 pb-0 md:flex-1 lg:flex-none">
                 <ChartContainer
                     config={chartConfig}
                     className="mx-auto aspect-square max-h-[310px]"
@@ -123,7 +125,8 @@ export function Donut({ budgets, totals }: Readonly<DonutProps>) {
                                                     className="fill-muted-foreground"
                                                 >
                                                     of $
-                                                    {totalBudget.toLocaleString()}
+                                                    {totalBudget.toLocaleString()}{" "}
+                                                    limit
                                                 </tspan>
                                             </text>
                                         );
@@ -134,7 +137,7 @@ export function Donut({ budgets, totals }: Readonly<DonutProps>) {
                     </PieChart>
                 </ChartContainer>
             </CardContent>
-            <CardFooter className="flex-col gap-2 text-sm items-start">
+            <CardFooter className="flex-col gap-2 text-sm items-start md:flex-1">
                 <h3 className="text-left text-preset-2 font-bold py-4 text-[hsl(var(--grey-900))]">
                     Spending summary
                 </h3>

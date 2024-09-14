@@ -5,6 +5,7 @@ import { Donut } from "../ui/Donut";
 import { Progress } from "@/components/ui/progress";
 import Image from "next/image";
 import dayjs from "dayjs";
+import clsx from "clsx";
 
 export default async function Page() {
     const budgets = await fetchBudgets();
@@ -16,6 +17,7 @@ export default async function Page() {
         personalCategory,
     } = category;
 
+    // calculate budgets amount (amount currently used)
     const totalEntertainment = entertainmentCategory.reduce(
         (accumulator, budget) => {
             return Number(accumulator) + Number(-budget.amount);
@@ -49,19 +51,12 @@ export default async function Page() {
         return Math.round((currentProgress / total) * 100);
     }
 
-    /*
-    console.log(`Entertainment - ${totalEntertainment}`);
-    console.log(`Bills - ${totalBills}`);
-    console.log(`Dining - ${totalDining}`);
-    console.log(`Personal - ${totalPersonal}`);
-    */
-    // console.log(entertainmentCategory);
     console.log(billsCategory);
     console.log("end of transmission");
     console.log(calculateProgress(490.49, 750));
 
     return (
-        <main className="flex-1 min-h-screen  px-4 pt-4 pb-16 lg:p-24">
+        <main className="flex-1 min-h-screen px-4 pt-4 pb-16 md:px-10 lg:p-8">
             <div className="flex justify-between items-center mb-4">
                 <h1 className={`text-preset-1`}>Budgets</h1>
                 <Link
@@ -69,9 +64,12 @@ export default async function Page() {
                     className={`bg-[hsl(var(--grey-900))] text-[hsl(var(--white))] text-preset-4 font-bold rounded-lg p-4`}
                 >
                     + Add New Budget
+                    <span className="sr-only">item</span>
                 </Link>
             </div>
-            <div>
+            <div
+                className={`left-side flex flex-col gap-4 lg:flex-row lg:items-start`}
+            >
                 <Donut
                     budgets={budgets}
                     totals={[
@@ -84,7 +82,7 @@ export default async function Page() {
 
                 <section
                     title="a breakdown of the expenditure"
-                    className={`flex flex-col gap-4 my-8`}
+                    className={`right-side flex flex-col lg:flex-1 gap-4`}
                 >
                     {data.map((budget) => {
                         const progressValue = calculateProgress(
@@ -141,9 +139,9 @@ export default async function Page() {
                                 <div
                                     className={`bg-[hsl(var(--beige-100))] p-4 rounded-xl`}
                                 >
-                                    <div className="flex items-center justify-between">
+                                    <div className="flex items-center justify-between pb-4">
                                         <h3
-                                            className={`text-preset-3 text-[hsl(var(--grey-900))]`}
+                                            className={`text-preset-3 text-[hsl(var(--grey-900))] font-bold`}
                                         >
                                             Latest spending
                                         </h3>
@@ -160,22 +158,45 @@ export default async function Page() {
                                             />
                                         </button>
                                     </div>
-                                    {filteredItems().map((item) => (
-                                        <div
-                                            key={item.id}
-                                            className="flex justify-between"
-                                        >
-                                            <h4>{item.name}</h4>
-                                            <div className="flex flex-col justify-end items-end">
-                                                <p>{item.amount}</p>
-                                                <p>
-                                                    {dayjs(item.date).format(
-                                                        "D MMM YYYY"
-                                                    )}
-                                                </p>
+                                    {filteredItems()
+                                        .slice(0, 3)
+                                        .map((item) => (
+                                            <div
+                                                key={item.id}
+                                                className={clsx(
+                                                    `flex justify-between border-b-[1px] py-4 last:border-b-0 border-[hsl(var(--grey-500))]`
+                                                )}
+                                            >
+                                                <div>
+                                                    <Image
+                                                        src={`/${item.avatar}`}
+                                                        width={32}
+                                                        height={32}
+                                                        alt=""
+                                                        className="rounded-[50%]"
+                                                    />
+                                                    <h4
+                                                        className={`text-preset-5 font-bold text-[hsl(var(--grey-900))]`}
+                                                    >
+                                                        {item.name}
+                                                    </h4>
+                                                </div>
+                                                <div className="flex flex-col justify-end items-end">
+                                                    <p
+                                                        className={`text-preset-5 font-bold text-[hsl(var(--grey-900))]`}
+                                                    >
+                                                        {item.amount}
+                                                    </p>
+                                                    <p
+                                                        className={`text-preset-5 font-normal text-[hsl(var(--grey-500))]`}
+                                                    >
+                                                        {dayjs(
+                                                            item.date
+                                                        ).format("D MMM YYYY")}
+                                                    </p>
+                                                </div>
                                             </div>
-                                        </div>
-                                    ))}
+                                        ))}
                                 </div>
                             </div>
                         );
