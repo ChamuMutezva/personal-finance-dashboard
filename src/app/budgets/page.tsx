@@ -4,6 +4,7 @@ import { fetchBudgets, fetchByCategory } from "../lib/data";
 import { Donut } from "../ui/Donut";
 import { Progress } from "@/components/ui/progress";
 import Image from "next/image";
+import dayjs from "dayjs";
 
 export default async function Page() {
     const budgets = await fetchBudgets();
@@ -54,10 +55,11 @@ export default async function Page() {
     console.log(`Dining - ${totalDining}`);
     console.log(`Personal - ${totalPersonal}`);
     */
-   // console.log(entertainmentCategory);
-    console.log(billsCategory)
+    // console.log(entertainmentCategory);
+    console.log(billsCategory);
     console.log("end of transmission");
     console.log(calculateProgress(490.49, 750));
+
     return (
         <main className="flex-1 min-h-screen  px-4 pt-4 pb-16 lg:p-24">
             <div className="flex justify-between items-center mb-4">
@@ -80,19 +82,43 @@ export default async function Page() {
                     ]}
                 />
 
-                <section title="a breakdown of the expenditure">
+                <section
+                    title="a breakdown of the expenditure"
+                    className={`flex flex-col gap-4 my-8`}
+                >
                     {data.map((budget) => {
                         const progressValue = calculateProgress(
                             budget.amount,
                             budget.maximum
                         );
 
+                        // Filter the bills category based on the current budget category
+                        function filteredItems() {
+                            if (budget.category === "Bills") {
+                                return billsCategory;
+                            } else if (budget.category === "Dining Out") {
+                                return diningCategory;
+                            } else if (budget.category === "Entertainment") {
+                                return entertainmentCategory;
+                            } else if (budget.category === "Personal Care") {
+                                return personalCategory;
+                            } else return [];
+                        }
+
                         return (
-                            <div key={budget.id}>
-                                <h2>{budget.category}</h2>
-                                <p>Maximum of ${budget.maximum}</p>
+                            <div
+                                key={budget.id}
+                                className="bg-[hsl(var(--white))] rounded-xl py-6 px-5 flex flex-col gap-4"
+                            >
+                                <h2 className={`text-preset-2 font-bold`}>
+                                    {budget.category}
+                                </h2>
+                                <p
+                                    className={`text-preset-4 text-[hsl(var(--grey-500))] font-normal`}
+                                >
+                                    Maximum of ${budget.maximum}
+                                </p>
                                 <Progress
-                                    role="meter"
                                     value={progressValue}
                                     className={`h-6 rounded`}
                                     style={{ backgroundColor: budget.fill }}
@@ -112,10 +138,19 @@ export default async function Page() {
                                         </span>
                                     </p>
                                 </div>
-                                <div>
+                                <div
+                                    className={`bg-[hsl(var(--beige-100))] p-4 rounded-xl`}
+                                >
                                     <div className="flex items-center justify-between">
-                                        <h3>Latest spending</h3>
-                                        <button type="button" className="flex items-center gap-2">
+                                        <h3
+                                            className={`text-preset-3 text-[hsl(var(--grey-900))]`}
+                                        >
+                                            Latest spending
+                                        </h3>
+                                        <button
+                                            type="button"
+                                            className="flex items-center gap-2 text-[hsl(var(--grey-500))] text-preset-4"
+                                        >
                                             See all{" "}
                                             <Image
                                                 src="assets/images/icon-caret-right.svg"
@@ -125,6 +160,22 @@ export default async function Page() {
                                             />
                                         </button>
                                     </div>
+                                    {filteredItems().map((item) => (
+                                        <div
+                                            key={item.id}
+                                            className="flex justify-between"
+                                        >
+                                            <h4>{item.name}</h4>
+                                            <div className="flex flex-col justify-end items-end">
+                                                <p>{item.amount}</p>
+                                                <p>
+                                                    {dayjs(item.date).format(
+                                                        "D MMM YYYY"
+                                                    )}
+                                                </p>
+                                            </div>
+                                        </div>
+                                    ))}
                                 </div>
                             </div>
                         );
