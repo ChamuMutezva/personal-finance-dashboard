@@ -169,11 +169,12 @@ export default async function Page() {
                                             >
                                                 <div>
                                                     <Image
-                                                        src={`/${item.avatar}`}
+                                                        src={item.avatar}
                                                         width={32}
                                                         height={32}
                                                         alt=""
                                                         className="rounded-[50%]"
+                                                        unoptimized
                                                     />
                                                     <h4
                                                         className={`text-preset-5 font-bold text-[hsl(var(--grey-900))]`}
