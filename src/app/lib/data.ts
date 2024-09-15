@@ -57,7 +57,19 @@ export async function fetchPots() {
         throw new Error("Failed to fetch pots data.");
     }
 }
-
+export async function fetchByCategoryExtendedExp(query: string) {
+    try {
+        const data =
+            await sql<Transaction>`SELECT * FROM transactions WHERE category = ${query}`;
+        const extendedTrialCategory = data.rows;
+        return extendedTrialCategory;
+    } catch (error) {
+        console.error("Database Error:", error);
+        throw new Error(
+            "Failed to fetch category data in the amended version."
+        );
+    }
+}
 export async function fetchByCategory() {
     try {
         console.log("Fetching transactions by category");

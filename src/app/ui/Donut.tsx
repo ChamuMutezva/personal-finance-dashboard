@@ -137,10 +137,10 @@ export function Donut({ budgets, totals }: Readonly<DonutProps>) {
                     </PieChart>
                 </ChartContainer>
             </CardContent>
-            <CardFooter className="flex-col gap-2 text-sm items-start md:flex-1">
-                <h3 className="text-left text-preset-2 font-bold py-4 text-[hsl(var(--grey-900))]">
+            <CardFooter className="left-side flex-col gap-2 text-sm items-start md:flex-1">
+                <h2 className="text-left text-preset-2 font-bold py-4 text-[hsl(var(--grey-900))]">
                     Spending summary
-                </h3>
+                </h2>
                 <div className="flex flex-col  w-full">
                     {chartData.map((budget) => {
                         return (

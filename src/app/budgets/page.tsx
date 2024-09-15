@@ -56,19 +56,22 @@ export default async function Page() {
     console.log(calculateProgress(490.49, 750));
 
     return (
-        <main className="flex-1 min-h-screen px-4 pt-4 pb-16 md:px-10 lg:p-8">
+        <main className="flex-1 min-h-screen px-4 pt-6 pb-16 md:px-10 lg:p-8">
             <div className="flex justify-between items-center mb-4">
-                <h1 className={`text-preset-1`}>Budgets</h1>
+                <h1
+                    className={`text-preset-1 font-bold text-[hsl(var(--grey-900))]`}
+                >
+                    Budgets
+                </h1>
                 <Link
                     href={"/budgets/add-new-budget"}
                     className={`bg-[hsl(var(--grey-900))] text-[hsl(var(--white))] text-preset-4 font-bold rounded-lg p-4`}
                 >
-                    + Add New Budget
-                    <span className="sr-only">item</span>
+                    + Add New Budget <span className="sr-only">item</span>
                 </Link>
             </div>
             <div
-                className={`left-side flex flex-col gap-4 lg:flex-row lg:items-start`}
+                className={`flex flex-col gap-4 lg:flex-row lg:items-start`}
             >
                 <Donut
                     budgets={budgets}
@@ -145,8 +148,8 @@ export default async function Page() {
                                         >
                                             Latest spending
                                         </h3>
-                                        <button
-                                            type="button"
+                                        <Link
+                                            href={"/transactions"}
                                             className="flex items-center gap-2 text-[hsl(var(--grey-500))] text-preset-4"
                                         >
                                             See all{" "}
@@ -156,7 +159,7 @@ export default async function Page() {
                                                 width={6}
                                                 height={11}
                                             />
-                                        </button>
+                                        </Link>
                                     </div>
                                     {filteredItems()
                                         .slice(0, 3)
