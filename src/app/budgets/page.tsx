@@ -7,6 +7,18 @@ import Image from "next/image";
 import dayjs from "dayjs";
 import clsx from "clsx";
 
+import { Button } from "@/components/ui/button";
+import {
+    Dialog,
+    DialogContent,
+    DialogDescription,
+    DialogFooter,
+    DialogHeader,
+    DialogTitle,
+    DialogTrigger,
+} from "@/components/ui/dialog";
+import AddBudgetForm from "../ui/AddBudgetForm";
+
 export default async function Page() {
     const budgets = await fetchBudgets();
     const category = await fetchByCategory();
@@ -63,16 +75,30 @@ export default async function Page() {
                 >
                     Budgets
                 </h1>
-                <Link
-                    href={"/budgets/add-new-budget"}
-                    className={`bg-[hsl(var(--grey-900))] text-[hsl(var(--white))] text-preset-4 font-bold rounded-lg p-4`}
-                >
-                    + Add New Budget <span className="sr-only">item</span>
-                </Link>
+                <Dialog>
+                    <DialogTrigger asChild>
+                        <Button variant="default">
+                            + Add New Budget{" "}
+                            <span className="sr-only">item</span>
+                        </Button>
+                    </DialogTrigger>
+                    <DialogContent className="sm:max-w-[425px]">
+                        <DialogHeader>
+                            <DialogTitle>Add New Budget</DialogTitle>
+                            <DialogDescription>
+                                Choose a category to set a spending budget.
+                                These categories can help you monitor spending.
+                            </DialogDescription>
+                        </DialogHeader>
+                        <AddBudgetForm />
+                        <DialogFooter>
+                            <Button type="submit">Save changes</Button>
+                        </DialogFooter>
+                    </DialogContent>
+                </Dialog>
+               
             </div>
-            <div
-                className={`flex flex-col gap-4 lg:flex-row lg:items-start`}
-            >
+            <div className={`flex flex-col gap-4 lg:flex-row lg:items-start`}>
                 <Donut
                     budgets={budgets}
                     totals={[
