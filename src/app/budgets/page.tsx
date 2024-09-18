@@ -82,7 +82,7 @@ export default async function Page() {
                             <span className="sr-only">item</span>
                         </Button>
                     </DialogTrigger>
-                    <DialogContent className="sm:max-w-[425px]">
+                    <DialogContent className="w-11/12 sm:max-w-[425px] rounded-xl">
                         <DialogHeader>
                             <DialogTitle>Add New Budget</DialogTitle>
                             <DialogDescription>

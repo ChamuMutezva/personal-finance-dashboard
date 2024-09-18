@@ -5,6 +5,14 @@ import { useForm } from "react-hook-form";
 import z from "zod";
 import { Button } from "@/components/ui/button";
 import {
+    Select,
+    SelectContent,
+    SelectItem,
+    SelectTrigger,
+    SelectValue,
+} from "@/components/ui/select";
+
+import {
     Form,
     FormControl,
     FormDescription,
@@ -17,6 +25,8 @@ import { Input } from "@/components/ui/input";
 
 const formSchema = z.object({
     username: z.string().min(2).max(50),
+    category: z.string().min(1, "Category is required"),
+    theme: z.string().min(1, "Category is required"),
 });
 
 function AddBudgetForm() {
@@ -25,6 +35,8 @@ function AddBudgetForm() {
         resolver: zodResolver(formSchema),
         defaultValues: {
             username: "",
+            category: "",
+            theme: "",
         },
     });
 
@@ -38,6 +50,38 @@ function AddBudgetForm() {
     return (
         <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+                {/* Step 2: Connect Select with React Hook Form */}
+                <FormField
+                    control={form.control}
+                    name="category"
+                    render={({ field }) => (
+                        <FormItem>
+                            <FormLabel>Category</FormLabel>
+                            <Select
+                                onValueChange={field.onChange}
+                                value={field.value}
+                            >
+                                <SelectTrigger className="w-full">
+                                    <SelectValue placeholder="Category" />
+                                </SelectTrigger>
+                                <SelectContent>
+                                    <SelectItem value="entertainment">
+                                        Entertainment
+                                    </SelectItem>
+                                    <SelectItem value="dining">
+                                        Dining Out
+                                    </SelectItem>
+                                    <SelectItem value="bills">Bills</SelectItem>
+                                    <SelectItem value="personal">
+                                        Personal Care
+                                    </SelectItem>
+                                </SelectContent>
+                            </Select>
+                            <FormMessage />
+                        </FormItem>
+                    )}
+                />
+
                 <FormField
                     control={form.control}
                     name="username"
@@ -50,6 +94,37 @@ function AddBudgetForm() {
                             <FormDescription>
                                 This is your public display name.
                             </FormDescription>
+                            <FormMessage />
+                        </FormItem>
+                    )}
+                />
+
+                <FormField
+                    control={form.control}
+                    name="theme"
+                    render={({ field }) => (
+                        <FormItem>
+                            <FormLabel>Category</FormLabel>
+                            <Select
+                                onValueChange={field.onChange}
+                                value={field.value}
+                            >
+                                <SelectTrigger className="w-full">
+                                    <SelectValue placeholder="theme" />
+                                </SelectTrigger>
+                                <SelectContent>
+                                    <SelectItem value="green">
+                                        Green
+                                    </SelectItem>
+                                    <SelectItem value="cream">
+                                        Cream
+                                    </SelectItem>
+                                    <SelectItem value="cyan">Cyan</SelectItem>
+                                    <SelectItem value="navy">
+                                        Navy
+                                    </SelectItem>
+                                </SelectContent>
+                            </Select>
                             <FormMessage />
                         </FormItem>
                     )}
