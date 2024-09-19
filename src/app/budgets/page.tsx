@@ -3,6 +3,7 @@ import Link from "next/link";
 import { fetchBudgets, fetchByCategory } from "../lib/data";
 import { Donut } from "../ui/Donut";
 import { Progress } from "@/components/ui/progress";
+import Meter from "../ui/Meter";
 import Image from "next/image";
 import dayjs from "dayjs";
 import clsx from "clsx";
@@ -96,7 +97,6 @@ export default async function Page() {
                         </DialogFooter>
                     </DialogContent>
                 </Dialog>
-               
             </div>
             <div className={`flex flex-col gap-4 lg:flex-row lg:items-start`}>
                 <Donut
@@ -114,11 +114,12 @@ export default async function Page() {
                     className={`right-side flex flex-col lg:flex-1 gap-4`}
                 >
                     {data.map((budget) => {
+                        /*
                         const progressValue = calculateProgress(
                             budget.amount,
                             budget.maximum
                         );
-
+                        */
                         // Filter the bills category based on the current budget category
                         function filteredItems() {
                             if (budget.category === "Bills") {
@@ -145,13 +146,24 @@ export default async function Page() {
                                 >
                                     Maximum of ${budget.maximum}
                                 </p>
+                                <Meter
+                                    value={budget.amount}
+                                    min={0}
+                                    max={budget.maximum}
+                                    color={budget.fill}
+                                />
+                                {/*
                                 <Progress
                                     value={progressValue}
                                     className={`h-6 rounded`}
                                     style={{ backgroundColor: budget.fill }}
                                 />
+                                */}
                                 <div className="flex items-center spending">
-                                    <p className="flex flex-col flex-1">
+                                    <p
+                                        id="category-usage"
+                                        className="flex flex-col flex-1"
+                                    >
                                         Spent <span>${budget.amount}</span>
                                     </p>
                                     <p className="flex flex-1 flex-col">
