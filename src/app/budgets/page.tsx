@@ -64,6 +64,23 @@ export default async function Page() {
         return Math.round((currentProgress / total) * 100);
     }
 
+    const formatBudgetCurrency = (amount: number): string => {
+        // Format the number to a currency string without the currency symbol
+        const options: Intl.NumberFormatOptions = {
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2,
+        };
+
+        // Get the absolute value formatted as a string
+        const formattedAmount = Math.abs(amount).toLocaleString(
+            undefined,
+            options
+        );
+
+        // If the amount is negative, prepend a minus sign
+        return amount < 0 ? `-$${formattedAmount}` : `$${formattedAmount}`;
+    };
+
     console.log(billsCategory);
     console.log("end of transmission");
     console.log(calculateProgress(490.49, 750));
@@ -191,6 +208,9 @@ export default async function Page() {
                                             className="flex items-center gap-2 text-[hsl(var(--grey-500))] text-preset-4"
                                         >
                                             See all{" "}
+                                            <span className="sr-only">
+                                                list of transactions
+                                            </span>
                                             <Image
                                                 src="assets/images/icon-caret-right.svg"
                                                 alt=""
@@ -227,14 +247,26 @@ export default async function Page() {
                                                     <p
                                                         className={`text-preset-5 font-bold text-[hsl(var(--grey-900))]`}
                                                     >
-                                                        {item.amount}
+                                                        {formatBudgetCurrency(
+                                                            item.amount
+                                                        )}
                                                     </p>
                                                     <p
                                                         className={`text-preset-5 font-normal text-[hsl(var(--grey-500))]`}
                                                     >
-                                                        {dayjs(
-                                                            item.date
-                                                        ).format("D MMM YYYY")}
+                                                        <time
+                                                            dateTime={dayjs(
+                                                                item.date
+                                                            ).format(
+                                                                "D MMM YYYY"
+                                                            )}
+                                                        >
+                                                            {dayjs(
+                                                                item.date
+                                                            ).format(
+                                                                "D MMM YYYY"
+                                                            )}
+                                                        </time>
                                                     </p>
                                                 </div>
                                             </div>

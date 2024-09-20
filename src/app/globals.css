@@ -61,11 +61,11 @@
 }
 
 .sidebar {
-  transition: all 300ms ease; /* Adjust the duration and easing as needed */
+    transition: all 300ms ease; /* Adjust the duration and easing as needed */
 }
 
 @layer base {
-  :root {
+    :root {
         --background: 0 0% 100%;
         --foreground: 240 10% 3.9%;
         --card: 0 0% 100%;
@@ -92,7 +92,7 @@
         --chart-5: 27 87% 67%;
         --radius: 0.5rem;
     }
-  .dark {
+    .dark {
         --background: 240 10% 3.9%;
         --foreground: 0 0% 98%;
         --card: 240 10% 3.9%;
@@ -120,11 +120,55 @@
     }
 }
 
+/* For WebKit Browsers (Chrome, Safari) */
+/* Background track */
+meter::-webkit-meter-bar {
+  background: #e5e7eb; /* Light gray background for the track */
+  border-radius: 5px; /* Rounded corners */
+}
+
+/* Optimum value fill */
+meter::-webkit-meter-optimum-value {
+  background: #86efac; /* Green for optimum value */
+}
+
+/* Suboptimum value fill */
+meter::-webkit-meter-suboptimum-value {
+  background: #fbbf24; /* Yellow for suboptimal value */
+}
+
+/* Even less good value fill */
+meter::-webkit-meter-even-less-good-value {
+  background: #f87171; /* Red for even less good value */
+}
+
+/* FIREFOX */
+/* Background track */
+meter {
+    background: #e5e7eb; /* Light gray background for the track */
+    border-radius: 5px; /* Rounded corners */
+}
+
+/* Optimum value fill */
+meter::-moz-meter-optimum {
+    background: #86efac; /* Green for optimum value */
+}
+
+/* Suboptimum value fill */
+meter::-moz-meter-sub-optimum {
+    background: #fbbf24; /* Yellow for suboptimal value */
+}
+
+/* Even less good value fill */
+meter::-moz-meter-sub-sub-optimum {
+    background: #f87171; /* Red for even less good value */
+}
+
 @layer base {
-  * {
-    @apply border-border;
+    * {
+        @apply border-border;
     }
-  body {
-    @apply bg-background text-foreground;
+    body {
+        @apply bg-background text-foreground;
     }
 }

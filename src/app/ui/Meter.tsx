@@ -16,29 +16,25 @@ const Meter = ({
 
     return (
         <div className="relative w-full rounded flex flex-col">
-            <label className="sr-only" htmlFor="category-meter">Category Level</label>
+            <label className="sr-only" htmlFor="category-meter">
+                Category Level
+            </label>
+            
             <meter
                 id="category-meter"
                 value={value}
                 min={min}
                 max={max}
                 aria-labelledby="category-level-description category-usage"
-                className={`h-6 w-full bg-[${color}]  rounded`}
+                className={`h-6 w-full rounded`}
+                style={{backgroundColor: color}}
             />
 
             <span id="category-level-description" className="sr-only">
                 {value} dollars used out of {max} dollars budgeted , which is{" "}
                 {percentage} usage.
             </span>
-            {/*
-            <div
-                className={`absolute top-0 left-0 h-full bg-[${color}] rounded`}
-                style={{ width: `${percentage < 100 ? percentage : 100}%`, backgroundColor: color }}
-            />
-            <span className="absolute left-1/2 transform -translate-x-1/2 text-xs font-semibold text-gray-700">
-                {value}
-            </span>
-            */}
+          
         </div>
     );
 };
