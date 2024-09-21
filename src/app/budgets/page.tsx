@@ -109,9 +109,11 @@ export default async function Page() {
                             </DialogDescription>
                         </DialogHeader>
                         <AddBudgetForm />
+                        {/*
                         <DialogFooter>
                             <Button type="submit">Save changes</Button>
                         </DialogFooter>
+                        */}
                     </DialogContent>
                 </Dialog>
             </div>

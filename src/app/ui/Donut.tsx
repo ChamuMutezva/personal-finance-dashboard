@@ -74,7 +74,7 @@ export function Donut({ budgets, totals }: Readonly<DonutProps>) {
     const colors = ["#277C78", "#82C9D7", "#F2CDAC", "#626070"];
 
     return (
-        <Card className="flex flex-col md:flex-row lg:flex-col lg:flex-1">
+        <Card className="flex flex-col md:flex-row mt-4 lg:flex-col lg:flex-1">
             {/*
             <CardHeader className="items-center pb-0">
                 <CardTitle>Summary of expenses</CardTitle>
@@ -86,7 +86,12 @@ export function Donut({ budgets, totals }: Readonly<DonutProps>) {
                     config={chartConfig}
                     className="mx-auto aspect-square max-h-[310px]"
                 >
-                    <PieChart>
+                    <PieChart
+                        accessibilityLayer
+                        role="img"
+                        aria-label="summary visual presentation of budget and spending"
+                        aria-describedby="total-used total-budget chart-description"
+                    >
                         <ChartTooltip
                             cursor={false}
                             content={<ChartTooltipContent hideLabel />}
@@ -115,6 +120,7 @@ export function Donut({ budgets, totals }: Readonly<DonutProps>) {
                                                 <tspan
                                                     x={viewBox.cx}
                                                     y={viewBox.cy}
+                                                    id="total-used"
                                                     className="fill-foreground text-3xl font-bold"
                                                 >
                                                     ${usage.toLocaleString()}
@@ -122,6 +128,7 @@ export function Donut({ budgets, totals }: Readonly<DonutProps>) {
                                                 <tspan
                                                     x={viewBox.cx}
                                                     y={(viewBox.cy || 0) + 24}
+                                                    id="total-budget"
                                                     className="fill-muted-foreground"
                                                 >
                                                     of $
@@ -137,7 +144,10 @@ export function Donut({ budgets, totals }: Readonly<DonutProps>) {
                     </PieChart>
                 </ChartContainer>
             </CardContent>
-            <CardFooter className="left-side flex-col gap-2 text-sm items-start md:flex-1">
+            <CardFooter
+                id="chart-description"
+                className="left-side flex-col gap-2 text-sm items-start md:flex-1"
+            >
                 <h2 className="text-left text-preset-2 font-bold py-4 text-[hsl(var(--grey-900))]">
                     Spending summary
                 </h2>
@@ -146,10 +156,31 @@ export function Donut({ budgets, totals }: Readonly<DonutProps>) {
                         return (
                             <div
                                 key={budget.id}
-                                className={clsx(`border-b-2 py-4 last:border-b-0 border-[hsl(var(--grey-100))] relative
-                            before:absolute before:-left-4 before:top-1/2 before:-translate-y-1/2 before:w-1
-                             before:h-2/5 before:bg-[hsl(var(--green))] before:rounded-t-xl before:rounded-b-xl`)}
+                                className={clsx(
+                                    `border-b-2 py-4 last:border-b-0 border-[hsl(var(--grey-100))] relative`
+                                )}
+                                style={
+                                    {
+                                        // Use a CSS string to set the before pseudo-element's background color
+                                        "--pseudo-bg-color": budget.fill, // Set a custom property
+                                    } as React.CSSProperties
+                                }
                             >
+                                <style jsx>{`
+                                    div::before {
+                                        content: "";
+                                        position: absolute;
+                                        left: -1rem; /* Adjust as needed */
+                                        top: 50%;
+                                        transform: translateY(-50%);
+                                        width: 0.25rem; /* Adjust width */
+                                        height: 40%; /* Adjust height */
+                                        background-color: var(
+                                            --pseudo-bg-color
+                                        ); /* Use the custom property */
+                                        border-radius: 0.5rem; /* Adjust border radius if needed */
+                                    }
+                                `}</style>
                                 <div className="flex justify-between items-center gap-4">
                                     <p className="text-preset-4 text-[hsl(var(--grey-500))]">
                                         {budget.category}

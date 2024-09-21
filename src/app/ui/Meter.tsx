@@ -32,7 +32,7 @@ const Meter = ({
 
             <span id="category-level-description" className="sr-only">
                 {value} dollars used out of {max} dollars budgeted , which is{" "}
-                {percentage} usage.
+                {percentage.toFixed(2)} percent usage.
             </span>
           
         </div>
