@@ -130,7 +130,7 @@ export default async function Page() {
 
                 <section
                     title="a breakdown of the expenditure"
-                    className={`right-side flex flex-col lg:flex-1 gap-4`}
+                    className={`right-side flex flex-col mt-4 lg:flex-1 gap-4`}
                 >
                     {data.map((budget) => {
                         /*

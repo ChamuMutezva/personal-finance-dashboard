@@ -2,9 +2,9 @@
 import React from "react";
 
 const Meter = ({
-    value,
+    value = 0,
     min = 0,
-    max,
+    max = 0,
     color,
 }: {
     value: number;
@@ -16,25 +16,23 @@ const Meter = ({
 
     return (
         <div className="relative w-full rounded flex flex-col">
-            <label className="sr-only" htmlFor="category-meter">
-                Category Level
-            </label>
-            
-            <meter
-                id="category-meter"
-                value={value}
-                min={min}
-                max={max}
-                aria-labelledby="category-level-description category-usage"
-                className={`h-6 w-full rounded`}
-                style={{backgroundColor: color}}
-            />
-
-            <span id="category-level-description" className="sr-only">
-                {value} dollars used out of {max} dollars budgeted , which is{" "}
-                {percentage.toFixed(2)} percent usage.
-            </span>
-          
+            <div className={`h-6 w-full bg-[hsl(var(--grey-100))] rounded`}>
+                <div
+                    id="category-meter"
+                    role="meter"
+                    aria-valuenow={value}
+                    aria-valuemin={min}
+                    aria-valuemax={max}
+                    aria-labelledby="category-level-description category-usage"
+                    className={`h-6 rounded`}
+                    style={{
+                        backgroundColor:
+                            percentage > 100 ? `hsl(var(--red))` : color,
+                        width: `${percentage > 100 ? 100 : percentage}%`,
+                        transition: "width 0.3s ease-in-out",
+                    }}
+                />
+            </div>
         </div>
     );
 };
