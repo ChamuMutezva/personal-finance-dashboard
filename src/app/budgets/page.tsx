@@ -1,7 +1,9 @@
 import React from "react";
 import Link from "next/link";
 import { fetchBudgets, fetchByCategory } from "../lib/data";
+import { Card } from "@/components/ui/card";
 import { Donut } from "../ui/Donut";
+import { formatPosNegativeCurrency } from "../lib/utils";
 // import { Progress } from "@/components/ui/progress";
 import Meter from "../ui/Meter";
 import Image from "next/image";
@@ -67,22 +69,7 @@ export default async function Page() {
         return Math.round((currentProgress / total) * 100);
     }
 
-    const formatBudgetCurrency = (amount: number): string => {
-        // Format the number to a currency string without the currency symbol
-        const options: Intl.NumberFormatOptions = {
-            minimumFractionDigits: 2,
-            maximumFractionDigits: 2,
-        };
-
-        // Get the absolute value formatted as a string
-        const formattedAmount = Math.abs(amount).toLocaleString(
-            undefined,
-            options
-        );
-
-        // If the amount is negative, prepend a minus sign
-        return amount < 0 ? `-$${formattedAmount}` : `$${formattedAmount}`;
-    };
+    
 
     // console.log(billsCategory);
     // console.log("end of transmission");
@@ -156,9 +143,9 @@ export default async function Page() {
                         }
 
                         return (
-                            <div
+                            <Card
                                 key={budget.id}
-                                className="bg-[hsl(var(--white))] rounded-xl py-6 px-5 flex flex-col gap-4"
+                                className="rounded-xl py-6 px-5 flex flex-col gap-4"
                             >
                                 <div className="flex justify-between items-center">
                                     <h2
@@ -288,7 +275,7 @@ export default async function Page() {
                                                     <p
                                                         className={`text-preset-5 font-bold text-[hsl(var(--grey-900))]`}
                                                     >
-                                                        {formatBudgetCurrency(
+                                                        {formatPosNegativeCurrency(
                                                             item.amount
                                                         )}
                                                     </p>
@@ -313,7 +300,7 @@ export default async function Page() {
                                             </div>
                                         ))}
                                 </div>
-                            </div>
+                            </Card>
                         );
                     })}
                 </section>
