@@ -13,7 +13,7 @@ import {
     Dialog,
     DialogContent,
     DialogDescription,
-   // DialogFooter,
+    // DialogFooter,
     DialogHeader,
     DialogTitle,
     DialogTrigger,
@@ -30,7 +30,7 @@ export default async function Page() {
         personalCategory,
     } = category;
 
-    // calculate budgets amount (amount currently used)
+    // calculate  budget used for Entertainment
     const totalEntertainment = entertainmentCategory.reduce(
         (accumulator, budget) => {
             return Number(accumulator) + Number(-budget.amount);
@@ -38,14 +38,17 @@ export default async function Page() {
         0
     );
 
+    // calculate  budget used for Bills
     const totalBills = billsCategory.reduce((accumulator, budget) => {
         return Number(accumulator) + Number(-budget.amount);
     }, 0);
 
+    // calculate  budget used for Dining Out
     const totalDining = diningCategory.reduce((accumulator, budget) => {
         return Number(accumulator) + Number(-budget.amount);
     }, 0);
 
+    // calculate  budget used for Personal Care
     const totalPersonal = personalCategory.reduce((accumulator, budget) => {
         return Number(accumulator) + Number(-budget.amount);
     }, 0);
@@ -81,11 +84,11 @@ export default async function Page() {
         return amount < 0 ? `-$${formattedAmount}` : `$${formattedAmount}`;
     };
 
-   // console.log(billsCategory);
-   // console.log("end of transmission");
-   // console.log(calculateProgress(490.49, 750));
+    // console.log(billsCategory);
+    // console.log("end of transmission");
+    // console.log(calculateProgress(490.49, 750));
 
-   console.log(budgets)
+    console.log(budgets);
 
     return (
         <main className="flex-1 min-h-screen px-4 pt-6 pb-16 md:px-10 lg:p-8">
@@ -95,6 +98,7 @@ export default async function Page() {
                 >
                     Budgets
                 </h1>
+                {/* Dialog component */}
                 <Dialog>
                     <DialogTrigger asChild>
                         <Button variant="default">
@@ -119,7 +123,9 @@ export default async function Page() {
                     </DialogContent>
                 </Dialog>
             </div>
+
             <div className={`flex flex-col gap-4 lg:flex-row lg:items-start`}>
+                {/* Left side component */}
                 <Donut
                     budgets={budgets}
                     totals={[
@@ -130,17 +136,12 @@ export default async function Page() {
                     ]}
                 />
 
+                {/* Right side component */}
                 <section
                     title="a breakdown of the expenditure"
                     className={`right-side flex flex-col mt-4 lg:flex-1 gap-4`}
                 >
                     {data.map((budget) => {
-                        /*
-                        const progressValue = calculateProgress(
-                            budget.amount,
-                            budget.maximum
-                        );
-                        */
                         // Filter the bills category based on the current budget category
                         function filteredItems() {
                             if (budget.category === "Bills") {
@@ -159,45 +160,81 @@ export default async function Page() {
                                 key={budget.id}
                                 className="bg-[hsl(var(--white))] rounded-xl py-6 px-5 flex flex-col gap-4"
                             >
-                                <h2 className={`text-preset-2 font-bold`}>
-                                    {budget.category}
-                                </h2>
+                                <div className="flex justify-between items-center">
+                                    <h2
+                                        className={`flex justify-center items-center gap-4 relative`}
+                                    >
+                                        <span
+                                            className={`w-4 h-4 inline-block rounded-full`}
+                                            style={{
+                                                backgroundColor: budget.fill,
+                                            }}
+                                        />
+                                        <span className="text-preset-2 font-bold ">
+                                            {budget.category}
+                                        </span>
+                                    </h2>
+                                    <button
+                                        type="button"
+                                        className="hover:bg-blue-600 focus:ring-2focus:ring-blue-400 focus:ring-opacity-50"
+                                    >
+                                        <span className="sr-only">
+                                            See more bills to pay
+                                        </span>
+                                        <Image
+                                            src="assets/images/icon-ellipsis.svg"
+                                            alt=""
+                                            width={14}
+                                            height={14}
+                                        />
+                                    </button>
+                                </div>
+
                                 <p
                                     className={`text-preset-4 text-[hsl(var(--grey-500))] font-normal`}
                                 >
                                     Maximum of ${budget.maximum}
                                 </p>
+
                                 <Meter
                                     value={budget.amount}
                                     min={0}
                                     max={budget.maximum}
                                     color={budget.fill}
                                 />
-                                {/*
-                                <Progress
-                                    value={progressValue}
-                                    className={`h-6 rounded`}
-                                    style={{ backgroundColor: budget.fill }}
-                                />
-                                */}
+
                                 <div className="flex items-center spending">
-                                    <p
-                                        id="category-usage"
-                                        className="flex flex-col flex-1"
-                                    >
-                                        Spent <span>${budget.amount}</span>
-                                    </p>
-                                    <p className="flex flex-1 flex-col">
-                                        Free{" "}
-                                        <span>
-                                            $
-                                            {budget.amount > budget.maximum
-                                                ? 0
-                                                : budget.maximum -
-                                                  budget.amount}
-                                        </span>
-                                    </p>
+                                    <div className="flex items-center flex-1 gap-2">
+                                        <span
+                                            className={`w-1 h-10 inline-block rounded-sm`}
+                                            style={{
+                                                backgroundColor: budget.fill,
+                                            }}
+                                        />
+                                        <p
+                                            id="category-usage"
+                                            className="flex flex-col flex-1"
+                                        >
+                                            Spent <span>${budget.amount}</span>
+                                        </p>
+                                    </div>
+                                    <div className="flex items-center flex-1 gap-2">
+                                        <span
+                                            className={`w-1 h-10 inline-block rounded-sm bg-[hsl(var(--beige-100))]`}
+                                        />
+                                        <p className="flex flex-col">
+                                            Free{" "}
+                                            <span>
+                                                $
+                                                {budget.amount > budget.maximum
+                                                    ? 0
+                                                    : budget.maximum -
+                                                      budget.amount}
+                                            </span>
+                                        </p>
+                                    </div>
                                 </div>
+
                                 <div
                                     className={`bg-[hsl(var(--beige-100))] p-4 rounded-xl`}
                                 >
@@ -229,7 +266,7 @@ export default async function Page() {
                                             <div
                                                 key={item.id}
                                                 className={clsx(
-                                                    `flex justify-between border-b-[1px] py-4 last:border-b-0 border-[hsl(var(--grey-500))]`
+                                                    `flex justify-between border-b-[1px] py-4 last:border-b-0 border-[hsl(var(--beige-500))]`
                                                 )}
                                             >
                                                 <div>
