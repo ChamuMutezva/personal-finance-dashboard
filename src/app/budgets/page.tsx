@@ -2,7 +2,7 @@ import React from "react";
 import Link from "next/link";
 import { fetchBudgets, fetchByCategory } from "../lib/data";
 import { Donut } from "../ui/Donut";
-import { Progress } from "@/components/ui/progress";
+// import { Progress } from "@/components/ui/progress";
 import Meter from "../ui/Meter";
 import Image from "next/image";
 import dayjs from "dayjs";
@@ -13,7 +13,7 @@ import {
     Dialog,
     DialogContent,
     DialogDescription,
-    DialogFooter,
+   // DialogFooter,
     DialogHeader,
     DialogTitle,
     DialogTrigger,
@@ -81,9 +81,11 @@ export default async function Page() {
         return amount < 0 ? `-$${formattedAmount}` : `$${formattedAmount}`;
     };
 
-    console.log(billsCategory);
-    console.log("end of transmission");
-    console.log(calculateProgress(490.49, 750));
+   // console.log(billsCategory);
+   // console.log("end of transmission");
+   // console.log(calculateProgress(490.49, 750));
+
+   console.log(budgets)
 
     return (
         <main className="flex-1 min-h-screen px-4 pt-6 pb-16 md:px-10 lg:p-8">

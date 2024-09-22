@@ -11,6 +11,7 @@ import {
     SelectTrigger,
     SelectValue,
 } from "@/components/ui/select";
+import { createBudget } from "../lib/actions";
 
 import {
     Form,
@@ -24,7 +25,7 @@ import {
 import { Input } from "@/components/ui/input";
 
 const formSchema = z.object({
-    username: z.string().min(2).max(50),
+    maximum: z.number().positive(),
     category: z.string().min(1, "Category is required"),
     theme: z.string().min(1, "Category is required"),
 });
@@ -34,22 +35,33 @@ function AddBudgetForm() {
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
         defaultValues: {
-            username: "",
+            maximum: 10,
             category: "",
             theme: "",
         },
     });
 
-    // 2. Define a submit handler.
-    function onSubmit(values: z.infer<typeof formSchema>) {
-        // Do something with the form values.
-        // ✅ This will be type-safe and validated.
+    /*
+    function onSubmit(values: z.infer<typeof formSchema>) {        
         console.log(values);
     }
+  */
+
+    /* TODO: The `action={createBudget}` is used to add a new budget to the database - see form below
+    THE commands that adds the budget has been commented out in the action.ts file , until the database
+     has been aligned correctly such that when a new budget item has been added the categories will not
+      cause a NAN ERROR in the Donut chart. The NAN is coming from calculating the USAGE total.
+
+    The onsubmit handler is a dummy and should be removed
+    */
 
     return (
         <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+            <form
+                action={createBudget}
+                /*  onSubmit={form.handleSubmit(onSubmit)} */
+                className="space-y-8"
+            >
                 {/* Step 2: Connect Select with React Hook Form */}
                 <FormField
                     control={form.control}
@@ -59,20 +71,21 @@ function AddBudgetForm() {
                             <FormLabel>Category</FormLabel>
                             <Select
                                 onValueChange={field.onChange}
-                                value={field.value}
+                                // value={field.value}
+                                {...field}
                             >
                                 <SelectTrigger className="w-full">
                                     <SelectValue placeholder="Category" />
                                 </SelectTrigger>
                                 <SelectContent>
-                                    <SelectItem value="entertainment">
+                                    <SelectItem value="Entertainment">
                                         Entertainment
                                     </SelectItem>
-                                    <SelectItem value="dining">
+                                    <SelectItem value="Dining Out">
                                         Dining Out
                                     </SelectItem>
-                                    <SelectItem value="bills">Bills</SelectItem>
-                                    <SelectItem value="personal">
+                                    <SelectItem value="Bills">Bills</SelectItem>
+                                    <SelectItem value="Personal Care">
                                         Personal Care
                                     </SelectItem>
                                 </SelectContent>
@@ -84,15 +97,19 @@ function AddBudgetForm() {
 
                 <FormField
                     control={form.control}
-                    name="username"
+                    name="maximum"
                     render={({ field }) => (
                         <FormItem>
-                            <FormLabel>Username</FormLabel>
+                            <FormLabel>Maximum budget amount</FormLabel>
                             <FormControl>
-                                <Input placeholder="Chamu" {...field} />
+                                <Input
+                                    type="number"
+                                    placeholder="10"
+                                    {...field}
+                                />
                             </FormControl>
                             <FormDescription>
-                                This is your public display name.
+                                Maximum budget amount.
                             </FormDescription>
                             <FormMessage />
                         </FormItem>
@@ -104,24 +121,29 @@ function AddBudgetForm() {
                     name="theme"
                     render={({ field }) => (
                         <FormItem>
-                            <FormLabel>Category</FormLabel>
+                            <FormLabel>Theme</FormLabel>
                             <Select
-                                onValueChange={field.onChange}
-                                value={field.value}
+                                onValueChange={(value) => {
+                                    field.onChange(value); // Update value in React Hook Form
+                                }}
+                                {...field}
+                                // value={field.value}
                             >
                                 <SelectTrigger className="w-full">
                                     <SelectValue placeholder="theme" />
                                 </SelectTrigger>
                                 <SelectContent>
-                                    <SelectItem value="green">
+                                    <SelectItem value="#277C78">
                                         Green
                                     </SelectItem>
-                                    <SelectItem value="cream">
+                                    <SelectItem value="#F2CDAC">
                                         Cream
                                     </SelectItem>
-                                    <SelectItem value="cyan">Cyan</SelectItem>
-                                    <SelectItem value="navy">
-                                        Navy
+                                    <SelectItem value="#82C9D7">
+                                        Cyan
+                                    </SelectItem>
+                                    <SelectItem value="#626070">
+                                        Grey
                                     </SelectItem>
                                 </SelectContent>
                             </Select>
@@ -129,7 +151,9 @@ function AddBudgetForm() {
                         </FormItem>
                     )}
                 />
-                <Button type="submit" className="w-full">Submit</Button>
+                <Button type="submit" className="w-full">
+                    Submit
+                </Button>
             </form>
         </Form>
     );

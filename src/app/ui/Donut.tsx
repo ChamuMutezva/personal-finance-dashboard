@@ -9,10 +9,10 @@ import { Budget } from "../lib/definitions";
 import {
     Card,
     CardContent,
-    CardDescription,
+   // CardDescription,
     CardFooter,
-    CardHeader,
-    CardTitle,
+   // CardHeader,
+  //  CardTitle,
 } from "@/components/ui/card";
 import {
     ChartConfig,
@@ -70,6 +70,8 @@ export function Donut({ budgets, totals }: Readonly<DonutProps>) {
     const usage = React.useMemo(() => {
         return chartData.reduce((acc, curr) => acc + curr.amount, 0);
     }, []);
+
+
 
     const colors = ["#277C78", "#82C9D7", "#F2CDAC", "#626070"];
 
