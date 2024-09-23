@@ -108,6 +108,40 @@ export async function fetchByCategory() {
         throw new Error("Failed to fetch category data.");
     }
 }
+/*
+OR
+transactions.recurring ILIKE ${`%${query}%`}
+ORDER BY transactions.date DESC
+LIMIT ${ITEMS_PER_PAGE} OFFSET ${offset}
+*/
+
+const ITEMS_PER_PAGE = 6;
+export async function fetchFilteredTransactions(
+    query: string,
+    currentPage: number
+) {
+    const offset = (currentPage - 1) * ITEMS_PER_PAGE;
+
+    try {
+        const transactions = await sql<Transaction>`
+        SELECT * FROM transactions
+        WHERE
+             transactions.name ILIKE ${`%${query}%`} OR
+             transactions.category ILIKE ${`%${query}%`} OR
+             transactions.amount::text ILIKE ${`%${query}%`} OR
+             transactions.date::text ILIKE ${`%${query}%`} OR
+             transactions.recurring::text ILIKE ${`%${query}%`}
+        ORDER BY
+              transactions.date DESC        
+        LIMIT ${ITEMS_PER_PAGE} OFFSET ${offset}
+    `;
+
+        return transactions.rows;
+    } catch (error) {
+        console.error("Database Error:", error);
+        throw new Error("Failed to fetch transactions.");
+    }
+}
 
 /*
 export async function fetchLatestInvoices() {
