@@ -144,6 +144,38 @@ export async function fetchFilteredTransactions(
 }
 
 /*
+ WHERE
+      transactions.name ILIKE ${`%${query}%`} OR
+      transactions.category ILIKE ${`%${query}%`} OR
+      transactions.amount::text ILIKE ${`%${query}%`} OR
+      transactions.date::text ILIKE ${`%${query}%`} OR
+      transactions.recurring::text ILIKE ${`%${query}%`}
+*/
+
+
+export async function fetchTransactionsPages(query: string) {
+    try {
+        const count = await sql`SELECT COUNT(*)
+    FROM transactions  
+    WHERE
+      transactions.name ILIKE ${`%${query}%`} OR
+      transactions.category ILIKE ${`%${query}%`} OR
+      transactions.amount::text ILIKE ${`%${query}%`} OR
+      transactions.date::text ILIKE ${`%${query}%`} OR
+      transactions.recurring::text ILIKE ${`%${query}%`}   
+  `;
+
+        const totalPages = Math.ceil(
+            Number(count.rows[0].count) / ITEMS_PER_PAGE
+        );
+        return totalPages;
+    } catch (error) {
+        console.error("Database Error:", error);
+        throw new Error("Failed to fetch total number of Transactions.");
+    }
+}
+
+/*
 export async function fetchLatestInvoices() {
     try {
         const data = await sql<LatestInvoiceRaw>`
