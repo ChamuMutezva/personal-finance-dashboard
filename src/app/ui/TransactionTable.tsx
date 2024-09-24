@@ -32,11 +32,11 @@ export default async function TransactionTable({
         <Table>
             <TableCaption>A list of my transactions.</TableCaption>
             <TableHeader>
-                <TableRow className="hidden md:contents">
-                    <TableHead>Recipient/Sender</TableHead>
-                    <TableHead>Category</TableHead>
-                    <TableHead>Transaction Date</TableHead>
-                    <TableHead className="text-right">Amount</TableHead>
+                <TableRow className="hidden sm:contents">
+                    <TableHead className="text-preset-5 text-[hsl(var(--grey-500))]">Recipient/Sender</TableHead>
+                    <TableHead className="text-preset-5 text-[hsl(var(--grey-500))]">Category</TableHead>
+                    <TableHead className="text-preset-5 text-[hsl(var(--grey-500))]">Transaction Date</TableHead>
+                    <TableHead className="text-preset-5 text-[hsl(var(--grey-500))] text-right">Amount</TableHead>
                 </TableRow>
             </TableHeader>
             <TableBody>
@@ -52,21 +52,21 @@ export default async function TransactionTable({
                                 unoptimized
                             />
                             <p className="flex flex-col">
-                                <span className="text-preset-4 font-bold">
+                                <span className="text-preset-4 text-[hsl(var(--grey-900))] font-bold">
                                     {transaction.name}
                                 </span>
-                                <span className="md:hidden text-preset-5">
+                                <span className="sm:hidden text-preset-5 text-[hsl(var(--grey-500))]">
                                     {transaction.category}
                                 </span>
                             </p>
                         </TableCell>
-                        <TableCell className="hidden md:table-cell text-preset-5">
+                        <TableCell className="hidden sm:table-cell text-preset-5 text-[hsl(var(--grey-500))]">
                             {transaction.category}
                         </TableCell>
                         <TableCell className="font-medium flex-1">
                             <p className=" flex flex-col-reverse min-w-full">
                                 <time
-                                    className="text-preset-5"
+                                    className="text-preset-5 text-[hsl(var(--grey-500))]"
                                     dateTime={dayjs(transaction.date).format(
                                         "D MMM YYYY"
                                     )}
@@ -76,7 +76,7 @@ export default async function TransactionTable({
                                     )}
                                 </time>
                                 <span
-                                    className="md:hidden text-preset-4 font-bold"
+                                    className="sm:hidden text-preset-4 font-bold"
                                     style={{
                                         color:
                                             transaction.amount > 0
@@ -91,7 +91,7 @@ export default async function TransactionTable({
                             </p>
                         </TableCell>
                         <TableCell
-                            className="hidden md:table-cell text-right text-preset-4 font-bold"
+                            className="hidden sm:table-cell text-right text-preset-4 font-bold"
                             style={{
                                 color:
                                     transaction.amount > 0
@@ -115,13 +115,3 @@ export default async function TransactionTable({
         </Table>
     );
 }
-
-/*
-{
-    query,
-    currentPage,
-}: {
-    query: string;
-    currentPage: number;
-}
-    */

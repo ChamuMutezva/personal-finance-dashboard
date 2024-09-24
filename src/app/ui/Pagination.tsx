@@ -7,7 +7,6 @@ import { generatePagination } from "@/app/lib/utils";
 import { usePathname, useSearchParams } from "next/navigation";
 
 export default function Pagination({ totalPages }: { totalPages: number }) {
-    
     const pathname = usePathname();
     const searchParams = useSearchParams();
     const currentPage = Number(searchParams.get("page")) || 1;
@@ -21,45 +20,47 @@ export default function Pagination({ totalPages }: { totalPages: number }) {
     const allPages = generatePagination(currentPage, totalPages);
 
     return (
-        <div className="inline-flex">
-                <PaginationArrow
-                    direction="left"
-                    href={createPageURL(currentPage - 1)}
-                    isDisabled={currentPage <= 1}
-                />
+        <div className="inline-flex w-full justify-center sm:justify-between">
+            <PaginationArrow
+                direction="left"
+                href={createPageURL(currentPage - 1)}
+                isDisabled={currentPage <= 1}
+                text="Prev"
+            />
 
-                <div className="flex -space-x-px">
-                    {allPages.map((page, index) => {
-                        let position:
-                            | "first"
-                            | "last"
-                            | "single"
-                            | "middle"
-                            | undefined;
+            <div className="flex -space-x-px">
+                {allPages.map((page, index) => {
+                    let position:
+                        | "first"
+                        | "last"
+                        | "single"
+                        | "middle"
+                        | undefined;
 
-                        if (index === 0) position = "first";
-                        if (index === allPages.length - 1) position = "last";
-                        if (allPages.length === 1) position = "single";
-                        if (page === "...") position = "middle";
+                    if (index === 0) position = "first";
+                    if (index === allPages.length - 1) position = "last";
+                    if (allPages.length === 1) position = "single";
+                    if (page === "...") position = "middle";
 
-                        return (
-                            <PaginationNumber
-                                key={page}
-                                href={createPageURL(page)}
-                                page={page}
-                                position={position}
-                                isActive={currentPage === page}
-                            />
-                        );
-                    })}
-                </div>
-
-                <PaginationArrow
-                    direction="right"
-                    href={createPageURL(currentPage + 1)}
-                    isDisabled={currentPage >= totalPages}
-                />
+                    return (
+                        <PaginationNumber
+                            key={page}
+                            href={createPageURL(page)}
+                            page={page}
+                            position={position}
+                            isActive={currentPage === page}
+                        />
+                    );
+                })}
             </div>
+
+            <PaginationArrow
+                direction="right"
+                href={createPageURL(currentPage + 1)}
+                isDisabled={currentPage >= totalPages}
+                text="Next"
+            />
+        </div>
     );
 }
 
@@ -98,13 +99,15 @@ function PaginationArrow({
     href,
     direction,
     isDisabled,
+    text,
 }: {
     href: string;
     direction: "left" | "right";
     isDisabled?: boolean;
+    text: "Prev" | "Next";
 }) {
     const className = clsx(
-        "flex h-10 w-10 items-center justify-center rounded-md border",
+        "flex h-10 w-10 sm:w-24 items-center gap-4 justify-center rounded-md border",
         {
             "pointer-events-none text-gray-300": isDisabled,
             "hover:bg-gray-100": !isDisabled,
@@ -124,7 +127,13 @@ function PaginationArrow({
         <div className={className}>{icon}</div>
     ) : (
         <Link className={className} href={href}>
+            {direction === "right" && (
+                <span className="hidden sm:block">{text}</span>
+            )}
             {icon}
+            {direction === "left" && (
+                <span className="hidden sm:block">{text}</span>
+            )}
         </Link>
     );
 }
