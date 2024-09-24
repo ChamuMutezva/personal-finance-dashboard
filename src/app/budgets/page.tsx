@@ -69,8 +69,6 @@ export default async function Page() {
         return Math.round((currentProgress / total) * 100);
     }
 
-    
-
     // console.log(billsCategory);
     // console.log("end of transmission");
     // console.log(calculateProgress(490.49, 750));
