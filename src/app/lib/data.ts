@@ -102,7 +102,6 @@ export async function fetchByCategory() {
             entertainmentCategory,
         };
 
-        // return data.rows
     } catch (error) {
         console.error("Database Error:", error);
         throw new Error("Failed to fetch category data.");

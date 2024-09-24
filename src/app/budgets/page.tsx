@@ -2,10 +2,10 @@ import React from "react";
 import Link from "next/link";
 import { fetchBudgets, fetchByCategory } from "../lib/data";
 import { Card } from "@/components/ui/card";
-import { Donut } from "../ui/Donut";
+import { Donut } from "../ui/budget/Donut";
 import { formatPosNegativeCurrency } from "../lib/utils";
 // import { Progress } from "@/components/ui/progress";
-import Meter from "../ui/Meter";
+import Meter from "../ui/budget/Meter";
 import Image from "next/image";
 import dayjs from "dayjs";
 import clsx from "clsx";
@@ -20,7 +20,7 @@ import {
     DialogTitle,
     DialogTrigger,
 } from "@/components/ui/dialog";
-import AddBudgetForm from "../ui/AddBudgetForm";
+import AddBudgetForm from "../ui/budget/AddBudgetForm";
 
 export default async function Page() {
     const budgets = await fetchBudgets();
@@ -99,7 +99,7 @@ export default async function Page() {
                                 These categories can help you monitor spending.
                             </DialogDescription>
                         </DialogHeader>
-                        <AddBudgetForm />
+                        <AddBudgetForm budgets={budgets} />
                         {/*
                         <DialogFooter>
                             <Button type="submit">Save changes</Button>

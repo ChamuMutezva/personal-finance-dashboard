@@ -10,6 +10,7 @@ This is a solution to the [Personal finance app challenge on Frontend Mentor](ht
   - [Screenshot](#screenshot)
   - [Links](#links)
 - [My process](#my-process)
+  - [mermaid shortcut](#mermaid-shortcut)
   - [Built with](#built-with)
   - [What I learned](#what-i-learned)
   - [Continued development](#continued-development)
@@ -93,6 +94,10 @@ to preview press ctrl + shift + v
 - Live Site URL: [Personal Finance Dashboard](https://personal-finance-dashboard-two.vercel.app/)
 
 ## My process
+
+## Mermaid Shortcut
+
+- to preview changes of mermaid in readme , press `ctrl + shift + v`
 
 ### Built with
 
@@ -322,6 +327,20 @@ export async function GET() {
 ```
 
 #### The Budget page
+
+#### The Transactions Page
+
+```mermaid
+  graph TD
+    A[Transactions Page] --> B(Main)
+    B --> C(Div)
+    C --> D(h1 heading)
+    B --> E(Div)
+    E --> F(Search)   
+    E --> G(Table)
+    E --> H(Pagination)
+
+```
 
 ### Continued development
 

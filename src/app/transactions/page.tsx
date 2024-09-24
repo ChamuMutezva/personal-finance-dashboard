@@ -1,10 +1,10 @@
 import { Suspense } from "react";
-import TransactionTable from "../ui/TransactionTable";
+import TransactionTable from "../ui/transactions/TransactionTable";
 import { fetchTransactionsPages } from "../lib/data";
-import { SkeletonLoader } from "../ui/TransactionTableSkeleton";
+import { SkeletonLoader } from "../ui/transactions/TransactionTableSkeleton";
 
-import Search from "../ui/search";
-import Pagination from "../ui/Pagination";
+import Search from "../ui/transactions/search";
+import Pagination from "../ui/transactions/Pagination";
 
 export default async function Page({
     searchParams,
@@ -28,7 +28,9 @@ export default async function Page({
                 </h1>
             </div>
             <div className={"w-full mb-20 lg:mb-0"}>
-                <Search placeholder="Search transactions" />
+                <div>
+                    <Search placeholder="Search transactions" />
+                </div>
                 <Suspense
                     key={query + currentPage}
                     fallback={<SkeletonLoader />}

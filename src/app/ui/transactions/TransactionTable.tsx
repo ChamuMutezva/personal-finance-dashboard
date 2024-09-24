@@ -1,6 +1,6 @@
 import React from "react";
-import { fetchTransactions, fetchFilteredTransactions } from "../lib/data";
-import { formatPosNegativeCurrency } from "../lib/utils";
+import { fetchTransactions, fetchFilteredTransactions } from "../../lib/data";
+import { formatPosNegativeCurrency } from "../../lib/utils";
 import dayjs from "dayjs";
 import Image from "next/image";
 import {

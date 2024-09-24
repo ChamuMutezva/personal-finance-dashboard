@@ -4,7 +4,7 @@ import * as React from "react";
 import clsx from "clsx";
 // import { TrendingUp } from "lucide-react";
 import { Label, Pie, PieChart } from "recharts";
-import { Budget } from "../lib/definitions";
+import { Budget } from "../../lib/definitions";
 
 import {
     Card,

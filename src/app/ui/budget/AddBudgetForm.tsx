@@ -11,7 +11,7 @@ import {
     SelectTrigger,
     SelectValue,
 } from "@/components/ui/select";
-import { createBudget } from "../lib/actions";
+import { createBudget } from "../../lib/actions";
 
 import {
     Form,
@@ -23,6 +23,7 @@ import {
     FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { Budget } from "@/app/lib/definitions";
 
 const formSchema = z.object({
     maximum: z.number().positive(),
@@ -30,7 +31,7 @@ const formSchema = z.object({
     theme: z.string().min(1, "Category is required"),
 });
 
-function AddBudgetForm() {
+function AddBudgetForm({ budgets }: { budgets: Budget[] }) {
     // 1. Define your form.
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
@@ -78,16 +79,14 @@ function AddBudgetForm() {
                                     <SelectValue placeholder="Category" />
                                 </SelectTrigger>
                                 <SelectContent>
-                                    <SelectItem value="Entertainment">
-                                        Entertainment
-                                    </SelectItem>
-                                    <SelectItem value="Dining Out">
-                                        Dining Out
-                                    </SelectItem>
-                                    <SelectItem value="Bills">Bills</SelectItem>
-                                    <SelectItem value="Personal Care">
-                                        Personal Care
-                                    </SelectItem>
+                                    {budgets.map((budget) => (
+                                        <SelectItem
+                                            key={budget.id}
+                                            value={budget.category}
+                                        >
+                                            {budget.category}
+                                        </SelectItem>
+                                    ))}
                                 </SelectContent>
                             </Select>
                             <FormMessage />
