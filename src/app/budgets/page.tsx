@@ -20,7 +20,27 @@ import {
     DialogTitle,
     DialogTrigger,
 } from "@/components/ui/dialog";
+import {
+    Popover,
+    PopoverContent,
+    PopoverTrigger,
+} from "@/components/ui/popover";
+import {
+    AlertDialog,
+    AlertDialogAction,
+    AlertDialogCancel,
+    AlertDialogContent,
+    AlertDialogDescription,
+    AlertDialogFooter,
+    AlertDialogHeader,
+    AlertDialogTitle,
+    AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
+
 import AddBudgetForm from "../ui/budget/AddBudgetForm";
+import EditBudgetForm from "../ui/budget/EditBudgetForm";
+import DeleteBudgetForm from "../ui/budget/DeleteBudgetForm";
+import { Separator } from "@/components/ui/separator";
 
 export default async function Page() {
     const budgets = await fetchBudgets();
@@ -145,7 +165,7 @@ export default async function Page() {
                                 key={budget.id}
                                 className="rounded-xl py-6 px-5 flex flex-col gap-4"
                             >
-                                <div className="flex justify-between items-center">
+                                <div className="flex justify-between items-center relative">
                                     <h2
                                         className={`flex justify-center items-center gap-4 relative`}
                                     >
@@ -159,20 +179,76 @@ export default async function Page() {
                                             {budget.category}
                                         </span>
                                     </h2>
-                                    <button
-                                        type="button"
-                                        className="hover:bg-blue-600 focus:ring-2focus:ring-blue-400 focus:ring-opacity-50"
-                                    >
-                                        <span className="sr-only">
-                                            See more bills to pay
-                                        </span>
-                                        <Image
-                                            src="assets/images/icon-ellipsis.svg"
-                                            alt=""
-                                            width={14}
-                                            height={14}
-                                        />
-                                    </button>
+                                    <Popover>
+                                        <PopoverTrigger>
+                                            {" "}
+                                            <Image
+                                                src="assets/images/icon-ellipsis.svg"
+                                                alt=""
+                                                width={14}
+                                                height={14}
+                                            />
+                                        </PopoverTrigger>
+                                        <PopoverContent className="flex relative flex-col gap-2 w-[134px] h-[91px] mr-8">
+                                            <Dialog>
+                                                <DialogTrigger asChild>
+                                                    <Button
+                                                        variant="link"
+                                                        className="m-0 p-0 bg-inherit text-[hsl(var(--grey-900))]"
+                                                    >
+                                                        Edit budget
+                                                    </Button>
+                                                </DialogTrigger>
+                                                <DialogContent className="w-11/12 sm:max-w-[425px] rounded-xl">
+                                                    <DialogHeader>
+                                                        <DialogTitle>
+                                                            Edit Budget
+                                                        </DialogTitle>
+                                                        <DialogDescription>
+                                                            As your budget
+                                                            change, feel free to
+                                                            update your spending
+                                                            limits
+                                                        </DialogDescription>
+                                                    </DialogHeader>
+                                                    <EditBudgetForm
+                                                        budgets={budgets}
+                                                    />
+                                                </DialogContent>
+                                            </Dialog>
+
+                                            <Separator />
+                                            <AlertDialog>
+                                                <AlertDialogTrigger className="text-preset-4 m-0 p-0 bg-inherit text-[hsl(var(--red))]">
+                                                    Delete budget
+                                                </AlertDialogTrigger>
+                                                <AlertDialogContent>
+                                                    <AlertDialogHeader>
+                                                        <AlertDialogTitle>
+                                                            Are you absolutely
+                                                            sure?
+                                                        </AlertDialogTitle>
+                                                        <AlertDialogDescription>
+                                                            This action cannot
+                                                            be undone. This will
+                                                            permanently delete
+                                                            your account and
+                                                            remove your data
+                                                            from our servers.
+                                                        </AlertDialogDescription>
+                                                    </AlertDialogHeader>
+                                                    <AlertDialogFooter>
+                                                        <AlertDialogCancel>
+                                                            Cancel
+                                                        </AlertDialogCancel>
+                                                        <AlertDialogAction>
+                                                            Continue
+                                                        </AlertDialogAction>
+                                                    </AlertDialogFooter>
+                                                </AlertDialogContent>
+                                            </AlertDialog>
+                                        </PopoverContent>
+                                    </Popover>
                                 </div>
 
                                 <p
