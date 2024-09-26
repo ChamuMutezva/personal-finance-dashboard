@@ -186,7 +186,7 @@ export default async function Page() {
                                                 src="assets/images/icon-ellipsis.svg"
                                                 alt=""
                                                 width={14}
-                                                height={14}
+                                                height={4}
                                             />
                                         </PopoverTrigger>
                                         <PopoverContent className="flex relative flex-col gap-2 w-[134px] h-[91px] mr-8">
@@ -202,7 +202,7 @@ export default async function Page() {
                                                 <DialogContent className="w-11/12 sm:max-w-[425px] rounded-xl">
                                                     <DialogHeader>
                                                         <DialogTitle>
-                                                            Edit Budget
+                                                            Edit {budget.category} Budget
                                                         </DialogTitle>
                                                         <DialogDescription>
                                                             As your budget
@@ -212,6 +212,7 @@ export default async function Page() {
                                                         </DialogDescription>
                                                     </DialogHeader>
                                                     <EditBudgetForm
+                                                        id={budget.id}
                                                         budgets={budgets}
                                                     />
                                                 </DialogContent>

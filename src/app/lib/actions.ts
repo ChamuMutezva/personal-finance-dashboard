@@ -35,3 +35,23 @@ export async function createBudget(formData: FormData) {
     redirect("/budgets")
     */
 }
+
+const UpdateBudget = FormSchema.omit({ id: true, category: true , theme: true});
+
+export async function updateBudget(id: string, formData: FormData) {
+    const { maximum } = UpdateBudget.parse({
+        maximum: formData.get("maximum"),
+       // category: formData.get("category"),
+       // theme: formData.get("theme"),
+    });
+
+    console.log(maximum);
+
+    await sql`
+    UPDATE budgets
+    SET maximum = ${maximum} 
+    WHERE id = ${id}`;
+
+    revalidatePath("/budgets");
+    redirect("/budgets");
+}

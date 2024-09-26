@@ -79,14 +79,27 @@ function AddBudgetForm({ budgets }: { budgets: Budget[] }) {
                                     <SelectValue placeholder="Category" />
                                 </SelectTrigger>
                                 <SelectContent>
+                                    {/*
                                     {budgets.map((budget) => (
-                                        <SelectItem
+                                        <SelectItem  
+                                                                                    
                                             key={budget.id}
                                             value={budget.category}
                                         >
                                             {budget.category}
                                         </SelectItem>
                                     ))}
+                                    */}
+                                    <SelectItem value="Entertainment">
+                                        Entertainment
+                                    </SelectItem>
+                                    <SelectItem value="Dining Out">
+                                        Dining Out
+                                    </SelectItem>
+                                    <SelectItem value="Bills">Bills</SelectItem>
+                                    <SelectItem value="Personal Care">
+                                        Personal Care
+                                    </SelectItem>
                                 </SelectContent>
                             </Select>
                             <FormMessage />

@@ -11,7 +11,7 @@ import {
     SelectTrigger,
     SelectValue,
 } from "@/components/ui/select";
-import { createBudget } from "../../lib/actions";
+import { updateBudget } from "../../lib/actions";
 
 import {
     Form,
@@ -31,17 +31,23 @@ const formSchema = z.object({
     theme: z.string().min(1, "Category is required"),
 });
 
-function EditBudgetForm({ budgets }: { budgets: Budget[] }) {
-    // 1. Define your form.
+export default function EditBudgetForm({
+    id,
+    budgets,
+}: Readonly<{ id: string; budgets: Budget[] }>) {
+    const updateBudgetWithID = updateBudget.bind(null, id);
+    const preBudget = budgets.find((budget) => budget.id === id);
+    // const id = params.id;
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
         defaultValues: {
-            maximum: 10,
-            category: "",
-            theme: "",
+            maximum: preBudget?.maximum || 10,
+            category: preBudget?.category || "",
+            theme: preBudget?.theme || "",
         },
     });
 
+    console.log(preBudget);
     /*
     function onSubmit(values: z.infer<typeof formSchema>) {        
         console.log(values);
@@ -59,7 +65,7 @@ function EditBudgetForm({ budgets }: { budgets: Budget[] }) {
     return (
         <Form {...form}>
             <form
-                action={createBudget}
+                action={updateBudgetWithID}
                 /*  onSubmit={form.handleSubmit(onSubmit)} */
                 className="space-y-8"
             >
@@ -71,14 +77,28 @@ function EditBudgetForm({ budgets }: { budgets: Budget[] }) {
                         <FormItem>
                             <FormLabel>Category</FormLabel>
                             <Select
-                                onValueChange={field.onChange}
-                                // value={field.value}
                                 {...field}
+                                onValueChange={field.onChange}
+                                // defaultValue={preBudget?.category}
+                                value={preBudget?.category}
+                                disabled
                             >
                                 <SelectTrigger className="w-full">
                                     <SelectValue placeholder="Category" />
                                 </SelectTrigger>
                                 <SelectContent>
+                                    {/*}
+                                    <SelectItem value="Entertainment">
+                                        Entertainment
+                                    </SelectItem>
+                                    <SelectItem value="Dining Out">
+                                        Dining Out
+                                    </SelectItem>
+                                    <SelectItem value="Bills">Bills</SelectItem>
+                                    <SelectItem value="Personal Care">
+                                        Personal Care
+                                    </SelectItem>
+                                    */}
                                     {budgets.map((budget) => (
                                         <SelectItem
                                             key={budget.id}
@@ -105,6 +125,7 @@ function EditBudgetForm({ budgets }: { budgets: Budget[] }) {
                                     type="number"
                                     placeholder="10"
                                     {...field}
+                                    // value={preBudget?.maximum}
                                 />
                             </FormControl>
                             <FormDescription>
@@ -121,17 +142,27 @@ function EditBudgetForm({ budgets }: { budgets: Budget[] }) {
                     render={({ field }) => (
                         <FormItem>
                             <FormLabel>Theme</FormLabel>
-                            <Select
+                            <Select                               
                                 onValueChange={(value) => {
                                     field.onChange(value); // Update value in React Hook Form
                                 }}
                                 {...field}
+                                disabled
                                 // value={field.value}
                             >
                                 <SelectTrigger className="w-full">
                                     <SelectValue placeholder="theme" />
                                 </SelectTrigger>
                                 <SelectContent>
+                                    {budgets.map((budget) => (
+                                        <SelectItem
+                                            key={budget.id}
+                                            value={budget.theme}
+                                        >
+                                            {budget.theme}
+                                        </SelectItem>
+                                    ))}
+                                    {/*
                                     <SelectItem value="#277C78">
                                         Green
                                     </SelectItem>
@@ -144,6 +175,7 @@ function EditBudgetForm({ budgets }: { budgets: Budget[] }) {
                                     <SelectItem value="#626070">
                                         Grey
                                     </SelectItem>
+                                    */}
                                 </SelectContent>
                             </Select>
                             <FormMessage />
@@ -157,5 +189,3 @@ function EditBudgetForm({ budgets }: { budgets: Budget[] }) {
         </Form>
     );
 }
-
-export default EditBudgetForm;

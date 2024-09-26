@@ -101,7 +101,6 @@ export async function fetchByCategory() {
             billsCategory,
             entertainmentCategory,
         };
-
     } catch (error) {
         console.error("Database Error:", error);
         throw new Error("Failed to fetch category data.");
@@ -155,6 +154,29 @@ export async function fetchTransactionsPages(query: string) {
     } catch (error) {
         console.error("Database Error:", error);
         throw new Error("Failed to fetch total number of Transactions.");
+    }
+}
+
+export async function fetchBudgetById(id: string) {
+    try {
+        const data = await sql<Budget>`
+      SELECT
+        budgets.id,
+        budgets.maximum,
+        budgets.theme,
+        budgets.category
+      FROM budgets
+      WHERE budgets.id = ${id};
+    `;
+
+        const budget = data.rows.map((budget) => ({
+            ...budget,
+        }));
+
+        return budget[0];
+    } catch (error) {
+        console.error("Database Error:", error);
+        throw new Error("Failed to fetch budget.");
     }
 }
 
