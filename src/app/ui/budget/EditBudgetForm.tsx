@@ -41,32 +41,25 @@ export default function EditBudgetForm({
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
         defaultValues: {
-            maximum: preBudget?.maximum || 10,
-            category: preBudget?.category || "",
-            theme: preBudget?.theme || "",
+            maximum: preBudget?.maximum ?? 10,
+            category: preBudget?.category ?? "",
+            theme: preBudget?.theme ?? "",
         },
     });
 
     console.log(preBudget);
-    /*
-    function onSubmit(values: z.infer<typeof formSchema>) {        
-        console.log(values);
-    }
-  */
-
+   
     /* TODO: The `action={createBudget}` is used to add a new budget to the database - see form below
     THE commands that adds the budget has been commented out in the action.ts file , until the database
      has been aligned correctly such that when a new budget item has been added the categories will not
       cause a NAN ERROR in the Donut chart. The NAN is coming from calculating the USAGE total.
 
-    The onsubmit handler is a dummy and should be removed
     */
 
     return (
         <Form {...form}>
             <form
-                action={updateBudgetWithID}
-                /*  onSubmit={form.handleSubmit(onSubmit)} */
+                action={updateBudgetWithID}                
                 className="space-y-8"
             >
                 {/* Step 2: Connect Select with React Hook Form */}
@@ -142,7 +135,7 @@ export default function EditBudgetForm({
                     render={({ field }) => (
                         <FormItem>
                             <FormLabel>Theme</FormLabel>
-                            <Select                               
+                            <Select
                                 onValueChange={(value) => {
                                     field.onChange(value); // Update value in React Hook Form
                                 }}

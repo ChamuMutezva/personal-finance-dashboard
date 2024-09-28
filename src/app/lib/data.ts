@@ -2,6 +2,38 @@ import { sql } from "@vercel/postgres";
 // import { formatCurrency } from "./utils";
 import { Balance, User, Pot, Budget, Transaction } from "./definitions";
 
+export const colors = [
+    { color: "green", hex: "#277c78" },
+    { color: "magenta", hex: "#934F6F" },
+    { color: "yellow", hex: "#F2CDAC" },
+    { color: "cyan", hex: "#B2C907" },
+    { color: "blue", hex: "3F82B2" },
+    { color: "purple", hex: "#826CB0" },
+    { color: "red", hex: "#C94736" },
+    { color: "navy", hex: "#626070" },
+    { color: "light-purple", hex: "#AF81BA" },
+    { color: "turquoise", hex: "#597C7C" },
+    { color: "brown", hex: "#9367AF" },
+    { color: "navy-grey", hex: "#97A0AC" },
+    { color: "orange", hex: "#BE6C49" },
+    { color: "gold", hex: "#CAB361" },
+    { color: "army-green", hex: "#7F9161" },
+];
+
+export const categories = [
+    { category: "All Transactions" },
+    { category: "Entertainment" },
+    { category: "Bills" },
+    { category: "Groceries" },
+    { category: "Dining Out" },
+    { category: "Transportation" },
+    { category: "Personal Care" },
+    { category: "Education" },
+    { category: "Lifestyle" },
+    { category: "Shopping" },
+    { category: "General" },
+];
+
 export async function fetchBalance() {
     try {
         // Artificially delay a response for demo purposes.

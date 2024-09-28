@@ -190,19 +190,30 @@ export default async function Page() {
                                             />
                                         </PopoverTrigger>
                                         <PopoverContent className="flex relative flex-col gap-2 w-[134px] h-[91px] mr-8">
+                                            <Link
+                                                // variant="link"
+                                                href={`/budgets/${budget.id}/edit`}
+                                                className="m-0 p-0 bg-inherit text-[hsl(var(--grey-900))]"
+                                            >
+                                                Edit budget
+                                            </Link>
+                                            {/*
                                             <Dialog>
                                                 <DialogTrigger asChild>
-                                                    <Button
-                                                        variant="link"
+                                                    <Link
+                                                        // variant="link"
+                                                        href={`/budgets/${budget.id}/edit`}
                                                         className="m-0 p-0 bg-inherit text-[hsl(var(--grey-900))]"
                                                     >
                                                         Edit budget
-                                                    </Button>
+                                                    </Link>
                                                 </DialogTrigger>
                                                 <DialogContent className="w-11/12 sm:max-w-[425px] rounded-xl">
                                                     <DialogHeader>
                                                         <DialogTitle>
-                                                            Edit {budget.category} Budget
+                                                            Edit{" "}
+                                                            {budget.category}{" "}
+                                                            Budget
                                                         </DialogTitle>
                                                         <DialogDescription>
                                                             As your budget
@@ -217,7 +228,7 @@ export default async function Page() {
                                                     />
                                                 </DialogContent>
                                             </Dialog>
-
+                                            */}
                                             <Separator />
                                             <AlertDialog>
                                                 <AlertDialogTrigger className="text-preset-4 m-0 p-0 bg-inherit text-[hsl(var(--red))]">
@@ -277,7 +288,10 @@ export default async function Page() {
                                             id="category-usage"
                                             className="flex flex-col flex-1"
                                         >
-                                            Spent <span>${budget.amount}</span>
+                                            Spent{" "}
+                                            <span>
+                                                ${budget.amount.toFixed(2)}
+                                            </span>
                                         </p>
                                     </div>
                                     <div className="flex items-center flex-1 gap-2">
@@ -290,8 +304,10 @@ export default async function Page() {
                                                 $
                                                 {budget.amount > budget.maximum
                                                     ? 0
-                                                    : budget.maximum -
-                                                      budget.amount}
+                                                    : (
+                                                          budget.maximum -
+                                                          budget.amount
+                                                      ).toFixed(2)}
                                             </span>
                                         </p>
                                     </div>
