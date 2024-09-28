@@ -1,6 +1,7 @@
 import React from "react";
 import Link from "next/link";
 import { fetchBudgets, fetchByCategory } from "../lib/data";
+import { deleteBudget } from "../lib/actions";
 import { Card } from "@/components/ui/card";
 import { Donut } from "../ui/budget/Donut";
 import { formatPosNegativeCurrency } from "../lib/utils";
@@ -39,8 +40,9 @@ import {
 
 import AddBudgetForm from "../ui/budget/AddBudgetForm";
 import EditBudgetForm from "../ui/budget/EditBudgetForm";
-import DeleteBudgetForm from "../ui/budget/DeleteBudgetForm";
+import { DeleteBudget } from "../ui/budget/DeleteBudgetForm";
 import { Separator } from "@/components/ui/separator";
+import { revalidatePath } from "next/cache";
 
 export default async function Page() {
     const budgets = await fetchBudgets();
@@ -88,6 +90,14 @@ export default async function Page() {
     function calculateProgress(currentProgress: number, total: number) {
         return Math.round((currentProgress / total) * 100);
     }
+
+    const handleDelete = async (id: string) => {
+        console.log(id);
+        // await deleteBudget.bind(null, id)
+        // await deleteBudget(id); // Call your delete function
+        // Optionally revalidate or redirect after deletion
+        revalidatePath("/budgets");
+    };
 
     // console.log(billsCategory);
     // console.log("end of transmission");
@@ -230,6 +240,8 @@ export default async function Page() {
                                             </Dialog>
                                             */}
                                             <Separator />
+                                            
+                                            {/*DELETE DIALOG*/}
                                             <AlertDialog>
                                                 <AlertDialogTrigger className="text-preset-4 m-0 p-0 bg-inherit text-[hsl(var(--red))]">
                                                     Delete budget
@@ -253,8 +265,10 @@ export default async function Page() {
                                                         <AlertDialogCancel>
                                                             Cancel
                                                         </AlertDialogCancel>
-                                                        <AlertDialogAction>
-                                                            Continue
+                                                        <AlertDialogAction type="submit">
+                                                            <DeleteBudget
+                                                                id={budget.id}
+                                                            />
                                                         </AlertDialogAction>
                                                     </AlertDialogFooter>
                                                 </AlertDialogContent>

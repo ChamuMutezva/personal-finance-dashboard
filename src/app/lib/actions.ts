@@ -36,13 +36,13 @@ export async function createBudget(formData: FormData) {
     */
 }
 
-const UpdateBudget = FormSchema.omit({ id: true, category: true , theme: true});
+const UpdateBudget = FormSchema.omit({ id: true, category: true, theme: true });
 
 export async function updateBudget(id: string, formData: FormData) {
     const { maximum } = UpdateBudget.parse({
         maximum: formData.get("maximum"),
-       // category: formData.get("category"),
-       // theme: formData.get("theme"),
+        // category: formData.get("category"),
+        // theme: formData.get("theme"),
     });
 
     console.log(maximum);
@@ -54,4 +54,10 @@ export async function updateBudget(id: string, formData: FormData) {
 
     revalidatePath("/budgets");
     redirect("/budgets");
+}
+
+export async function deleteBudget(id: string) {
+    console.log("hey there, i am in")
+    await sql`DELETE FROM budgets WHERE id = ${id}`;
+    revalidatePath("/budgets");
 }
