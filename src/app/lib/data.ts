@@ -3,25 +3,24 @@ import { sql } from "@vercel/postgres";
 import { Balance, User, Pot, Budget, Transaction } from "./definitions";
 
 export const colors = [
-    { color: "green", hex: "#277c78" },
-    { color: "magenta", hex: "#934F6F" },
-    { color: "yellow", hex: "#F2CDAC" },
-    { color: "cyan", hex: "#B2C907" },
-    { color: "blue", hex: "3F82B2" },
-    { color: "purple", hex: "#826CB0" },
-    { color: "red", hex: "#C94736" },
-    { color: "navy", hex: "#626070" },
-    { color: "light-purple", hex: "#AF81BA" },
-    { color: "turquoise", hex: "#597C7C" },
-    { color: "brown", hex: "#9367AF" },
-    { color: "navy-grey", hex: "#97A0AC" },
-    { color: "orange", hex: "#BE6C49" },
-    { color: "gold", hex: "#CAB361" },
-    { color: "army-green", hex: "#7F9161" },
+    { color: "Green", hex: "#277c78" },
+    { color: "Magenta", hex: "#934F6F" },
+    { color: "Yellow", hex: "#F2CDAC" },
+    { color: "Cyan", hex: "#B2C907" },
+    { color: "Blue", hex: "#3F82B2" },
+    { color: "Purple", hex: "#826CB0" },
+    { color: "Red", hex: "#C94736" },
+    { color: "Navy", hex: "#626070" },
+    { color: "Light purple", hex: "#AF81BA" },
+    { color: "Turquoise", hex: "#597C7C" },
+    { color: "Brown", hex: "#93674F" },
+    { color: "Navy grey", hex: "#97A0AC" },
+    { color: "Orange", hex: "#BE6C49" },
+    { color: "Gold", hex: "#CAB361" },
+    { color: "Army green", hex: "#7F9161" },
 ];
 
-export const categories = [
-    { category: "All Transactions" },
+export const categories = [   
     { category: "Entertainment" },
     { category: "Bills" },
     { category: "Groceries" },

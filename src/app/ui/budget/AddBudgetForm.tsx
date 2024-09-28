@@ -12,6 +12,7 @@ import {
     SelectValue,
 } from "@/components/ui/select";
 import { createBudget } from "../../lib/actions";
+import { categories, colors } from "@/app/lib/data";
 
 import {
     Form,
@@ -55,6 +56,9 @@ function AddBudgetForm({ budgets }: { budgets: Budget[] }) {
 
     The onsubmit handler is a dummy and should be removed
     */
+    // Get used categories and themes
+    const usedCategories = budgets.map((budget) => budget.category);
+    const usedThemes = budgets.map((budget) => budget.theme);
 
     return (
         <Form {...form}>
@@ -79,27 +83,25 @@ function AddBudgetForm({ budgets }: { budgets: Budget[] }) {
                                     <SelectValue placeholder="Category" />
                                 </SelectTrigger>
                                 <SelectContent>
-                                    {/*
-                                    {budgets.map((budget) => (
-                                        <SelectItem  
-                                                                                    
-                                            key={budget.id}
-                                            value={budget.category}
+                                    {categories.map((category) => (
+                                        <SelectItem
+                                            key={category.category}
+                                            value={category.category}
+                                            disabled={usedCategories.includes(
+                                                category.category
+                                            )} // disable if already in use
+                                            className={`flex justify-between`}
                                         >
-                                            {budget.category}
+                                            {category.category}
+                                            {usedCategories.includes(
+                                                category.category
+                                            ) && (
+                                                <span className="text-[hsl(var(--grey-500))] ml-2 line-through">
+                                                    Already used
+                                                </span>
+                                            )}
                                         </SelectItem>
                                     ))}
-                                    */}
-                                    <SelectItem value="Entertainment">
-                                        Entertainment
-                                    </SelectItem>
-                                    <SelectItem value="Dining Out">
-                                        Dining Out
-                                    </SelectItem>
-                                    <SelectItem value="Bills">Bills</SelectItem>
-                                    <SelectItem value="Personal Care">
-                                        Personal Care
-                                    </SelectItem>
                                 </SelectContent>
                             </Select>
                             <FormMessage />
@@ -145,18 +147,29 @@ function AddBudgetForm({ budgets }: { budgets: Budget[] }) {
                                     <SelectValue placeholder="theme" />
                                 </SelectTrigger>
                                 <SelectContent>
-                                    <SelectItem value="#277C78">
-                                        Green
-                                    </SelectItem>
-                                    <SelectItem value="#F2CDAC">
-                                        Cream
-                                    </SelectItem>
-                                    <SelectItem value="#82C9D7">
-                                        Cyan
-                                    </SelectItem>
-                                    <SelectItem value="#626070">
-                                        Grey
-                                    </SelectItem>
+                                    {colors.map((color) => (
+                                        <SelectItem
+                                            key={color.hex}
+                                            value={color.hex}
+                                            className={`flex gap-8 items-center justify-start min-h-8`}
+                                            disabled={usedThemes.includes(
+                                                color.hex
+                                            )} // Disable if already in use
+                                        >
+                                            <span
+                                                className={`inline-block relative h-3 w-3 rounded-full mr-4`}
+                                                style={{
+                                                    backgroundColor: color.hex,
+                                                }}
+                                            ></span>
+                                            {color.color}
+                                            {usedThemes.includes(color.hex) && (
+                                                <span className="text-[hsl(var(--grey-500))] ml-2 line-through">
+                                                    already used
+                                                </span>
+                                            )}
+                                        </SelectItem>
+                                    ))}
                                 </SelectContent>
                             </Select>
                             <FormMessage />
