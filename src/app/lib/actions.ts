@@ -26,14 +26,20 @@ export async function createBudget(formData: FormData) {
         theme: formData.get("theme"),
     });
     console.log(maximum, category, theme);
-    /*
-    await sql`
-    INSERT INTO budgets (maximum, category, theme)
-    VALUES (${maximum}, ${category}, ${theme})`;
-
-    revalidatePath("/budgets")
-    redirect("/budgets")
-    */
+    try {
+        /*
+        await sql`
+        INSERT INTO budgets (maximum, category, theme)
+        VALUES (${maximum}, ${category}, ${theme})`;   
+        
+        */
+    } catch (error) {
+        return {
+            message: "Database Error: Failed to create budget",
+        };
+    }
+    revalidatePath("/budgets");
+    redirect("/budgets");
 }
 
 const UpdateBudget = FormSchema.omit({ id: true, category: true, theme: true });
@@ -47,17 +53,30 @@ export async function updateBudget(id: string, formData: FormData) {
 
     console.log(maximum);
 
-    await sql`
-    UPDATE budgets
-    SET maximum = ${maximum} 
-    WHERE id = ${id}`;
+    try {
+        await sql`
+        UPDATE budgets
+        SET maximum = ${maximum} 
+        WHERE id = ${id}`;
+    } catch (error) {
+        return {
+            message: "Database Error: Failed to update budget.",
+        };
+    }
 
     revalidatePath("/budgets");
     redirect("/budgets");
 }
 
 export async function deleteBudget(id: string) {
-    console.log("hey there, i am in")
-    await sql`DELETE FROM budgets WHERE id = ${id}`;
+   // throw new Error('Failed to Delete budget');
+    try {
+        console.log("hey there, i am in");
+        await sql`DELETE FROM budgets WHERE id = ${id}`;
+    } catch (error) {
+        return {
+            message: "Database Error: Failed to delete budget.",
+        };
+    }
     revalidatePath("/budgets");
 }

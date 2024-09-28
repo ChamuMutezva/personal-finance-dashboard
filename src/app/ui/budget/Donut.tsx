@@ -65,11 +65,11 @@ export function Donut({ budgets, totals }: Readonly<DonutProps>) {
     } satisfies ChartConfig;
     const totalBudget = React.useMemo(() => {
         return chartData.reduce((acc, curr) => acc + curr.maximum, 0);
-    }, []);
+    }, [chartData]);
 
     const usage = React.useMemo(() => {
         return chartData.reduce((acc, curr) => acc + curr.amount, 0);
-    }, []);
+    }, [chartData]);
 
 
 

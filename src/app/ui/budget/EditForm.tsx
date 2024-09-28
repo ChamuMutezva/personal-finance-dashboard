@@ -37,7 +37,7 @@ export default function EditForm({
 }: Readonly<{ id: string; budgets: Budget[] }>) {
     const updateBudgetWithID = updateBudget.bind(null, id);
     const preBudget = budgets.find((budget) => budget.id === id);
-    // const id = params.id;
+
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
         defaultValues: {
@@ -46,8 +46,6 @@ export default function EditForm({
             theme: preBudget?.theme ?? "",
         },
     });
-
-    console.log(preBudget);
 
     return (
         <main className="flex-1 min-h-screen flex justify-center items-center px-4 pt-6 pb-16 md:px-10 lg:p-8">
