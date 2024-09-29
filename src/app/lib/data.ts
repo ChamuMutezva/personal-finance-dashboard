@@ -20,7 +20,7 @@ export const colors = [
     { color: "Army green", hex: "#7F9161" },
 ];
 
-export const categories = [   
+export const categories = [
     { category: "Entertainment" },
     { category: "Bills" },
     { category: "Groceries" },
@@ -114,23 +114,53 @@ export async function fetchByCategory() {
             await sql<Transaction>`SELECT * FROM transactions WHERE category = 'Bills'`;
         const entertainmentCategoryPromise =
             await sql<Transaction>`SELECT * FROM transactions WHERE category = 'Entertainment'`;
+        const groceriesCategoryPromise =
+            await sql<Transaction>`SELECT * FROM transactions WHERE category = 'Groceries'`;
+        const transportationCategoryPromise =
+            await sql<Transaction>`SELECT * FROM transactions WHERE category = 'Transportation'`;
+        const educationCategoryPromise =
+            await sql<Transaction>`SELECT * FROM transactions WHERE category = 'Education'`;
+        const lifestyleCategoryPromise =
+            await sql<Transaction>`SELECT * FROM transactions WHERE category = 'Lifestyle'`;
+        const shoppingCategoryPromise =
+            await sql<Transaction>`SELECT * FROM transactions WHERE category = 'Shopping'`;
+        const generalCategoryPromise =
+            await sql<Transaction>`SELECT * FROM transactions WHERE category = 'General'`;
 
         const data = await Promise.all([
             diningCategoryPromise,
             personalCategoryPromise,
             billsCategoryPromise,
             entertainmentCategoryPromise,
+            groceriesCategoryPromise,
+            transportationCategoryPromise,
+            educationCategoryPromise,
+            lifestyleCategoryPromise,
+            shoppingCategoryPromise,
+            generalCategoryPromise,
         ]);
 
         const diningCategory = data[0].rows;
         const personalCategory = data[1].rows;
         const billsCategory = data[2].rows;
         const entertainmentCategory = data[3].rows;
+        const groceriesCategory = data[4].rows;
+        const transportationCategory = data[5].rows;
+        const educationCategory = data[6].rows;
+        const lifestyleCategory = data[7].rows;
+        const shoppingCategory = data[8].rows;
+        const generalCategory = data[9].rows;
         return {
             diningCategory,
             personalCategory,
             billsCategory,
             entertainmentCategory,
+            groceriesCategory,
+            transportationCategory,
+            educationCategory,
+            lifestyleCategory,
+            shoppingCategory,
+            generalCategory,
         };
     } catch (error) {
         console.error("Database Error:", error);

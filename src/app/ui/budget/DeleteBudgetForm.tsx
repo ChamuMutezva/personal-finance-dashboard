@@ -11,9 +11,9 @@ export function DeleteBudget({ id }: { id: string }) {
             action={deleteBudgetWithId}           
             className="space-y-8"
         >
-            <button type="submit" className="w-full">
-                Delete 
-            </button>
+            <span>
+                Yes, Confirm Deletion 
+            </span>
         </form>
     );
 }

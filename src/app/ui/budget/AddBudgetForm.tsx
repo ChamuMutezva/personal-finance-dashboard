@@ -49,13 +49,6 @@ function AddBudgetForm({ budgets }: { budgets: Budget[] }) {
     }
   */
 
-    /* TODO: The `action={createBudget}` is used to add a new budget to the database - see form below
-    THE commands that adds the budget has been commented out in the action.ts file , until the database
-     has been aligned correctly such that when a new budget item has been added the categories will not
-      cause a NAN ERROR in the Donut chart. The NAN is coming from calculating the USAGE total.
-
-    The onsubmit handler is a dummy and should be removed
-    */
     // Get used categories and themes
     const usedCategories = budgets.map((budget) => budget.category);
     const usedThemes = budgets.map((budget) => budget.theme);
@@ -73,7 +66,7 @@ function AddBudgetForm({ budgets }: { budgets: Budget[] }) {
                     name="category"
                     render={({ field }) => (
                         <FormItem>
-                            <FormLabel>Category</FormLabel>
+                            <FormLabel>Budget Category</FormLabel>
                             <Select
                                 onValueChange={field.onChange}
                                 // value={field.value}
@@ -114,7 +107,7 @@ function AddBudgetForm({ budgets }: { budgets: Budget[] }) {
                     name="maximum"
                     render={({ field }) => (
                         <FormItem>
-                            <FormLabel>Maximum budget amount</FormLabel>
+                            <FormLabel>Maximum spending</FormLabel>
                             <FormControl>
                                 <Input
                                     type="number"
@@ -135,7 +128,7 @@ function AddBudgetForm({ budgets }: { budgets: Budget[] }) {
                     name="theme"
                     render={({ field }) => (
                         <FormItem>
-                            <FormLabel>Theme</FormLabel>
+                            <FormLabel>Color tag</FormLabel>
                             <Select
                                 onValueChange={(value) => {
                                     field.onChange(value); // Update value in React Hook Form

@@ -54,7 +54,7 @@ export default function EditForm({
                     action={updateBudgetWithID}
                     className="min-w-72 space-y-8"
                 >
-                    <h1>Edit budget</h1>
+                    <h1 className="text-preset-1">Edit budget</h1>
                     <p>
                         As your budget change, feel free to update your spending
                         limits

@@ -48,7 +48,7 @@ export default function EditBudgetForm({
     });
 
     console.log(preBudget);
-   
+
     /* TODO: The `action={createBudget}` is used to add a new budget to the database - see form below
     THE commands that adds the budget has been commented out in the action.ts file , until the database
      has been aligned correctly such that when a new budget item has been added the categories will not
@@ -58,10 +58,7 @@ export default function EditBudgetForm({
 
     return (
         <Form {...form}>
-            <form
-                action={updateBudgetWithID}                
-                className="space-y-8"
-            >
+            <form action={updateBudgetWithID} className="space-y-8">
                 {/* Step 2: Connect Select with React Hook Form */}
                 <FormField
                     control={form.control}
@@ -80,18 +77,6 @@ export default function EditBudgetForm({
                                     <SelectValue placeholder="Category" />
                                 </SelectTrigger>
                                 <SelectContent>
-                                    {/*}
-                                    <SelectItem value="Entertainment">
-                                        Entertainment
-                                    </SelectItem>
-                                    <SelectItem value="Dining Out">
-                                        Dining Out
-                                    </SelectItem>
-                                    <SelectItem value="Bills">Bills</SelectItem>
-                                    <SelectItem value="Personal Care">
-                                        Personal Care
-                                    </SelectItem>
-                                    */}
                                     {budgets.map((budget) => (
                                         <SelectItem
                                             key={budget.id}
@@ -155,20 +140,6 @@ export default function EditBudgetForm({
                                             {budget.theme}
                                         </SelectItem>
                                     ))}
-                                    {/*
-                                    <SelectItem value="#277C78">
-                                        Green
-                                    </SelectItem>
-                                    <SelectItem value="#F2CDAC">
-                                        Cream
-                                    </SelectItem>
-                                    <SelectItem value="#82C9D7">
-                                        Cyan
-                                    </SelectItem>
-                                    <SelectItem value="#626070">
-                                        Grey
-                                    </SelectItem>
-                                    */}
                                 </SelectContent>
                             </Select>
                             <FormMessage />

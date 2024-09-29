@@ -52,6 +52,12 @@ export default async function Page() {
         billsCategory,
         diningCategory,
         personalCategory,
+        groceriesCategory,
+        generalCategory,
+        shoppingCategory,
+        educationCategory,
+        lifestyleCategory,
+        transportationCategory,
     } = category;
 
     // calculate  budget used for Entertainment
@@ -61,6 +67,34 @@ export default async function Page() {
         },
         0
     );
+
+    // calculate  budget used for Bills
+    const totalTransportation = transportationCategory.reduce(
+        (accumulator, budget) => {
+            return Number(accumulator) + Number(-budget.amount);
+        },
+        0
+    );
+
+    // calculate  budget used for lifestyle
+    const totalLifestyle = lifestyleCategory.reduce((accumulator, budget) => {
+        return Number(accumulator) + Number(-budget.amount);
+    }, 0);
+
+    // calculate  budget used for education
+    const totalEducation = educationCategory.reduce((accumulator, budget) => {
+        return Number(accumulator) + Number(-budget.amount);
+    }, 0);
+
+    // calculate  budget used for shopping
+    const totalShopping = shoppingCategory.reduce((accumulator, budget) => {
+        return Number(accumulator) + Number(-budget.amount);
+    }, 0);
+
+    // calculate  budget used for general
+    const totalGeneral = generalCategory.reduce((accumulator, budget) => {
+        return Number(accumulator) + Number(-budget.amount);
+    }, 0);
 
     // calculate  budget used for Bills
     const totalBills = billsCategory.reduce((accumulator, budget) => {
@@ -77,7 +111,24 @@ export default async function Page() {
         return Number(accumulator) + Number(-budget.amount);
     }, 0);
 
-    const totals = [totalEntertainment, totalBills, totalDining, totalPersonal];
+    // calculate  budget used for Personal Care
+    const totalGroceries = groceriesCategory.reduce((accumulator, budget) => {
+        return Number(accumulator) + Number(-budget.amount);
+    }, 0);
+
+    const totals = [
+        totalEntertainment,
+        totalBills,
+        totalDining,
+        totalPersonal,
+        totalGroceries,
+        totalEducation,
+        totalGeneral,
+        totalGroceries,
+        totalLifestyle,
+        totalShopping,
+        totalTransportation,
+    ];
 
     const data = budgets.map((budget, index) => ({
         id: budget.id,
@@ -116,7 +167,11 @@ export default async function Page() {
                 {/* Dialog component */}
                 <Dialog>
                     <DialogTrigger asChild>
-                        <Button variant="default">
+                        <Button
+                            variant="default"
+                            className={`focus:outline-dashed focus:outline-current focus:outline-1 focus:-outline-offset-4
+                                hover:outline-dashed hover:outline-current hover:outline-1 hover:-outline-offset-4`}
+                        >
                             + Add New Budget{" "}
                             <span className="sr-only">item</span>
                         </Button>
@@ -148,6 +203,13 @@ export default async function Page() {
                         totalBills,
                         totalDining,
                         totalPersonal,
+                        totalGroceries,
+                        totalEducation,
+                        totalGeneral,
+                        totalGroceries,
+                        totalLifestyle,
+                        totalShopping,
+                        totalTransportation,
                     ]}
                 />
 
@@ -167,6 +229,18 @@ export default async function Page() {
                                 return entertainmentCategory;
                             } else if (budget.category === "Personal Care") {
                                 return personalCategory;
+                            } else if (budget.category === "Groceries") {
+                                return groceriesCategory;
+                            } else if (budget.category === "Education") {
+                                return educationCategory;
+                            } else if (budget.category === "Transportation") {
+                                return transportationCategory;
+                            } else if (budget.category === "Shopping") {
+                                return shoppingCategory;
+                            } else if (budget.category === "Lifestyle") {
+                                return lifestyleCategory;
+                            } else if (budget.category === "General") {
+                                return generalCategory;
                             } else return [];
                         }
 
@@ -190,8 +264,10 @@ export default async function Page() {
                                         </span>
                                     </h2>
                                     <Popover>
-                                        <PopoverTrigger>
-                                            {" "}
+                                        <PopoverTrigger
+                                            className={`p-2 focus:outline-dashed focus:outline-current focus:outline-1 focus:-outline-offset-4
+                                hover:outline-dashed hover:outline-current hover:outline-1 hover:-outline-offset-4`}
+                                        >
                                             <Image
                                                 src="assets/images/icon-ellipsis.svg"
                                                 alt=""
@@ -240,7 +316,7 @@ export default async function Page() {
                                             </Dialog>
                                             */}
                                             <Separator />
-                                            
+
                                             {/*DELETE DIALOG*/}
                                             <AlertDialog>
                                                 <AlertDialogTrigger className="text-preset-4 m-0 p-0 bg-inherit text-[hsl(var(--red))]">
@@ -249,23 +325,23 @@ export default async function Page() {
                                                 <AlertDialogContent>
                                                     <AlertDialogHeader>
                                                         <AlertDialogTitle>
-                                                            Are you absolutely
-                                                            sure?
+                                                            Delete '{budget.category}'?
                                                         </AlertDialogTitle>
                                                         <AlertDialogDescription>
-                                                            This action cannot
-                                                            be undone. This will
-                                                            permanently delete
-                                                            your account and
-                                                            remove your data
-                                                            from our servers.
+                                                            Are you sure you
+                                                            want to delete this
+                                                            budget? This action
+                                                            cannot be reversed
+                                                            and the data in it
+                                                            will be removed
+                                                            forever
                                                         </AlertDialogDescription>
                                                     </AlertDialogHeader>
                                                     <AlertDialogFooter>
                                                         <AlertDialogCancel>
-                                                            Cancel
+                                                            No, Go Back
                                                         </AlertDialogCancel>
-                                                        <AlertDialogAction type="submit">
+                                                        <AlertDialogAction type="submit" className="bg-[hsl(var(--red))]">
                                                             <DeleteBudget
                                                                 id={budget.id}
                                                             />
@@ -338,7 +414,9 @@ export default async function Page() {
                                         </h3>
                                         <Link
                                             href={"/transactions"}
-                                            className="flex items-center gap-2 text-[hsl(var(--grey-500))] text-preset-4"
+                                            className={`p-2 flex items-center gap-2 text-[hsl(var(--grey-500))] text-preset-4
+                                                focus:outline-dashed focus:outline-current focus:outline-1 focus:-outline-offset-4
+                                                hover:outline-dashed hover:outline-current hover:outline-1 hover:-outline-offset-4`}
                                         >
                                             See all{" "}
                                             <span className="sr-only">
