@@ -2,6 +2,7 @@
 import React from "react";
 
 import { deleteBudget } from "../../lib/actions";
+import { AlertDialogAction } from "@/components/ui/alert-dialog";
 
 export function DeleteBudget({ id }: { id: string }) {
     const deleteBudgetWithId = deleteBudget.bind(null, id);
@@ -11,9 +12,9 @@ export function DeleteBudget({ id }: { id: string }) {
             action={deleteBudgetWithId}           
             className="space-y-8"
         >
-            <span>
+           <AlertDialogAction type="submit" className="bg-[hsl(var(--red))]">
                 Yes, Confirm Deletion 
-            </span>
+            </AlertDialogAction>
         </form>
     );
 }
