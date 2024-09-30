@@ -24,6 +24,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Budget } from "@/app/lib/definitions";
+import { DialogClose, DialogFooter } from "@/components/ui/dialog";
 
 const formSchema = z.object({
     maximum: z.number().positive(),
@@ -146,9 +147,18 @@ export default function EditBudgetForm({
                         </FormItem>
                     )}
                 />
+                {/*
                 <Button type="submit" className="w-full">
                     Submit
                 </Button>
+                */}
+                <DialogFooter className="sm:justify-start">
+                    <DialogClose asChild>
+                        <Button type="submit" className="w-full">
+                            Save Changes
+                        </Button>
+                    </DialogClose>
+                </DialogFooter>
             </form>
         </Form>
     );

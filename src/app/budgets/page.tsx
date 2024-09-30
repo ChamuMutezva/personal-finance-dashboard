@@ -44,6 +44,7 @@ import AddBudgetForm from "../ui/budget/AddBudgetForm";
 import { DeleteBudget } from "../ui/budget/DeleteBudgetForm";
 import { Separator } from "@/components/ui/separator";
 import { revalidatePath } from "next/cache";
+import EditBudgetForm from "../ui/budget/EditBudgetForm";
 
 export default async function Page() {
     const budgets = await fetchBudgets();
@@ -170,7 +171,7 @@ export default async function Page() {
                                 These categories can help you monitor spending.
                             </DialogDescription>
                         </DialogHeader>
-                        <AddBudgetForm budgets={budgets} />                        
+                        <AddBudgetForm budgets={budgets} />
                     </DialogContent>
                 </Dialog>
             </div>
@@ -269,50 +270,61 @@ export default async function Page() {
                                                 />
                                             </PopoverTrigger>
                                             <PopoverContent className="flex relative flex-col gap-2 w-[134px] h-[91px] mr-8">
-                                                <Link
-                                                    // variant="link"
+                                                {/*
+                                                <Link                                                    
                                                     href={`/budgets/${budget.id}/edit`}
                                                     className="m-0 p-0 bg-inherit text-[hsl(var(--grey-900))]"
                                                 >
                                                     Edit budget
                                                 </Link>
-                                                {/*
-                                            <Dialog>
-                                                <DialogTrigger asChild>
-                                                    <Link
-                                                        // variant="link"
-                                                        href={`/budgets/${budget.id}/edit`}
-                                                        className="m-0 p-0 bg-inherit text-[hsl(var(--grey-900))]"
-                                                    >
-                                                        Edit budget
-                                                    </Link>
-                                                </DialogTrigger>
-                                                <DialogContent className="w-11/12 sm:max-w-[425px] rounded-xl">
-                                                    <DialogHeader>
-                                                        <DialogTitle>
-                                                            Edit{" "}
-                                                            {budget.category}{" "}
-                                                            Budget
-                                                        </DialogTitle>
-                                                        <DialogDescription>
-                                                            As your budget
-                                                            change, feel free to
-                                                            update your spending
-                                                            limits
-                                                        </DialogDescription>
-                                                    </DialogHeader>
-                                                    <EditBudgetForm
-                                                        id={budget.id}
-                                                        budgets={budgets}
-                                                    />
-                                                </DialogContent>
-                                            </Dialog>
-                                            */}
+                                                */}
+
+                                                <Dialog>
+                                                    <DialogTrigger asChild>
+                                                        <Button
+                                                            variant={
+                                                                "secondary"
+                                                            }
+                                                            className="p-0 m-0 bg-inherit text-[hsl(var(--grey-900))]
+                                                         focus:outline-dashed focus:outline-current focus:outline-1 focus:-outline-offset-4
+                                                          hover:outline-dashed hover:outline-current hover:outline-1 hover:-outline-offset-4"
+                                                        >
+                                                            Edit budget
+                                                        </Button>
+                                                    </DialogTrigger>
+                                                    <DialogContent className="w-11/12 sm:max-w-[425px] rounded-xl">
+                                                        <DialogHeader>
+                                                            <DialogTitle>
+                                                                Edit{" "}
+                                                                {
+                                                                    budget.category
+                                                                }{" "}
+                                                                Budget
+                                                            </DialogTitle>
+                                                            <DialogDescription>
+                                                                As your budget
+                                                                change, feel
+                                                                free to update
+                                                                your spending
+                                                                limits
+                                                            </DialogDescription>
+                                                        </DialogHeader>
+                                                        <EditBudgetForm
+                                                            id={budget.id}
+                                                            budgets={budgets}
+                                                        />
+                                                    </DialogContent>
+                                                </Dialog>
+
                                                 <Separator />
 
                                                 {/*DELETE DIALOG*/}
                                                 <AlertDialog>
-                                                    <AlertDialogTrigger className="text-preset-4 m-0 p-0 bg-inherit text-[hsl(var(--red))]">
+                                                    <AlertDialogTrigger
+                                                        className="text-preset-4 m-0 p-0 bg-inherit text-[hsl(var(--red))]
+                                                    focus:outline-dashed focus:outline-current focus:outline-1 focus:-outline-offset-4
+                                                          hover:outline-dashed hover:outline-current hover:outline-1 hover:-outline-offset-4"
+                                                    >
                                                         Delete budget
                                                     </AlertDialogTrigger>
                                                     <AlertDialogContent>
