@@ -11,8 +11,7 @@ import {
     SelectTrigger,
     SelectValue,
 } from "@/components/ui/select";
-import { createBudget } from "../../lib/actions";
-import { categories, colors } from "@/app/lib/data";
+import { updateBudget } from "../../lib/actions";
 
 import {
     Form,
@@ -25,7 +24,6 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Budget } from "@/app/lib/definitions";
-import { DialogClose, DialogFooter } from "@/components/ui/dialog";
 
 const formSchema = z.object({
     maximum: z.number().positive(),
@@ -33,67 +31,58 @@ const formSchema = z.object({
     theme: z.string().min(1, "Category is required"),
 });
 
-function AddBudgetForm({ budgets }: { budgets: Budget[] }) {
-    // 1. Define your form.
+export default function EditBudgetForm({
+    id,
+    budgets,
+}: Readonly<{ id: string; budgets: Budget[] }>) {
+    const updateBudgetWithID = updateBudget.bind(null, id);
+    const preBudget = budgets.find((budget) => budget.id === id);
+    // const id = params.id;
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
         defaultValues: {
-            maximum: 10,
-            category: "",
-            theme: "",
+            maximum: preBudget?.maximum ?? 10,
+            category: preBudget?.category ?? "",
+            theme: preBudget?.theme ?? "",
         },
     });
 
-    /*
-    function onSubmit(values: z.infer<typeof formSchema>) {        
-        console.log(values);
-    }
-  */
+    console.log(preBudget);
 
-    // Get used categories and themes
-    const usedCategories = budgets.map((budget) => budget.category);
-    const usedThemes = budgets.map((budget) => budget.theme);
+    /* TODO: The `action={createBudget}` is used to add a new budget to the database - see form below
+    THE commands that adds the budget has been commented out in the action.ts file , until the database
+     has been aligned correctly such that when a new budget item has been added the categories will not
+      cause a NAN ERROR in the Donut chart. The NAN is coming from calculating the USAGE total.
+
+    */
 
     return (
         <Form {...form}>
-            <form
-                action={createBudget}
-                /*  onSubmit={form.handleSubmit(onSubmit)} */
-                className="space-y-8"
-            >
+            <form action={updateBudgetWithID} className="space-y-8">
                 {/* Step 2: Connect Select with React Hook Form */}
                 <FormField
                     control={form.control}
                     name="category"
                     render={({ field }) => (
                         <FormItem>
-                            <FormLabel>Budget Category</FormLabel>
+                            <FormLabel>Category</FormLabel>
                             <Select
-                                onValueChange={field.onChange}
-                                // value={field.value}
                                 {...field}
+                                onValueChange={field.onChange}
+                                // defaultValue={preBudget?.category}
+                                value={preBudget?.category}
+                                disabled
                             >
                                 <SelectTrigger className="w-full">
                                     <SelectValue placeholder="Category" />
                                 </SelectTrigger>
                                 <SelectContent>
-                                    {categories.map((category) => (
+                                    {budgets.map((budget) => (
                                         <SelectItem
-                                            key={category.category}
-                                            value={category.category}
-                                            disabled={usedCategories.includes(
-                                                category.category
-                                            )} // disable if already in use
-                                            className={`flex justify-between`}
+                                            key={budget.id}
+                                            value={budget.category}
                                         >
-                                            {category.category}
-                                            {usedCategories.includes(
-                                                category.category
-                                            ) && (
-                                                <span className="text-[hsl(var(--grey-500))] ml-2 line-through">
-                                                    Already used
-                                                </span>
-                                            )}
+                                            {budget.category}
                                         </SelectItem>
                                     ))}
                                 </SelectContent>
@@ -108,12 +97,13 @@ function AddBudgetForm({ budgets }: { budgets: Budget[] }) {
                     name="maximum"
                     render={({ field }) => (
                         <FormItem>
-                            <FormLabel>Maximum spending</FormLabel>
+                            <FormLabel>Maximum budget amount</FormLabel>
                             <FormControl>
                                 <Input
                                     type="number"
                                     placeholder="10"
                                     {...field}
+                                    // value={preBudget?.maximum}
                                 />
                             </FormControl>
                             <FormDescription>
@@ -129,39 +119,25 @@ function AddBudgetForm({ budgets }: { budgets: Budget[] }) {
                     name="theme"
                     render={({ field }) => (
                         <FormItem>
-                            <FormLabel>Color tag</FormLabel>
+                            <FormLabel>Theme</FormLabel>
                             <Select
                                 onValueChange={(value) => {
                                     field.onChange(value); // Update value in React Hook Form
                                 }}
                                 {...field}
+                                disabled
                                 // value={field.value}
                             >
                                 <SelectTrigger className="w-full">
                                     <SelectValue placeholder="theme" />
                                 </SelectTrigger>
                                 <SelectContent>
-                                    {colors.map((color) => (
+                                    {budgets.map((budget) => (
                                         <SelectItem
-                                            key={color.hex}
-                                            value={color.hex}
-                                            className={`flex gap-8 items-center justify-start min-h-8`}
-                                            disabled={usedThemes.includes(
-                                                color.hex
-                                            )} // Disable if already in use
+                                            key={budget.id}
+                                            value={budget.theme}
                                         >
-                                            <span
-                                                className={`inline-block relative h-3 w-3 rounded-full mr-4`}
-                                                style={{
-                                                    backgroundColor: color.hex,
-                                                }}
-                                            ></span>
-                                            {color.color}
-                                            {usedThemes.includes(color.hex) && (
-                                                <span className="text-[hsl(var(--grey-500))] ml-2 line-through">
-                                                    already used
-                                                </span>
-                                            )}
+                                            {budget.theme}
                                         </SelectItem>
                                     ))}
                                 </SelectContent>
@@ -170,21 +146,10 @@ function AddBudgetForm({ budgets }: { budgets: Budget[] }) {
                         </FormItem>
                     )}
                 />
-                {/*
                 <Button type="submit" className="w-full">
                     Submit
                 </Button>
-                */}
-                <DialogFooter className="sm:justify-start">
-                    <DialogClose asChild>
-                        <Button type="submit" className="w-full">
-                            Add Budget
-                        </Button>
-                    </DialogClose>
-                </DialogFooter>
             </form>
         </Form>
     );
 }
-
-export default AddBudgetForm;

@@ -14,8 +14,10 @@ import clsx from "clsx";
 import { Button } from "@/components/ui/button";
 import {
     Dialog,
+    DialogClose,
     DialogContent,
     DialogDescription,
+    DialogFooter,
     // DialogFooter,
     DialogHeader,
     DialogTitle,
@@ -168,7 +170,7 @@ export default async function Page() {
                                 These categories can help you monitor spending.
                             </DialogDescription>
                         </DialogHeader>
-                        <AddBudgetForm budgets={budgets} />
+                        <AddBudgetForm budgets={budgets} />                        
                     </DialogContent>
                 </Dialog>
             </div>
