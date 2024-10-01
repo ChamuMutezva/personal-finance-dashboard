@@ -12,6 +12,7 @@ import {
     SelectValue,
 } from "@/components/ui/select";
 import { updateBudget } from "../../lib/actions";
+import { colors } from "@/app/lib/data";
 
 import {
     Form,
@@ -49,6 +50,8 @@ export default function EditBudgetForm({
     });
 
     console.log(preBudget);
+
+    const usedThemes = budgets.map((budget) => budget.theme);
 
     return (
         <Form {...form}>
@@ -123,19 +126,34 @@ export default function EditBudgetForm({
                                     field.onChange(value); // Update value in React Hook Form
                                 }}
                                 {...field}
-                                disabled
+                                // disabled
                                 // value={field.value}
                             >
                                 <SelectTrigger className="w-full">
                                     <SelectValue placeholder="theme" />
                                 </SelectTrigger>
                                 <SelectContent>
-                                    {budgets.map((budget) => (
+                                    {colors.map((color) => (
                                         <SelectItem
-                                            key={budget.id}
-                                            value={budget.theme}
+                                            key={color.hex}
+                                            value={color.hex}
+                                            className={`flex gap-8 items-center justify-start min-h-8`}
+                                            disabled={usedThemes.includes(
+                                                color.hex
+                                            )} // Disable if already in use
                                         >
-                                            {budget.theme}
+                                            <span
+                                                className={`inline-block relative h-3 w-3 rounded-full mr-4`}
+                                                style={{
+                                                    backgroundColor: color.hex,
+                                                }}
+                                            ></span>
+                                            {color.color}
+                                            {usedThemes.includes(color.hex) && (
+                                                <span className="text-[hsl(var(--grey-500))] ml-2 line-through">
+                                                    already used
+                                                </span>
+                                            )}
                                         </SelectItem>
                                     ))}
                                 </SelectContent>
