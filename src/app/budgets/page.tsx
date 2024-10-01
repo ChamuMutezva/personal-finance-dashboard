@@ -208,33 +208,30 @@ export default async function Page() {
                         {data.map((budget) => {
                             // Filter the bills category based on the current budget category
                             function filteredItems() {
-                                if (budget.category === "Bills") {
-                                    return billsCategory;
-                                } else if (budget.category === "Dining Out") {
-                                    return diningCategory;
-                                } else if (
-                                    budget.category === "Entertainment"
-                                ) {
-                                    return entertainmentCategory;
-                                } else if (
-                                    budget.category === "Personal Care"
-                                ) {
-                                    return personalCategory;
-                                } else if (budget.category === "Groceries") {
-                                    return groceriesCategory;
-                                } else if (budget.category === "Education") {
-                                    return educationCategory;
-                                } else if (
-                                    budget.category === "Transportation"
-                                ) {
-                                    return transportationCategory;
-                                } else if (budget.category === "Shopping") {
-                                    return shoppingCategory;
-                                } else if (budget.category === "Lifestyle") {
-                                    return lifestyleCategory;
-                                } else if (budget.category === "General") {
-                                    return generalCategory;
-                                } else return [];
+                                switch (budget.category) {
+                                    case "Bills":
+                                        return billsCategory;
+                                    case "Dining Out":
+                                        return diningCategory;
+                                    case "Entertainment":
+                                        return entertainmentCategory;
+                                    case "Personal Care":
+                                        return personalCategory;
+                                    case "Groceries":
+                                        return groceriesCategory;
+                                    case "Education":
+                                        return educationCategory;
+                                    case "Transportation":
+                                        return transportationCategory;
+                                    case "Shopping":
+                                        return shoppingCategory;
+                                    case "Lifestyle":
+                                        return lifestyleCategory;
+                                    case "General":
+                                        return generalCategory;
+                                    default:
+                                        return [];
+                                }
                             }
 
                             return (
@@ -260,7 +257,7 @@ export default async function Page() {
                                         <Popover>
                                             <PopoverTrigger
                                                 className={`p-2 focus:outline-dashed focus:outline-current focus:outline-1 focus:-outline-offset-4
-                                hover:outline-dashed hover:outline-current hover:outline-1 hover:-outline-offset-4`}
+                                                            hover:outline-dashed hover:outline-current hover:outline-1 hover:-outline-offset-4`}
                                             >
                                                 <Image
                                                     src="assets/images/icon-ellipsis.svg"
@@ -270,15 +267,6 @@ export default async function Page() {
                                                 />
                                             </PopoverTrigger>
                                             <PopoverContent className="flex relative flex-col gap-2 w-[134px] h-[91px] mr-8">
-                                                {/*
-                                                <Link                                                    
-                                                    href={`/budgets/${budget.id}/edit`}
-                                                    className="m-0 p-0 bg-inherit text-[hsl(var(--grey-900))]"
-                                                >
-                                                    Edit budget
-                                                </Link>
-                                                */}
-
                                                 <Dialog>
                                                     <DialogTrigger asChild>
                                                         <Button
