@@ -1,7 +1,6 @@
 import React from "react";
 import Link from "next/link";
 import { fetchBudgets, fetchByCategory } from "../lib/data";
-import { deleteBudget } from "../lib/actions";
 import { Card } from "@/components/ui/card";
 import { Donut } from "../ui/budget/Donut";
 import { formatPosNegativeCurrency } from "../lib/utils";
@@ -43,7 +42,6 @@ import {
 import AddBudgetForm from "../ui/budget/AddBudgetForm";
 import { DeleteBudget } from "../ui/budget/DeleteBudgetForm";
 import { Separator } from "@/components/ui/separator";
-import { revalidatePath } from "next/cache";
 import EditBudgetForm from "../ui/budget/EditBudgetForm";
 
 export default async function Page() {
@@ -315,7 +313,7 @@ export default async function Page() {
                                                     >
                                                         Delete budget
                                                     </AlertDialogTrigger>
-                                                    <AlertDialogContent>
+                                                    <AlertDialogContent className="w-11/12 sm:max-w-[425px] rounded-xl">
                                                         <AlertDialogHeader>
                                                             <AlertDialogTitle>
                                                                 Delete{" "}

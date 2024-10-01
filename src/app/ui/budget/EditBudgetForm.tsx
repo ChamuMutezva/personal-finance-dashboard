@@ -50,16 +50,13 @@ export default function EditBudgetForm({
 
     console.log(preBudget);
 
-    /* TODO: The `action={createBudget}` is used to add a new budget to the database - see form below
-    THE commands that adds the budget has been commented out in the action.ts file , until the database
-     has been aligned correctly such that when a new budget item has been added the categories will not
-      cause a NAN ERROR in the Donut chart. The NAN is coming from calculating the USAGE total.
-
-    */
-
     return (
         <Form {...form}>
-            <form action={updateBudgetWithID} className="space-y-8">
+            <form
+                id="edit-budget-form"
+                action={updateBudgetWithID}
+                className="space-y-8"
+            >
                 {/* Step 2: Connect Select with React Hook Form */}
                 <FormField
                     control={form.control}

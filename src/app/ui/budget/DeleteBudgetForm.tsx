@@ -9,10 +9,11 @@ export function DeleteBudget({ id }: { id: string }) {
 
     return (
         <form
+            id="delete-budget-form"
             action={deleteBudgetWithId}           
             className="space-y-8"
         >
-           <AlertDialogAction type="submit" className="bg-[hsl(var(--red))]">
+           <AlertDialogAction type="submit" className="w-full bg-[hsl(var(--red))]">
                 Yes, Confirm Deletion 
             </AlertDialogAction>
         </form>

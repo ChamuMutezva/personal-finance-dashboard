@@ -57,6 +57,7 @@ function AddBudgetForm({ budgets }: { budgets: Budget[] }) {
     return (
         <Form {...form}>
             <form
+                id="add-budget-form"
                 action={createBudget}
                 /*  onSubmit={form.handleSubmit(onSubmit)} */
                 className="space-y-8"
@@ -113,6 +114,7 @@ function AddBudgetForm({ budgets }: { budgets: Budget[] }) {
                                 <Input
                                     type="number"
                                     placeholder="10"
+                                    required
                                     {...field}
                                 />
                             </FormControl>
