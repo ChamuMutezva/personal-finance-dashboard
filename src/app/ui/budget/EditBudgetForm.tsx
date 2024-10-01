@@ -127,7 +127,7 @@ export default function EditBudgetForm({
                                 }}
                                 {...field}
                                 // disabled
-                                // value={field.value}
+                                 value={field.value}
                             >
                                 <SelectTrigger className="w-full">
                                     <SelectValue placeholder="theme" />
