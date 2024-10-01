@@ -316,11 +316,7 @@ export default async function Page() {
                                                     <AlertDialogContent className="w-11/12 sm:max-w-[425px] rounded-xl">
                                                         <AlertDialogHeader>
                                                             <AlertDialogTitle>
-                                                                Delete{" "}
-                                                                {
-                                                                    budget.category
-                                                                }
-                                                                ?
+                                                                Delete{` '${budget.category}'`}?
                                                             </AlertDialogTitle>
                                                             <AlertDialogDescription>
                                                                 Are you sure you
