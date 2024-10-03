@@ -1,0 +1,59 @@
+"use client";
+
+import { useSearchParams, usePathname, useRouter } from "next/navigation";
+const categories = [
+    "All",
+    "Entertainment",
+    "Bills",
+    "Groceries",
+    "Dining Out",
+    "Transportation",
+    "Personal Care",
+    "Education",
+    "Lifestyle",
+    "Shopping",
+    "General",
+];
+
+export default function CategoryFilter() {
+    const searchParams = useSearchParams();
+    const pathname = usePathname();
+    const { replace } = useRouter();
+
+    const handleCategoryChange = (
+        event: React.ChangeEvent<HTMLSelectElement>
+    ) => {
+        const selectedCategory = event.target.value;
+        console.log(selectedCategory);
+        const params = new URLSearchParams(searchParams);
+        params.set("page", "1");
+
+        if (selectedCategory !== "All") {
+            params.set("query", selectedCategory);
+        } else {
+            params.delete("query"); // Remove category filter if 'All' is selected
+        }
+
+        replace(`${pathname}?${params.toString()}`);
+    };
+
+    return (
+        <div className="flex items-center mb-4">
+            <label htmlFor="categories">
+                Categories
+            </label>
+
+            <select
+                id="categories"
+                onChange={handleCategoryChange}
+                className="ml-4 border rounded-md p-2"
+            >
+                {categories.map((category) => (
+                    <option key={category} value={category}>
+                        {category}
+                    </option>
+                ))}
+            </select>
+        </div>
+    );
+}

@@ -5,6 +5,7 @@ import { SkeletonLoader } from "../ui/transactions/TransactionTableSkeleton";
 
 import Search from "../ui/transactions/search";
 import Pagination from "../ui/transactions/Pagination";
+import CategoryFilter from "../ui/transactions/CategoryFilter";
 
 export default async function Page({
     searchParams,
@@ -28,8 +29,9 @@ export default async function Page({
                 </h1>
             </div>
             <div className={"w-full mb-20 lg:mb-0"}>
-                <div>
+                <div className="flex gap-2">
                     <Search placeholder="Search transactions" />
+                    <CategoryFilter />
                 </div>
                 <Suspense
                     key={query + currentPage}
