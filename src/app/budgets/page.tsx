@@ -407,7 +407,7 @@ export default async function Page() {
                                                 Latest spending
                                             </h3>
                                             <Link
-                                                href={"/transactions"}
+                                                href={`/transactions?page=1&query=${budget.category}`}
                                                 className={`p-2 flex items-center gap-2 text-[hsl(var(--grey-500))] text-preset-4
                                                 focus:outline-dashed focus:outline-current focus:outline-1 focus:-outline-offset-4
                                                 hover:outline-dashed hover:outline-current hover:outline-1 hover:-outline-offset-4`}
