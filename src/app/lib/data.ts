@@ -35,14 +35,7 @@ export const categories = [
 
 export async function fetchBalance() {
     try {
-        // Artificially delay a response for demo purposes.
-        // Don't do this in production :)
-
-        console.log("Fetching balance data...");
-        //  await new Promise((resolve) => setTimeout(resolve, 3000));
-
         const data = await sql<Balance>`SELECT * FROM balances`;
-
         return data.rows;
     } catch (error) {
         console.error("Database Error:", error);

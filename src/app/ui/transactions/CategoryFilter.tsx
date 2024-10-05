@@ -1,5 +1,18 @@
 "use client";
 
+import {
+    FormField,
+    FormItem,
+    FormLabel,
+    FormMessage,
+} from "@/components/ui/form";
+import {
+    Select,
+    SelectContent,
+    SelectItem,
+    SelectTrigger,
+    SelectValue,
+} from "@/components/ui/select";
 import { useSearchParams, usePathname, useRouter } from "next/navigation";
 const categories = [
     "All",
@@ -39,7 +52,7 @@ export default function CategoryFilter() {
 
     return (
         <div className="flex items-center mb-4">
-            <label htmlFor="categories">
+            <label htmlFor="categories" className="sr-only sm:not-sr-only">
                 Categories
             </label>
 

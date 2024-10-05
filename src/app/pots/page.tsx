@@ -1,12 +1,210 @@
 import React from "react";
 import { fetchPots } from "../lib/data";
+import { Button } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
+import { budgets } from "../lib/placeholder-data";
+import Image from "next/image";
+import AddBudgetForm from "../ui/budget/AddBudgetForm";
+import {
+    Dialog,
+    DialogContent,
+    DialogDescription,
+    DialogHeader,
+    DialogTitle,
+    DialogTrigger,
+} from "@/components/ui/dialog";
+import AddPotForm from "../ui/pots/AddPotForm";
+import { Port_Lligat_Sans } from "next/font/google";
+import {
+    Popover,
+    PopoverContent,
+    PopoverTrigger,
+} from "@/components/ui/popover";
+import EditBudgetForm from "../ui/budget/EditBudgetForm";
+import { Separator } from "@/components/ui/separator";
+import {
+    AlertDialog,
+    AlertDialogCancel,
+    AlertDialogContent,
+    AlertDialogDescription,
+    AlertDialogFooter,
+    AlertDialogHeader,
+    AlertDialogTitle,
+    AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
+import { DeleteBudget } from "../ui/budget/DeleteBudgetForm";
+import Meter from "../ui/budget/Meter";
+import EditPotForm from "../ui/pots/EditPotForm";
 
 export default async function Page() {
     const pots = await fetchPots();
     console.log(pots);
     return (
-        <main className="flex-1 flex min-h-screen flex-col items-center justify-between lg:p-24">
-            Pots page
+        <main className="flex-1 min-h-screen px-4 pt-6 pb-16 md:px-10 lg:p-8">
+            <div className="flex justify-between items-center mb-4">
+                <h1
+                    className={`text-preset-1 font-bold text-[hsl(var(--grey-900))]`}
+                >
+                    Pots
+                </h1>
+                <Dialog>
+                    <DialogTrigger asChild>
+                        <Button
+                            variant="default"
+                            className={`focus:outline-dashed focus:outline-current focus:outline-1 focus:-outline-offset-4
+                                hover:outline-dashed hover:outline-current hover:outline-1 hover:-outline-offset-4`}
+                        >
+                            + Add New Pot <span className="sr-only">item</span>
+                        </Button>
+                    </DialogTrigger>
+                    <DialogContent className="w-11/12 sm:max-w-[425px] rounded-xl">
+                        <DialogHeader>
+                            <DialogTitle>Add New Pot</DialogTitle>
+                            <DialogDescription>
+                                Create a pot to set savings targets. These can
+                                help you on track as you save for special
+                                purchases
+                            </DialogDescription>
+                        </DialogHeader>
+                        <AddPotForm pots={pots} />
+                    </DialogContent>
+                </Dialog>
+            </div>
+            <div className={`grid gap-4 lg:grid-cols-2`}>
+                {pots.map((pot) => (
+                    <Card
+                        key={pot.id}
+                        className="rounded-xl py-6 px-5 flex-1 flex flex-col gap-4"
+                    >
+                        <div className="flex justify-between items-center relative">
+                            <h2
+                                className={`flex justify-center items-center gap-4 relative`}
+                            >
+                                <span
+                                    className={`w-4 h-4 inline-block rounded-full`}
+                                    style={{
+                                        backgroundColor: pot.theme,
+                                    }}
+                                />
+                                <span className="text-preset-2 font-bold ">
+                                    {pot.name}
+                                </span>
+                            </h2>
+                            <Popover>
+                                <PopoverTrigger
+                                    className={`p-2 focus:outline-dashed focus:outline-current focus:outline-1 focus:-outline-offset-4
+                                                            hover:outline-dashed hover:outline-current hover:outline-1 hover:-outline-offset-4`}
+                                >
+                                    <Image
+                                        src="assets/images/icon-ellipsis.svg"
+                                        alt=""
+                                        width={14}
+                                        height={4}
+                                    />
+                                </PopoverTrigger>
+                                <PopoverContent className="flex relative flex-col gap-2 w-[134px] h-[91px] mr-8">
+                                    <Dialog>
+                                        <DialogTrigger asChild>
+                                            <Button
+                                                variant={"secondary"}
+                                                className="p-0 m-0 bg-inherit text-[hsl(var(--grey-900))]
+                                                         focus:outline-dashed focus:outline-current focus:outline-1 focus:-outline-offset-4
+                                                          hover:outline-dashed hover:outline-current hover:outline-1 hover:-outline-offset-4"
+                                            >
+                                                Edit pot
+                                            </Button>
+                                        </DialogTrigger>
+                                        <DialogContent className="w-11/12 sm:max-w-[425px] rounded-xl">
+                                            <DialogHeader>
+                                                <DialogTitle>
+                                                    Edit {pot.name}
+                                                </DialogTitle>
+                                                <DialogDescription>
+                                                    If your saving targets
+                                                    change, feel free to update
+                                                    your pots
+                                                </DialogDescription>
+                                            </DialogHeader>
+                                            <EditPotForm
+                                                id={pot.id}
+                                                budgets={budgets}
+                                            />
+                                        </DialogContent>
+                                    </Dialog>
+
+                                    <Separator />
+
+                                    {/*DELETE DIALOG*/}
+                                    <AlertDialog>
+                                        <AlertDialogTrigger
+                                            className="text-preset-4 m-0 p-0 bg-inherit text-[hsl(var(--red))]
+                                                    focus:outline-dashed focus:outline-current focus:outline-1 focus:-outline-offset-4
+                                                          hover:outline-dashed hover:outline-current hover:outline-1 hover:-outline-offset-4"
+                                        >
+                                            Delete budget
+                                        </AlertDialogTrigger>
+                                        <AlertDialogContent className="w-11/12 sm:max-w-[425px] rounded-xl">
+                                            <AlertDialogHeader>
+                                                <AlertDialogTitle>
+                                                    Delete
+                                                    {` '${pot.name}'`}?
+                                                </AlertDialogTitle>
+                                                <AlertDialogDescription>
+                                                    Are you sure you want to
+                                                    delete this budget? This
+                                                    action cannot be reversed
+                                                    and the data in it will be
+                                                    removed forever
+                                                </AlertDialogDescription>
+                                            </AlertDialogHeader>
+                                            <AlertDialogFooter>
+                                                <AlertDialogCancel>
+                                                    No, Go Back
+                                                </AlertDialogCancel>
+
+                                                <DeleteBudget id={pot.id} />
+                                            </AlertDialogFooter>
+                                        </AlertDialogContent>
+                                    </AlertDialog>
+                                </PopoverContent>
+                            </Popover>
+                        </div>
+                        <p
+                            className={`text-preset-4 text-[hsl(var(--grey-500))] font-normal`}
+                        >
+                            Total saved ${pot.total}
+                        </p>
+                        <Meter
+                            value={pot.total}
+                            min={0}
+                            max={pot.target}
+                            color={pot.theme}
+                        />
+                        <p className="flex justify-between items-center">
+                            <span>
+                                {((pot.total / pot.target) * 100).toFixed(2)}%
+                            </span>{" "}
+                            <span>Target of ${pot.target}</span>
+                        </p>
+                        <div className="flex justify-between items-center">
+                            <Button
+                                className={`bg-[hsl(var(--beige-100))] text-[hsl(var--grey-900)] text-preset-4 text-bold
+                                focus:text-[hsl(var(--white))] focus:outline-dashed focus:outline-current focus:outline-1 focus:-outline-offset-4
+                               hover:text-[hsl(var(--white))] hover:outline-dashed hover:outline-current hover:outline-1 hover:-outline-offset-4`}
+                            >
+                                + Add Money
+                            </Button>
+                            <Button
+                                className={`bg-[hsl(var(--beige-100))] text-[hsl(var--grey-900)] text-preset-4 text-bold
+                                focus:text-[hsl(var(--white))] focus:outline-dashed focus:outline-current focus:outline-1 focus:-outline-offset-4
+                               hover:text-[hsl(var(--white))] hover:outline-dashed hover:outline-current hover:outline-1 hover:-outline-offset-4`}
+                            >
+                                Withdraw
+                            </Button>
+                        </div>
+                    </Card>
+                ))}
+            </div>
         </main>
     );
 }
