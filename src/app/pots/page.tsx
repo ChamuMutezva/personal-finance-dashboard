@@ -2,9 +2,7 @@ import React from "react";
 import { fetchPots } from "../lib/data";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { budgets } from "../lib/placeholder-data";
 import Image from "next/image";
-import AddBudgetForm from "../ui/budget/AddBudgetForm";
 import {
     Dialog,
     DialogContent,
@@ -14,13 +12,11 @@ import {
     DialogTrigger,
 } from "@/components/ui/dialog";
 import AddPotForm from "../ui/pots/AddPotForm";
-import { Port_Lligat_Sans } from "next/font/google";
 import {
     Popover,
     PopoverContent,
     PopoverTrigger,
 } from "@/components/ui/popover";
-import EditBudgetForm from "../ui/budget/EditBudgetForm";
 import { Separator } from "@/components/ui/separator";
 import {
     AlertDialog,
@@ -38,7 +34,7 @@ import EditPotForm from "../ui/pots/EditPotForm";
 
 export default async function Page() {
     const pots = await fetchPots();
-    console.log(pots);
+
     return (
         <main className="flex-1 min-h-screen px-4 pt-6 pb-16 md:px-10 lg:p-8">
             <div className="flex justify-between items-center mb-4">
@@ -127,7 +123,7 @@ export default async function Page() {
                                             </DialogHeader>
                                             <EditPotForm
                                                 id={pot.id}
-                                                budgets={budgets}
+                                                pots={pots}
                                             />
                                         </DialogContent>
                                     </Dialog>

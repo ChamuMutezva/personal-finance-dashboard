@@ -11,7 +11,7 @@ import {
     SelectTrigger,
     SelectValue,
 } from "@/components/ui/select";
-import { updateBudget } from "../../lib/actions";
+import { updatePot } from "../../lib/actions";
 import { colors } from "@/app/lib/data";
 
 import {
@@ -24,66 +24,64 @@ import {
     FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { Budget } from "@/app/lib/definitions";
+import { Pot } from "@/app/lib/definitions";
 import { DialogClose, DialogFooter } from "@/components/ui/dialog";
 
-const formSchema = z.object({
-    maximum: z.number().positive(),
-    category: z.string().min(1, "Category is required"),
-    theme: z.string().min(1, "Category is required"),
+const PotFormSchema = z.object({
+    id: z.string(),
+    name: z.string().max(30, "Name is required"),
+    target: z.coerce.number(),
+    total: z.coerce.number(),
+    theme: z.string(),
 });
 
 export default function EditBudgetForm({
     id,
-    budgets,
-}: Readonly<{ id: string; budgets: Budget[] }>) {
-    const updateBudgetWithID = updateBudget.bind(null, id);
-    const preBudget = budgets.find((budget) => budget.id === id);
-    // const id = params.id;
-    const form = useForm<z.infer<typeof formSchema>>({
-        resolver: zodResolver(formSchema),
+    pots,
+}: Readonly<{ id: string; pots: Pot[] }>) {
+    const updatePotWithID = updatePot.bind(null, id);
+    const prePot = pots.find((pot) => pot.id === id);
+    
+    console.log(prePot)
+    const form = useForm<z.infer<typeof PotFormSchema>>({
+        resolver: zodResolver(PotFormSchema),
         defaultValues: {
-            maximum: preBudget?.maximum ?? 10,
-            category: preBudget?.category ?? "",
-            theme: preBudget?.theme ?? "",
+            target: prePot?.target ?? 100,
+            theme: prePot?.theme ?? "",
         },
     });
-
-    console.log(preBudget);
-
-    const usedThemes = budgets.map((budget) => budget.theme);
+    
+    const usedThemes = pots.map((pot) => pot.theme);
 
     return (
         <Form {...form}>
             <form
                 id="edit-budget-form"
-                action={updateBudgetWithID}
+                action={updatePotWithID}
                 className="space-y-8"
             >
-                {/* Step 2: Connect Select with React Hook Form */}
                 <FormField
                     control={form.control}
-                    name="category"
+                    name="name"
                     render={({ field }) => (
                         <FormItem>
-                            <FormLabel>Category</FormLabel>
+                            <FormLabel>Pot name</FormLabel>
                             <Select
                                 {...field}
                                 onValueChange={field.onChange}
-                                // defaultValue={preBudget?.category}
-                                value={preBudget?.category}
+                                value={prePot?.name}
                                 disabled
                             >
                                 <SelectTrigger className="w-full">
                                     <SelectValue placeholder="Category" />
                                 </SelectTrigger>
                                 <SelectContent>
-                                    {budgets.map((budget) => (
+                                    {pots.map((pot) => (
                                         <SelectItem
-                                            key={budget.id}
-                                            value={budget.category}
+                                            key={pot.id}
+                                            value={pot.name}
                                         >
-                                            {budget.category}
+                                            {pot.name}
                                         </SelectItem>
                                     ))}
                                 </SelectContent>
@@ -95,21 +93,18 @@ export default function EditBudgetForm({
 
                 <FormField
                     control={form.control}
-                    name="maximum"
+                    name="target"
                     render={({ field }) => (
                         <FormItem>
-                            <FormLabel>Maximum budget amount</FormLabel>
+                            <FormLabel>Target</FormLabel>
                             <FormControl>
                                 <Input
                                     type="number"
-                                    placeholder="10"
+                                    placeholder="100"
                                     {...field}
-                                    // value={preBudget?.maximum}
                                 />
                             </FormControl>
-                            <FormDescription>
-                                Maximum budget amount.
-                            </FormDescription>
+                            <FormDescription>Target amount.</FormDescription>
                             <FormMessage />
                         </FormItem>
                     )}
@@ -122,12 +117,11 @@ export default function EditBudgetForm({
                         <FormItem>
                             <FormLabel>Theme</FormLabel>
                             <Select
-                                onValueChange={(value) => {
-                                    field.onChange(value); // Update value in React Hook Form
-                                }}
-                                {...field}
-                                // disabled
-                                 value={field.value}
+                                onValueChange={field.onChange}
+                                {...field}                              
+                                  value={field.value || prePot?.theme} // Use prePot theme if field.value is null or undefined
+                                  defaultValue={prePot?.theme} // Set default value based on prePot
+                                  disabled
                             >
                                 <SelectTrigger className="w-full">
                                     <SelectValue placeholder="theme" />
@@ -162,11 +156,7 @@ export default function EditBudgetForm({
                         </FormItem>
                     )}
                 />
-                {/*
-                <Button type="submit" className="w-full">
-                    Submit
-                </Button>
-                */}
+
                 <DialogFooter className="sm:justify-start">
                     <DialogClose asChild>
                         <Button type="submit" className="w-full">
