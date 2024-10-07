@@ -28,7 +28,7 @@ import {
     AlertDialogTitle,
     AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
-import { DeleteBudget } from "../ui/budget/DeleteBudgetForm";
+import { DeletePot } from "../ui/pots/DeletePotForm"; 
 import Meter from "../ui/budget/Meter";
 import EditPotForm from "../ui/pots/EditPotForm";
 
@@ -137,7 +137,7 @@ export default async function Page() {
                                                     focus:outline-dashed focus:outline-current focus:outline-1 focus:-outline-offset-4
                                                           hover:outline-dashed hover:outline-current hover:outline-1 hover:-outline-offset-4"
                                         >
-                                            Delete budget
+                                            Delete Pot
                                         </AlertDialogTrigger>
                                         <AlertDialogContent className="w-11/12 sm:max-w-[425px] rounded-xl">
                                             <AlertDialogHeader>
@@ -147,7 +147,7 @@ export default async function Page() {
                                                 </AlertDialogTitle>
                                                 <AlertDialogDescription>
                                                     Are you sure you want to
-                                                    delete this budget? This
+                                                    delete this Pot? This
                                                     action cannot be reversed
                                                     and the data in it will be
                                                     removed forever
@@ -158,7 +158,7 @@ export default async function Page() {
                                                     No, Go Back
                                                 </AlertDialogCancel>
 
-                                                <DeleteBudget id={pot.id} />
+                                                <DeletePot id={pot.id} />
                                             </AlertDialogFooter>
                                         </AlertDialogContent>
                                     </AlertDialog>

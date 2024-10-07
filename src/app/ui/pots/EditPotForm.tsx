@@ -41,8 +41,8 @@ export default function EditBudgetForm({
 }: Readonly<{ id: string; pots: Pot[] }>) {
     const updatePotWithID = updatePot.bind(null, id);
     const prePot = pots.find((pot) => pot.id === id);
-    
-    console.log(prePot)
+
+    console.log(prePot);
     const form = useForm<z.infer<typeof PotFormSchema>>({
         resolver: zodResolver(PotFormSchema),
         defaultValues: {
@@ -50,7 +50,7 @@ export default function EditBudgetForm({
             theme: prePot?.theme ?? "",
         },
     });
-    
+
     const usedThemes = pots.map((pot) => pot.theme);
 
     return (
@@ -118,10 +118,9 @@ export default function EditBudgetForm({
                             <FormLabel>Theme</FormLabel>
                             <Select
                                 onValueChange={field.onChange}
-                                {...field}                              
-                                  value={field.value || prePot?.theme} // Use prePot theme if field.value is null or undefined
-                                  defaultValue={prePot?.theme} // Set default value based on prePot
-                                  disabled
+                                {...field}
+                                value={field.value || prePot?.theme} // Use prePot theme if field.value is null or undefined
+                                defaultValue={prePot?.theme} // Set default value based on prePot
                             >
                                 <SelectTrigger className="w-full">
                                     <SelectValue placeholder="theme" />

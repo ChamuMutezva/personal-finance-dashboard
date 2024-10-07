@@ -11,7 +11,7 @@ import {
     SelectTrigger,
     SelectValue,
 } from "@/components/ui/select";
-import { createBudget } from "../../lib/actions";
+import { createPot } from "../../lib/actions";
 import { categories, colors, fetchPots } from "@/app/lib/data";
 
 import {
@@ -28,9 +28,10 @@ import { Pot } from "@/app/lib/definitions";
 import { DialogClose, DialogFooter } from "@/components/ui/dialog";
 
 const formSchema = z.object({
-    maximum: z.number().positive(),
-    category: z.string().min(1, "Category is required"),
-    theme: z.string().min(1, "Category is required"),
+    target: z.number().positive(),
+    total: z.number().positive(),
+    name: z.string().min(1, "Pot name is required").max(30),
+    theme: z.string().min(1, "Theme is required"),
 });
 
 function AddPotForm({ pots }: { pots: Pot[] }) {
@@ -38,50 +39,38 @@ function AddPotForm({ pots }: { pots: Pot[] }) {
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
         defaultValues: {
-            maximum: 10,
-            category: "",
+            target: 1000,
+            total: 10,
+            name: "",
             theme: "",
         },
     });
 
     // Get used categories and themes
     // const usedCategories = budgets.map((budget) => budget.category);
-    //  const usedThemes = budgets.map((budget) => budget.theme);
+    const usedThemes = pots.map((pot) => pot.theme);
 
     return (
         <Form {...form}>
-            <form
-                id="add-budget-form"
-                action={createBudget}              
-                className="space-y-8"
-            >
-                {/* Step 2: Connect Select with React Hook Form */}
+            <form id="add-pot-form" action={createPot} className="space-y-8">
                 <FormField
                     control={form.control}
-                    name="category"
+                    name="name"
                     render={({ field }) => (
                         <FormItem>
-                            <FormLabel>Pot Name</FormLabel>
-                            <Select
-                                onValueChange={field.onChange}
-                                // value={field.value}
-                                {...field}
-                            >
-                                <SelectTrigger className="w-full">
-                                    <SelectValue placeholder="Pot" />
-                                </SelectTrigger>
-                                <SelectContent>
-                                    {pots.map((pot) => (
-                                        <SelectItem
-                                            key={pot.id}
-                                            value={pot.name}
-                                            className={`flex justify-between`}
-                                        >
-                                            {pot.name}
-                                        </SelectItem>
-                                    ))}
-                                </SelectContent>
-                            </Select>
+                            <FormLabel>Pot name</FormLabel>
+                            <FormControl>
+                                <Input
+                                    type="text"
+                                    placeholder="Pot name"
+                                    required
+                                    maxLength={30}
+                                    {...field}
+                                />
+                            </FormControl>
+                            <FormDescription className="text-right">{`${
+                                30 - field.value.length
+                            } of 30 characters left`}</FormDescription>
                             <FormMessage />
                         </FormItem>
                     )}
@@ -89,10 +78,32 @@ function AddPotForm({ pots }: { pots: Pot[] }) {
 
                 <FormField
                     control={form.control}
-                    name="maximum"
+                    name="target"
                     render={({ field }) => (
                         <FormItem>
                             <FormLabel>Target</FormLabel>
+                            <FormControl>
+                                <Input
+                                    type="number"
+                                    placeholder="100"
+                                    required
+                                    {...field}
+                                />
+                            </FormControl>
+                            <FormDescription>
+                                Target pot amount.
+                            </FormDescription>
+                            <FormMessage />
+                        </FormItem>
+                    )}
+                />
+
+                <FormField
+                    control={form.control}
+                    name="total"
+                    render={({ field }) => (
+                        <FormItem>
+                            <FormLabel>Total</FormLabel>
                             <FormControl>
                                 <Input
                                     type="number"
@@ -101,9 +112,7 @@ function AddPotForm({ pots }: { pots: Pot[] }) {
                                     {...field}
                                 />
                             </FormControl>
-                            <FormDescription>
-                                Maximum pot amount.
-                            </FormDescription>
+                            <FormDescription>Total pot amount.</FormDescription>
                             <FormMessage />
                         </FormItem>
                     )}
@@ -131,6 +140,9 @@ function AddPotForm({ pots }: { pots: Pot[] }) {
                                             key={color.hex}
                                             value={color.hex}
                                             className={`flex gap-8 items-center justify-start min-h-8`}
+                                            disabled={usedThemes.includes(
+                                                color.hex
+                                            )} // Disable if already in use
                                         >
                                             <span
                                                 className={`inline-block relative h-3 w-3 rounded-full mr-4`}
@@ -139,6 +151,11 @@ function AddPotForm({ pots }: { pots: Pot[] }) {
                                                 }}
                                             ></span>
                                             {color.color}
+                                            {usedThemes.includes(color.hex) && (
+                                                <span className="text-[hsl(var(--grey-500))] ml-2 line-through">
+                                                    already used
+                                                </span>
+                                            )}
                                         </SelectItem>
                                     ))}
                                 </SelectContent>
@@ -147,11 +164,7 @@ function AddPotForm({ pots }: { pots: Pot[] }) {
                         </FormItem>
                     )}
                 />
-                {/*
-                <Button type="submit" className="w-full">
-                    Submit
-                </Button>
-                */}
+
                 <DialogFooter className="sm:justify-start">
                     <DialogClose asChild>
                         <Button type="submit" className="w-full">

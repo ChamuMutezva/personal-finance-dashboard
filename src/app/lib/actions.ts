@@ -14,25 +14,24 @@ const CreatePotFormSchema = z.object({
 
 // CREATE A POT
 const CreatePot = CreatePotFormSchema.omit({ id: true });
-export async function createPot(id: string, formData: FormData) {
+export async function createPot( formData: FormData) {
     console.log(formData);
-    const { target, theme, name, total } = CreatePot.parse({
+    const { target, theme, name, total} = CreatePot.parse({
         target: formData.get("target"),
         theme: formData.get("theme"),
         name: formData.get("name"),
         total: formData.get("total"),
     });
-    console.log(`theme - ${theme}, target - ${target}`);
     try {
         await sql`
-        UPDATE pots
-        SET target = ${target}, theme = ${theme}, name = ${name}, total = ${total}
-        WHERE id = ${id}`;
+        INSERT INTO pots (target, theme, name, total)
+        VALUES (${target}, ${theme}, ${name} , ${total})`;
     } catch (error) {
         return {
-            message: "Database Error: Failed to update pot.",
+            message: "Database Error: Failed to create pot",
         };
     }
+   
     revalidatePath("/pots");
     redirect("/pots");
 }
@@ -73,6 +72,18 @@ export async function updatePot(id: string, formData: FormData) {
     redirect("/pots");
 }
 
+export async function deletePot(id: string) {
+    try {
+        await sql`DELETE FROM pots WHERE id = ${id}`;
+    } catch (error) {
+        return {
+            message: "Database Error: Failed to delete budget.",
+        };
+    }
+    revalidatePath("/pots");
+}
+
+// *****BUDGET ACTIONS*****
 const FormSchema = z.object({
     id: z.string(),
     maximum: z.coerce.number(),
