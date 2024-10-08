@@ -23,7 +23,7 @@ const Meter = ({
                     aria-valuenow={value}
                     aria-valuemin={min}
                     aria-valuemax={max}
-                    aria-labelledby="category-level-description category-usage"
+                    aria-labelledby="meter-usage"
                     className={`h-6 rounded`}
                     style={{
                         backgroundColor:

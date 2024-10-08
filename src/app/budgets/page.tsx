@@ -13,10 +13,9 @@ import clsx from "clsx";
 import { Button } from "@/components/ui/button";
 import {
     Dialog,
-    DialogClose,
+    // DialogClose,
     DialogContent,
     DialogDescription,
-    DialogFooter,
     // DialogFooter,
     DialogHeader,
     DialogTitle,
@@ -29,7 +28,7 @@ import {
 } from "@/components/ui/popover";
 import {
     AlertDialog,
-    AlertDialogAction,
+    // AlertDialogAction,
     AlertDialogCancel,
     AlertDialogContent,
     AlertDialogDescription,
@@ -161,7 +160,7 @@ export default async function Page() {
                             <span className="sr-only">item</span>
                         </Button>
                     </DialogTrigger>
-                    <DialogContent className="w-11/12 sm:max-w-[425px] rounded-xl">
+                    <DialogContent className="w-11/12 sm:max-w-[35rem] rounded-xl">
                         <DialogHeader>
                             <DialogTitle>Add New Budget</DialogTitle>
                             <DialogDescription>
@@ -278,7 +277,7 @@ export default async function Page() {
                                                             Edit budget
                                                         </Button>
                                                     </DialogTrigger>
-                                                    <DialogContent className="w-11/12 sm:max-w-[425px] rounded-xl">
+                                                    <DialogContent className="w-11/12 sm:max-w-[35rem] rounded-xl">
                                                         <DialogHeader>
                                                             <DialogTitle>
                                                                 Edit{" "}
@@ -313,10 +312,12 @@ export default async function Page() {
                                                     >
                                                         Delete budget
                                                     </AlertDialogTrigger>
-                                                    <AlertDialogContent className="w-11/12 sm:max-w-[425px] rounded-xl">
+                                                    <AlertDialogContent className="w-11/12 sm:max-w-[35rem] rounded-xl">
                                                         <AlertDialogHeader>
                                                             <AlertDialogTitle>
-                                                                Delete{` '${budget.category}'`}?
+                                                                Delete
+                                                                {` '${budget.category}'`}
+                                                                ?
                                                             </AlertDialogTitle>
                                                             <AlertDialogDescription>
                                                                 Are you sure you
@@ -368,7 +369,7 @@ export default async function Page() {
                                                 }}
                                             />
                                             <p
-                                                id="category-usage"
+                                                id="meter-usage"
                                                 className="flex flex-col flex-1"
                                             >
                                                 Spent{" "}

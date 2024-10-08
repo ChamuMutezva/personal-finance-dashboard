@@ -12,7 +12,7 @@ import {
     SelectValue,
 } from "@/components/ui/select";
 import { createPot } from "../../lib/actions";
-import { categories, colors, fetchPots } from "@/app/lib/data";
+import {  colors  } from "@/app/lib/data";
 
 import {
     Form,
@@ -34,7 +34,7 @@ const formSchema = z.object({
     theme: z.string().min(1, "Theme is required"),
 });
 
-function AddPotForm({ pots }: { pots: Pot[] }) {
+function AddPotForm({ pots }: Readonly<{ pots: Pot[] }>) {
     // 1. Define your form.
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
@@ -52,7 +52,7 @@ function AddPotForm({ pots }: { pots: Pot[] }) {
 
     return (
         <Form {...form}>
-            <form id="add-pot-form" action={createPot} className="space-y-8">
+            <form id="add-pot-form" action={createPot}>
                 <FormField
                     control={form.control}
                     name="name"
@@ -165,7 +165,7 @@ function AddPotForm({ pots }: { pots: Pot[] }) {
                     )}
                 />
 
-                <DialogFooter className="sm:justify-start">
+                <DialogFooter className="sm:justify-start mt-4">
                     <DialogClose asChild>
                         <Button type="submit" className="w-full">
                             Add Pot

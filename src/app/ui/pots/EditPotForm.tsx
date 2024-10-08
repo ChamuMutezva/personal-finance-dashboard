@@ -121,6 +121,7 @@ export default function EditBudgetForm({
                                 {...field}
                                 value={field.value || prePot?.theme} // Use prePot theme if field.value is null or undefined
                                 defaultValue={prePot?.theme} // Set default value based on prePot
+                                disabled
                             >
                                 <SelectTrigger className="w-full">
                                     <SelectValue placeholder="theme" />

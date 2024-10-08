@@ -28,7 +28,7 @@ import {
     AlertDialogTitle,
     AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
-import { DeletePot } from "../ui/pots/DeletePotForm"; 
+import { DeletePot } from "../ui/pots/DeletePotForm";
 import Meter from "../ui/budget/Meter";
 import EditPotForm from "../ui/pots/EditPotForm";
 
@@ -53,7 +53,7 @@ export default async function Page() {
                             + Add New Pot <span className="sr-only">item</span>
                         </Button>
                     </DialogTrigger>
-                    <DialogContent className="w-11/12 sm:max-w-[425px] rounded-xl">
+                    <DialogContent className="w-11/12 sm:max-w-[35rem] rounded-xl">
                         <DialogHeader>
                             <DialogTitle>Add New Pot</DialogTitle>
                             <DialogDescription>
@@ -110,7 +110,7 @@ export default async function Page() {
                                                 Edit pot
                                             </Button>
                                         </DialogTrigger>
-                                        <DialogContent className="w-11/12 sm:max-w-[425px] rounded-xl">
+                                        <DialogContent className="w-11/12 sm:max-w-[35rem] rounded-xl">
                                             <DialogHeader>
                                                 <DialogTitle>
                                                     Edit {pot.name}
@@ -139,7 +139,7 @@ export default async function Page() {
                                         >
                                             Delete Pot
                                         </AlertDialogTrigger>
-                                        <AlertDialogContent className="w-11/12 sm:max-w-[425px] rounded-xl">
+                                        <AlertDialogContent className="w-11/12 sm:max-w-[35rem] rounded-xl">
                                             <AlertDialogHeader>
                                                 <AlertDialogTitle>
                                                     Delete
@@ -147,10 +147,10 @@ export default async function Page() {
                                                 </AlertDialogTitle>
                                                 <AlertDialogDescription>
                                                     Are you sure you want to
-                                                    delete this Pot? This
-                                                    action cannot be reversed
-                                                    and the data in it will be
-                                                    removed forever
+                                                    delete this Pot? This action
+                                                    cannot be reversed and the
+                                                    data in it will be removed
+                                                    forever
                                                 </AlertDialogDescription>
                                             </AlertDialogHeader>
                                             <AlertDialogFooter>
@@ -176,7 +176,10 @@ export default async function Page() {
                             max={pot.target}
                             color={pot.theme}
                         />
-                        <p className="flex justify-between items-center">
+                        <p
+                            id="meter-usage"
+                            className="flex justify-between items-center"
+                        >
                             <span>
                                 {((pot.total / pot.target) * 100).toFixed(2)}%
                             </span>{" "}
