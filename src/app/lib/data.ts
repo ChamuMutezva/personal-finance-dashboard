@@ -33,6 +33,17 @@ export const categories = [
     { category: "General" },
 ];
 
+export async function fetchBills() {
+    try {
+        const data = await sql<Transaction>`SELECT DISTINCT * FROM transactions
+       WHERE category = 'Bills'`;
+        return data.rows;
+    } catch (error) {
+        console.error("Database Error:", error);
+        throw new Error("Failed to fetch balance data.");
+    }
+}
+
 export async function fetchBalance() {
     try {
         const data = await sql<Balance>`SELECT * FROM balances`;

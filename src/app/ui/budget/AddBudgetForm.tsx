@@ -44,12 +44,6 @@ function AddBudgetForm({ budgets }: { budgets: Budget[] }) {
         },
     });
 
-    /*
-    function onSubmit(values: z.infer<typeof formSchema>) {        
-        console.log(values);
-    }
-  */
-
     // Get used categories and themes
     const usedCategories = budgets.map((budget) => budget.category);
     const usedThemes = budgets.map((budget) => budget.theme);
