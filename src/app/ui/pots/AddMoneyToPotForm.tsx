@@ -5,7 +5,6 @@ import { useForm } from "react-hook-form";
 import z from "zod";
 import { Button } from "@/components/ui/button";
 import { createPot } from "../../lib/actions";
-import { colors } from "@/app/lib/data";
 
 import {
     Form,
@@ -19,8 +18,6 @@ import {
 import { Input } from "@/components/ui/input";
 import { Pot } from "@/app/lib/definitions";
 import { DialogClose, DialogFooter } from "@/components/ui/dialog";
-import Meter from "../budget/Meter";
-import ProgressMeter  from "./ProgressMeter";
 
 const formSchema = z.object({
     target: z.number().positive(),
@@ -40,11 +37,6 @@ function AddMoneyToPotForm({ pot }: Readonly<{ pot: Pot }>) {
             theme: "",
         },
     });
-
-    console.log(pot);
-    // Get used categories and themes
-    // const usedCategories = budgets.map((budget) => budget.category);
-    //  const usedThemes = pots.map((pot) => pot.theme);
 
     return (
         <Form {...form}>
