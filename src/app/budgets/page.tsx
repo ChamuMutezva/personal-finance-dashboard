@@ -262,6 +262,9 @@ export default async function Page() {
                                                     width={14}
                                                     height={4}
                                                 />
+                                                <span className="sr-only">
+                                                    edit or delete 
+                                                </span>
                                             </PopoverTrigger>
                                             <PopoverContent className="flex relative flex-col gap-2 w-[134px] h-[91px] mr-8">
                                                 <Dialog>

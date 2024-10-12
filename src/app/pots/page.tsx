@@ -31,6 +31,7 @@ import {
 import { DeletePot } from "../ui/pots/DeletePotForm";
 import Meter from "../ui/budget/Meter";
 import EditPotForm from "../ui/pots/EditPotForm";
+import AddMoneyToPotForm from "../ui/pots/AddMoneyToPotForm";
 
 export default async function Page() {
     const pots = await fetchPots();
@@ -186,13 +187,34 @@ export default async function Page() {
                             <span>Target of ${pot.target}</span>
                         </p>
                         <div className="flex justify-between items-center">
-                            <Button
-                                className={`bg-[hsl(var(--beige-100))] text-[hsl(var--grey-900)] text-preset-4 text-bold
-                                focus:text-[hsl(var(--white))] focus:outline-dashed focus:outline-current focus:outline-1 focus:-outline-offset-4
-                               hover:text-[hsl(var(--white))] hover:outline-dashed hover:outline-current hover:outline-1 hover:-outline-offset-4`}
-                            >
-                                + Add Money
-                            </Button>
+                            <Dialog>
+                                <DialogTrigger asChild>
+                                    <Button
+                                        variant="default"
+                                        className={`focus:outline-dashed focus:outline-current focus:outline-1 focus:-outline-offset-4
+                                hover:outline-dashed hover:outline-current hover:outline-1 hover:-outline-offset-4`}
+                                    >
+                                        + Add Money
+                                        <span className="sr-only">to pot</span>
+                                    </Button>
+                                </DialogTrigger>
+                                <DialogContent className="w-11/12 sm:max-w-[35rem] rounded-xl">
+                                    <DialogHeader>
+                                        <DialogTitle>
+                                            Add to {`'${pot.name}'`}
+                                        </DialogTitle>
+                                        <DialogDescription>
+                                            Add money to your pot to keep it
+                                            separate from your main balance. As
+                                            soon as you add this money, it will
+                                            be deducted from your current
+                                            balance
+                                        </DialogDescription>
+                                    </DialogHeader>
+                                    <AddMoneyToPotForm pot={pot} />
+                                </DialogContent>
+                            </Dialog>
+
                             <Button
                                 className={`bg-[hsl(var(--beige-100))] text-[hsl(var--grey-900)] text-preset-4 text-bold
                                 focus:text-[hsl(var(--white))] focus:outline-dashed focus:outline-current focus:outline-1 focus:-outline-offset-4
