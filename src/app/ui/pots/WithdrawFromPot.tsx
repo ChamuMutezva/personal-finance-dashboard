@@ -26,7 +26,7 @@ const formSchema = z.object({
     theme: z.string().min(1, "Theme is required"),
 });
 
-function AddMoneyToPotForm({ pot }: Readonly<{ pot: Pot }>) {
+function WithDrawFromPot({ pot }: Readonly<{ pot: Pot }>) {
     // 1. Define your form.
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
@@ -55,7 +55,7 @@ function AddMoneyToPotForm({ pot }: Readonly<{ pot: Pot }>) {
                                     {...field}
                                 />
                             </FormControl>
-                            <FormDescription>Amount to Add.</FormDescription>
+                            <FormDescription>Amount to withdraw</FormDescription>
                             <FormMessage />
                         </FormItem>
                     )}
@@ -64,7 +64,7 @@ function AddMoneyToPotForm({ pot }: Readonly<{ pot: Pot }>) {
                 <DialogFooter className="sm:justify-start mt-4">
                     <DialogClose asChild>
                         <Button type="submit" className="w-full">
-                            Confirm Addition
+                            Confirm Withdrawal
                         </Button>
                     </DialogClose>
                 </DialogFooter>
@@ -73,4 +73,4 @@ function AddMoneyToPotForm({ pot }: Readonly<{ pot: Pot }>) {
     );
 }
 
-export default AddMoneyToPotForm;
+export default WithDrawFromPot;

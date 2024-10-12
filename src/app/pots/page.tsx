@@ -32,6 +32,7 @@ import { DeletePot } from "../ui/pots/DeletePotForm";
 import Meter from "../ui/budget/Meter";
 import EditPotForm from "../ui/pots/EditPotForm";
 import AddMoneyToPotForm from "../ui/pots/AddMoneyToPotForm";
+import WithDrawFromPot from "../ui/pots/WithdrawFromPot";
 
 export default async function Page() {
     const pots = await fetchPots();
@@ -194,7 +195,7 @@ export default async function Page() {
                                         className={`focus:outline-dashed focus:outline-current focus:outline-1 focus:-outline-offset-4
                                 hover:outline-dashed hover:outline-current hover:outline-1 hover:-outline-offset-4`}
                                     >
-                                        + Add Money
+                                        + Add Money{" "}
                                         <span className="sr-only">to pot</span>
                                     </Button>
                                 </DialogTrigger>
@@ -222,6 +223,35 @@ export default async function Page() {
                             >
                                 Withdraw
                             </Button>
+                            <Dialog>
+                                <DialogTrigger asChild>
+                                    <Button
+                                        variant="default"
+                                        className={`focus:outline-dashed focus:outline-current focus:outline-1 focus:-outline-offset-4
+                                hover:outline-dashed hover:outline-current hover:outline-1 hover:-outline-offset-4`}
+                                    >
+                                        Withdraw Money{" "}
+                                        <span className="sr-only">
+                                            from pot
+                                        </span>
+                                    </Button>
+                                </DialogTrigger>
+                                <DialogContent className="w-11/12 sm:max-w-[35rem] rounded-xl">
+                                    <DialogHeader>
+                                        <DialogTitle>
+                                            Withdraw from {`'${pot.name}'`}
+                                        </DialogTitle>
+                                        <DialogDescription>
+                                            Withdraw from your pot to put money
+                                            back in your main balance. This will
+                                            reduce the amount you have in this
+                                            pot separate from your main balance.
+                                            
+                                        </DialogDescription>
+                                    </DialogHeader>
+                                    <WithDrawFromPot pot={pot} />
+                                </DialogContent>
+                            </Dialog>
                         </div>
                     </Card>
                 ))}
