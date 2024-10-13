@@ -4,7 +4,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import z from "zod";
 import { Button } from "@/components/ui/button";
-import { createPot } from "../../lib/actions";
+import { addMoneyToPot } from "../../lib/actions";
 
 import {
     Form,
@@ -27,6 +27,7 @@ const formSchema = z.object({
 });
 
 function AddMoneyToPotForm({ pot }: Readonly<{ pot: Pot }>) {
+    const updatePotWithID = addMoneyToPot.bind(null, pot.id, pot);
     // 1. Define your form.
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
@@ -45,7 +46,7 @@ function AddMoneyToPotForm({ pot }: Readonly<{ pot: Pot }>) {
 
     return (
         <Form {...form}>
-            <form id="add-pot-form" action={createPot}>
+            <form id="add-pot-form" action={updatePotWithID}>
                 <p className="flex justify-between items-center text-preset-4 text-[hsl(var(--grey-500))]">
                     New amount{" "}
                     <span className="text-[hsl(var(--grey-900))] text-preset-1 font-bold">
@@ -81,12 +82,13 @@ function AddMoneyToPotForm({ pot }: Readonly<{ pot: Pot }>) {
                     />
                 </div>
                 <p className="flex justify-between items-center text-preset-4 text-[hsl(var(--grey-500))]">
-                    {meterPercentage.toFixed(2)}% <span>Target of ${pot.target}</span>
+                    {meterPercentage.toFixed(2)}%{" "}
+                    <span>Target of ${pot.target}</span>
                 </p>
 
                 <FormField
                     control={form.control}
-                    name="target"
+                    name="total"
                     render={({ field }) => (
                         <FormItem>
                             <FormLabel>Amount</FormLabel>

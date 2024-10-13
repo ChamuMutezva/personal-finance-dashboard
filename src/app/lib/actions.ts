@@ -3,7 +3,89 @@ import { z } from "zod";
 import { sql } from "@vercel/postgres";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
+import { Pot } from "./definitions";
 
+// WITHDRAW MONEY FROM POT
+const WithdrawMoneyFromPotFormSchema = z.object({
+    id: z.string(),
+    name: z.string().max(30, "Name is required"),
+    target: z.coerce.number(),
+    total: z.coerce.number(),
+    theme: z.string(),
+});
+
+const WithdrawMoney = WithdrawMoneyFromPotFormSchema.omit({
+    id: true,
+    name: true,
+    target: true,
+    theme: true,
+});
+export async function withdrawMoneyFromPot(id: string, pot: Pot, formData: FormData) {
+    const { total } = WithdrawMoney.parse({
+        total: formData.get("total"),
+    });
+    try {
+        // increase the total in the pots table
+        await sql`
+        UPDATE pots
+        SET total = ${pot.total - total}
+        WHERE id = ${id}`;
+
+        // Update the balances table by reducing the current balance
+        await sql`
+         UPDATE balances
+         SET current = current + ${total}
+     `;
+    } catch (error) {
+        return {
+            message: "Database Error: Failed to withdraw money from pot.",
+        };
+    }
+    revalidatePath("/pots");
+    redirect("/pots");
+}
+
+// ADD MONEY TO POT
+const AddMoneyToPotFormSchema = z.object({
+    id: z.string(),
+    name: z.string().max(30, "Name is required"),
+    target: z.coerce.number(),
+    total: z.coerce.number(),
+    theme: z.string(),
+});
+
+const AddMoney = AddMoneyToPotFormSchema.omit({
+    id: true,
+    name: true,
+    target: true,
+    theme: true,
+});
+export async function addMoneyToPot(id: string, pot: Pot, formData: FormData) {
+    const { total } = AddMoney.parse({
+        total: formData.get("total"),
+    });
+    try {
+        // increase the total in the pots table
+        await sql`
+        UPDATE pots
+        SET total = ${total + pot.total}
+        WHERE id = ${id}`;
+
+        // Update the balances table by reducing the current balance
+        await sql`
+         UPDATE balances
+         SET current = current - ${total}
+     `;
+    } catch (error) {
+        return {
+            message: "Database Error: Failed to add money to pot.",
+        };
+    }
+    revalidatePath("/pots");
+    redirect("/pots");
+}
+
+// CREATE A POT
 const CreatePotFormSchema = z.object({
     id: z.string(),
     name: z.string().max(30, "Name is required"),
@@ -12,11 +94,10 @@ const CreatePotFormSchema = z.object({
     theme: z.string(),
 });
 
-// CREATE A POT
 const CreatePot = CreatePotFormSchema.omit({ id: true });
-export async function createPot( formData: FormData) {
+export async function createPot(formData: FormData) {
     console.log(formData);
-    const { target, theme, name, total} = CreatePot.parse({
+    const { target, theme, name, total } = CreatePot.parse({
         target: formData.get("target"),
         theme: formData.get("theme"),
         name: formData.get("name"),
@@ -31,7 +112,7 @@ export async function createPot( formData: FormData) {
             message: "Database Error: Failed to create pot",
         };
     }
-   
+
     revalidatePath("/pots");
     redirect("/pots");
 }
