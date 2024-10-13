@@ -107,6 +107,12 @@ export async function createPot(formData: FormData) {
         await sql`
         INSERT INTO pots (target, theme, name, total)
         VALUES (${target}, ${theme}, ${name} , ${total})`;
+
+        // Update the balances table by reducing the current balance
+        await sql`
+         UPDATE balances
+         SET current = current - ${total}
+     `;
     } catch (error) {
         return {
             message: "Database Error: Failed to create pot",
@@ -153,9 +159,14 @@ export async function updatePot(id: string, formData: FormData) {
     redirect("/pots");
 }
 
-export async function deletePot(id: string) {
-    try {
-        await sql`DELETE FROM pots WHERE id = ${id}`;
+export async function deletePot(id: string, pot: Pot) {
+    try {       
+        await sql`
+        UPDATE balances
+        SET current = current + ${pot.total}`;
+
+        await sql`DELETE FROM pots WHERE id = ${id}`
+         
     } catch (error) {
         return {
             message: "Database Error: Failed to delete budget.",

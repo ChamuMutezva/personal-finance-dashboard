@@ -160,7 +160,7 @@ export default async function Page() {
                                                     No, Go Back
                                                 </AlertDialogCancel>
 
-                                                <DeletePot id={pot.id} />
+                                                <DeletePot  pot={pot} />
                                             </AlertDialogFooter>
                                         </AlertDialogContent>
                                     </AlertDialog>
