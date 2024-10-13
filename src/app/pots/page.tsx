@@ -29,7 +29,7 @@ import {
     AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import { DeletePot } from "../ui/pots/DeletePotForm";
-import Meter from "../ui/budget/Meter";
+import MeterPots from "../ui/pots/MeterPots";
 import EditPotForm from "../ui/pots/EditPotForm";
 import AddMoneyToPotForm from "../ui/pots/AddMoneyToPotForm";
 import WithDrawFromPot from "../ui/pots/WithdrawFromPot";
@@ -172,7 +172,7 @@ export default async function Page() {
                         >
                             Total saved ${pot.total}
                         </p>
-                        <Meter
+                        <MeterPots
                             value={pot.total}
                             min={0}
                             max={pot.target}
@@ -245,8 +245,7 @@ export default async function Page() {
                                             Withdraw from your pot to put money
                                             back in your main balance. This will
                                             reduce the amount you have in this
-                                            pot separate from your main balance.
-                                            
+                                            pot.
                                         </DialogDescription>
                                     </DialogHeader>
                                     <WithDrawFromPot pot={pot} />

@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import z from "zod";
@@ -38,21 +38,80 @@ function AddMoneyToPotForm({ pot }: Readonly<{ pot: Pot }>) {
         },
     });
 
+    const [addAmount, setAddAmount] = useState(0);
+
+    const meterPercentage = ((addAmount + pot.total) / pot.target) * 100;
+    console.log(meterPercentage);
+
     return (
         <Form {...form}>
-            <form id="add-pot-form" action={createPot}>                       
+            <form id="add-pot-form" action={createPot}>
+                <p className="flex justify-between items-center text-preset-4 text-[hsl(var(--grey-500))]">
+                    New amount{" "}
+                    <span className="text-[hsl(var(--grey-900))] text-preset-1 font-bold">
+                        ${addAmount}
+                    </span>
+                </p>
+                <div className="meter-container w-full h-2 bg-slate-200 rounded relative">
+                    <div
+                        role="meter"
+                        aria-valuenow={pot.total}
+                        aria-valuemin={0}
+                        aria-valuemax={pot.target}
+                        style={{
+                            backgroundColor: pot.theme,
+                            transition: "width 0.3s ease-in-out",
+                            width: `${(pot.total / pot.target) * 100}%`,
+                        }}
+                        className={`h-2 rounded-s-md border-r-2 absolute left-0`}
+                    />
+                    <div
+                        role="meter"
+                        aria-valuenow={addAmount}
+                        aria-valuemin={pot.total}
+                        aria-valuemax={pot.target - pot.total}
+                        style={{
+                            position: "absolute",
+                            backgroundColor: "yellowgreen",
+                            transition: "width 0.3s ease-in-out",
+                            width: `${(addAmount / pot.target) * 100}%`,
+                            left: `${(pot.total / pot.target) * 100}%`,
+                        }}
+                        className={`h-2 rounded-e-md border-l-2 absolute`}
+                    />
+                </div>
+                <p className="flex justify-between items-center text-preset-4 text-[hsl(var(--grey-500))]">
+                    {meterPercentage.toFixed(2)}% <span>Target of ${pot.target}</span>
+                </p>
+
                 <FormField
                     control={form.control}
                     name="target"
                     render={({ field }) => (
                         <FormItem>
-                            <FormLabel>Target</FormLabel>
+                            <FormLabel>Amount</FormLabel>
                             <FormControl>
                                 <Input
                                     type="number"
                                     placeholder="100"
                                     required
+                                    max={pot.target}
+                                    maxLength={2}
                                     {...field}
+                                    onChange={(evt) => {
+                                        const value = Number(evt.target.value);
+                                        if (value + pot.total > pot.target) {
+                                            setAddAmount(
+                                                pot.target - pot.total
+                                            );
+                                            field.onChange(
+                                                pot.target - pot.total
+                                            );
+                                        } else {
+                                            setAddAmount(value);
+                                            field.onChange(value);
+                                        }
+                                    }}
                                 />
                             </FormControl>
                             <FormDescription>Amount to Add.</FormDescription>
