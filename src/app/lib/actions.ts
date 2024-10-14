@@ -20,7 +20,11 @@ const WithdrawMoney = WithdrawMoneyFromPotFormSchema.omit({
     target: true,
     theme: true,
 });
-export async function withdrawMoneyFromPot(id: string, pot: Pot, formData: FormData) {
+export async function withdrawMoneyFromPot(
+    id: string,
+    pot: Pot,
+    formData: FormData
+) {
     const { total } = WithdrawMoney.parse({
         total: formData.get("total"),
     });
@@ -160,13 +164,12 @@ export async function updatePot(id: string, formData: FormData) {
 }
 
 export async function deletePot(id: string, pot: Pot) {
-    try {       
+    try {
         await sql`
         UPDATE balances
         SET current = current + ${pot.total}`;
 
-        await sql`DELETE FROM pots WHERE id = ${id}`
-         
+        await sql`DELETE FROM pots WHERE id = ${id}`;
     } catch (error) {
         return {
             message: "Database Error: Failed to delete budget.",
@@ -178,19 +181,39 @@ export async function deletePot(id: string, pot: Pot) {
 // *****BUDGET ACTIONS*****
 const FormSchema = z.object({
     id: z.string(),
-    maximum: z.coerce.number(),
+    maximum: z.coerce
+        .number()
+        .gt(0, { message: "Please enter an amount greater than $0." }),
     category: z.string().min(1, "Category is required"),
     theme: z.string().min(1, "Category is required"),
 });
 
+export type State = {
+    errors?: {
+        maximum?: string[];
+        category?: string[];
+        theme?: string[];
+    };
+    message?: string | null;
+};
+
 const CreateBudget = FormSchema.omit({ id: true });
-export async function createBudget(formData: FormData) {
-    const { maximum, category, theme } = CreateBudget.parse({
+export async function createBudget(prevState: State, formData: FormData) {
+    const validatedFields = CreateBudget.safeParse({
         maximum: formData.get("maximum"),
         category: formData.get("category"),
         theme: formData.get("theme"),
     });
 
+    // If form validation fails, return errors early. Otherwise, continue.
+    if (!validatedFields.success) {
+        return {
+            errors: validatedFields.error.flatten().fieldErrors,
+            message: "Missing Fields. Failed to Create Invoice.",
+        };
+    }
+
+    const { maximum, category, theme } = validatedFields.data;
     try {
         await sql`
         INSERT INTO budgets (maximum, category, theme)

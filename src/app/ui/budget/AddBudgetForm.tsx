@@ -1,5 +1,6 @@
 "use client";
 import React from "react";
+import { useFormState } from "react-dom";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import z from "zod";
@@ -11,7 +12,7 @@ import {
     SelectTrigger,
     SelectValue,
 } from "@/components/ui/select";
-import { createBudget } from "../../lib/actions";
+import { createBudget, State } from "../../lib/actions";
 import { categories, colors } from "@/app/lib/data";
 
 import {
@@ -44,6 +45,9 @@ function AddBudgetForm({ budgets }: { budgets: Budget[] }) {
         },
     });
 
+    const initialState: State = { message: null, errors: {} };
+    const [state, formAction] = useFormState(createBudget, initialState);
+
     // Get used categories and themes
     const usedCategories = budgets.map((budget) => budget.category);
     const usedThemes = budgets.map((budget) => budget.theme);
@@ -52,7 +56,7 @@ function AddBudgetForm({ budgets }: { budgets: Budget[] }) {
         <Form {...form}>
             <form
                 id="add-budget-form"
-                action={createBudget}
+                action={formAction}
                 /*  onSubmit={form.handleSubmit(onSubmit)} */
                 className="space-y-8"
             >
@@ -67,6 +71,7 @@ function AddBudgetForm({ budgets }: { budgets: Budget[] }) {
                                 onValueChange={field.onChange}
                                 // value={field.value}
                                 {...field}
+                                aria-describedby="category-error"
                             >
                                 <SelectTrigger className="w-full">
                                     <SelectValue placeholder="Category" />
@@ -94,6 +99,23 @@ function AddBudgetForm({ budgets }: { budgets: Budget[] }) {
                                 </SelectContent>
                             </Select>
                             <FormMessage />
+                            <div
+                                id="category-error"
+                                aria-live="polite"
+                                aria-atomic="true"
+                            >
+                                {state.errors?.category &&
+                                    state.errors.category.map(
+                                        (error: string) => (
+                                            <p
+                                                className="mt-2 text-sm text-red-500"
+                                                key={error}
+                                            >
+                                                {error}
+                                            </p>
+                                        )
+                                    )}
+                            </div>
                         </FormItem>
                     )}
                 />
@@ -109,6 +131,7 @@ function AddBudgetForm({ budgets }: { budgets: Budget[] }) {
                                     type="number"
                                     placeholder="10"
                                     required
+                                    aria-describedby="maximum-error"
                                     {...field}
                                 />
                             </FormControl>
@@ -116,6 +139,23 @@ function AddBudgetForm({ budgets }: { budgets: Budget[] }) {
                                 Maximum budget amount.
                             </FormDescription>
                             <FormMessage />
+                            <div
+                                id="maximum-error"
+                                aria-live="polite"
+                                aria-atomic="true"
+                            >
+                                {state.errors?.maximum &&
+                                    state.errors.maximum.map(
+                                        (error: string) => (
+                                            <p
+                                                className="mt-2 text-sm text-red-500"
+                                                key={error}
+                                            >
+                                                {error}
+                                            </p>
+                                        )
+                                    )}
+                            </div>
                         </FormItem>
                     )}
                 />
@@ -131,6 +171,7 @@ function AddBudgetForm({ budgets }: { budgets: Budget[] }) {
                                     field.onChange(value); // Update value in React Hook Form
                                 }}
                                 {...field}
+                                 aria-describedby="theme-error"
                                 // value={field.value}
                             >
                                 <SelectTrigger className="w-full">
@@ -163,6 +204,21 @@ function AddBudgetForm({ budgets }: { budgets: Budget[] }) {
                                 </SelectContent>
                             </Select>
                             <FormMessage />
+                            <div
+                                id="theme-error"
+                                aria-live="polite"
+                                aria-atomic="true"
+                            >
+                                {state.errors?.theme &&
+                                    state.errors.theme.map((error: string) => (
+                                        <p
+                                            className="mt-2 text-sm text-red-500"
+                                            key={error}
+                                        >
+                                            {error}
+                                        </p>
+                                    ))}
+                            </div>
                         </FormItem>
                     )}
                 />

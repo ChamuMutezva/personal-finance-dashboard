@@ -216,13 +216,6 @@ export default async function Page() {
                                 </DialogContent>
                             </Dialog>
 
-                            <Button
-                                className={`bg-[hsl(var(--beige-100))] text-[hsl(var--grey-900)] text-preset-4 text-bold
-                                focus:text-[hsl(var(--white))] focus:outline-dashed focus:outline-current focus:outline-1 focus:-outline-offset-4
-                               hover:text-[hsl(var(--white))] hover:outline-dashed hover:outline-current hover:outline-1 hover:-outline-offset-4`}
-                            >
-                                Withdraw
-                            </Button>
                             <Dialog>
                                 <DialogTrigger asChild>
                                     <Button
