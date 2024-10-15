@@ -160,7 +160,7 @@ export default async function Page() {
                                                     No, Go Back
                                                 </AlertDialogCancel>
 
-                                                <DeletePot  pot={pot} />
+                                                <DeletePot pot={pot} />
                                             </AlertDialogFooter>
                                         </AlertDialogContent>
                                     </AlertDialog>
@@ -191,9 +191,9 @@ export default async function Page() {
                             <Dialog>
                                 <DialogTrigger asChild>
                                     <Button
-                                        variant="default"
+                                        variant="secondary"
                                         className={`focus:outline-dashed focus:outline-current focus:outline-1 focus:-outline-offset-4
-                                hover:outline-dashed hover:outline-current hover:outline-1 hover:-outline-offset-4`}
+                                                     hover:outline-dashed hover:outline-current hover:outline-1 hover:-outline-offset-4 font-bold`}
                                     >
                                         + Add Money{" "}
                                         <span className="sr-only">to pot</span>
@@ -219,9 +219,9 @@ export default async function Page() {
                             <Dialog>
                                 <DialogTrigger asChild>
                                     <Button
-                                        variant="default"
+                                        variant="secondary"
                                         className={`focus:outline-dashed focus:outline-current focus:outline-1 focus:-outline-offset-4
-                                hover:outline-dashed hover:outline-current hover:outline-1 hover:-outline-offset-4`}
+                                hover:outline-dashed hover:outline-current hover:outline-1 hover:-outline-offset-4 font-bold`}
                                     >
                                         Withdraw Money{" "}
                                         <span className="sr-only">

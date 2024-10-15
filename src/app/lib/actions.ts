@@ -87,6 +87,7 @@ export async function addMoneyToPot(id: string, pot: Pot, formData: FormData) {
     }
     revalidatePath("/pots");
     redirect("/pots");
+   
 }
 
 // CREATE A POT
