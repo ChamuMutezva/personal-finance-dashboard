@@ -1,17 +1,122 @@
 import Image from "next/image";
-import { fetchBalance, fetchPots } from "./lib/data";
+import {
+    fetchBalance,
+    fetchBudgets,
+    fetchByCategory,
+    fetchPots,
+    fetchTransactions,
+    fetchBills,
+} from "./lib/data";
 import { Card } from "@/components/ui/card";
 import { formatPosNegativeCurrency } from "./lib/utils";
-import Link from "next/link";
+import OverviewTable from "./ui/overview/OverviewTable";
+import TransactionsHeader from "./ui/overview/TransactionsHeader";
+import PotsHeader from "./ui/overview/PotsHeader";
+import PotsMain from "./ui/overview/PotsMain";
+import BudgetsHeader from "./ui/overview/BudgetsHeader";
+import { DonutOverview } from "./ui/overview/DonutOverview";
+import RecurringHeader from "./ui/overview/RecurringHeader";
 
 export default async function Home() {
     const balance = await fetchBalance();
     const pots = await fetchPots();
+    const transactions = await fetchTransactions();
+    const budgets = await fetchBudgets();
+    const category = await fetchByCategory();
+    const {
+        entertainmentCategory,
+        billsCategory,
+        diningCategory,
+        personalCategory,
+        groceriesCategory,
+        generalCategory,
+        shoppingCategory,
+        educationCategory,
+        lifestyleCategory,
+        transportationCategory,
+    } = category;
 
-    console.log(balance);
-    const amountSavedInPots = pots.reduce((accumulator, pot) => {
-        return Number(accumulator) + Number(pot.total);
+    // BUDGET CALCULATIONS
+    // calculate  budget used for Entertainment
+    const totalEntertainment = entertainmentCategory.reduce(
+        (accumulator, budget) => {
+            return Number(accumulator) + Number(-budget.amount);
+        },
+        0
+    );
+
+    // calculate  budget used for Bills
+    const totalTransportation = transportationCategory.reduce(
+        (accumulator, budget) => {
+            return Number(accumulator) + Number(-budget.amount);
+        },
+        0
+    );
+
+    // calculate  budget used for lifestyle
+    const totalLifestyle = lifestyleCategory.reduce((accumulator, budget) => {
+        return Number(accumulator) + Number(-budget.amount);
     }, 0);
+
+    // calculate  budget used for education
+    const totalEducation = educationCategory.reduce((accumulator, budget) => {
+        return Number(accumulator) + Number(-budget.amount);
+    }, 0);
+
+    // calculate  budget used for shopping
+    const totalShopping = shoppingCategory.reduce((accumulator, budget) => {
+        return Number(accumulator) + Number(-budget.amount);
+    }, 0);
+
+    // calculate  budget used for general
+    const totalGeneral = generalCategory.reduce((accumulator, budget) => {
+        return Number(accumulator) + Number(-budget.amount);
+    }, 0);
+
+    // calculate  budget used for Bills
+    const totalBills = billsCategory.reduce((accumulator, budget) => {
+        return Number(accumulator) + Number(-budget.amount);
+    }, 0);
+
+    // calculate  budget used for Dining Out
+    const totalDining = diningCategory.reduce((accumulator, budget) => {
+        return Number(accumulator) + Number(-budget.amount);
+    }, 0);
+
+    // calculate  budget used for Personal Care
+    const totalPersonal = personalCategory.reduce((accumulator, budget) => {
+        return Number(accumulator) + Number(-budget.amount);
+    }, 0);
+
+    // calculate  budget used for Personal Care
+    const totalGroceries = groceriesCategory.reduce((accumulator, budget) => {
+        return Number(accumulator) + Number(-budget.amount);
+    }, 0);
+
+    // RECURRING BILLS CALCULATIONS
+    const bills = await fetchBills();
+    const totalOverviewBills = bills.reduce((accumulator, budget) => {
+        return Number(accumulator) + Number(budget.amount);
+    }, 0);
+
+    const paidBillsFilter = bills.filter((bill) => bill.recurring === false);
+    const upcomingBillsFilter = bills.filter((bill) => bill.recurring === true);
+
+    const totalPaidBillsFilter = paidBillsFilter.reduce(
+        (accumulator, budget) => {
+            return Number(accumulator) + Number(budget.amount);
+        },
+        0
+    );
+
+    const totalUpcomingBillsFilter = upcomingBillsFilter.reduce(
+        (accumulator, budget) => {
+            return Number(accumulator) + Number(budget.amount);
+        },
+        0
+    );
+    console.log(totalUpcomingBillsFilter);
+
     return (
         <main className="flex-1 min-h-screen px-4 pt-6 pb-16 md:px-10 lg:p-8">
             <div className="flex justify-between items-center mb-4">
@@ -49,62 +154,54 @@ export default async function Home() {
                 </Card>
             </section>
             <section aria-label="pots">
-                <div className="flex items-center justify-between pb-4">
-                    <h2
-                        className={`text-preset-3 text-[hsl(var(--grey-900))] font-bold`}
-                    >
-                        Pots
-                    </h2>
-                    <Link
-                        href={`/pots`}
-                        className={`p-2 flex items-center gap-2 text-[hsl(var(--grey-500))] text-preset-4
-                                                focus:outline-dashed focus:outline-current focus:outline-1 focus:-outline-offset-4
-                                                hover:outline-dashed hover:outline-current hover:outline-1 hover:-outline-offset-4`}
-                    >
-                        See all <span className="sr-only">list of pots</span>
-                        <Image
-                            src="assets/images/icon-caret-right.svg"
-                            alt=""
-                            width={6}
-                            height={11}
-                        />
-                    </Link>
+                <PotsHeader />
+                <PotsMain pots={pots} />
+            </section>
+            <section aria-label="transactions">
+                <TransactionsHeader />
+                <OverviewTable transactions={transactions} />
+            </section>
+            <section aria-label="budgets">
+                <BudgetsHeader />
+                <div
+                    className={`flex flex-col gap-4 lg:flex-row lg:items-start`}
+                >
+                    {/* Left side component */}
+                    <DonutOverview
+                        budgets={budgets}
+                        totals={[
+                            totalEntertainment,
+                            totalBills,
+                            totalDining,
+                            totalPersonal,
+                            totalGroceries,
+                            totalEducation,
+                            totalGeneral,
+                            totalLifestyle,
+                            totalShopping,
+                            totalTransportation,
+                        ]}
+                    />
                 </div>
+            </section>
+            <section aria-label="recurring bills">
+                <RecurringHeader />
                 <div>
-                    <Card className="flex p-5 gap-4">
-                        <Image
-                            src="assets/images/icon-pot.svg"
-                            alt=""
-                            width={36}
-                            height={28}
-                        />
-                        <div>
-                            <h3 className="text-preset-4 text-[hsl(var(--grey-500))]">
-                                Total saved
-                            </h3>
-                            <p className="text-preset-1 text-[hsl(var(--grey-900))] font-bold">
-                                {formatPosNegativeCurrency(amountSavedInPots)}
-                            </p>
-                        </div>
-                    </Card>
-                    <div className="grid sm:grid-cols-2 gap-2">
-                        {pots.map((pot) => (
-                            <div key={pot.id} className="relative">
-                                <h3>{pot.name}</h3>
-                                <p>{formatPosNegativeCurrency(pot.total)}</p>
-                                <span
-                                    className="absolute"
-                                    style={{
-                                        width: "5px",
-                                        height: "100%",
-                                        top: 0,
-                                        left: "-1rem",
-                                        backgroundColor: pot.theme,
-                                    }}
-                                ></span>
-                            </div>
-                        ))}
-                    </div>
+                    <p className="flex justify-between items-center gap-4">
+                        Paid bills{" "}
+                        <span>
+                            {paidBillsFilter.length}(R
+                            {-totalPaidBillsFilter})
+                        </span>
+                    </p>
+                    <p className="flex justify-between items-center gap-4">
+                        Total upcoming{" "}
+                        <span>
+                            {upcomingBillsFilter.length}(R
+                            {-totalUpcomingBillsFilter})
+                        </span>
+                    </p>
+                    <p>Due soon</p>
                 </div>
             </section>
         </main>

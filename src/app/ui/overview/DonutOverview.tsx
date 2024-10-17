@@ -28,7 +28,7 @@ interface DonutProps {
     totals: number[];
 }
 
-export function Donut({ budgets, totals }: Readonly<DonutProps>) {
+export function DonutOverview({ budgets, totals }: Readonly<DonutProps>) {
     console.log(totals);
 
     const chartData = budgets.map((budget, index) => ({
@@ -74,8 +74,8 @@ export function Donut({ budgets, totals }: Readonly<DonutProps>) {
     const colors = ["#277C78", "#82C9D7", "#F2CDAC", "#626070"];
 
     return (
-        <Card className="flex flex-col sm:flex-row mt-4 lg:flex-col lg:flex-1">
-            <CardContent className="flex-1 pb-0 md:flex-1 lg:flex-none">
+        <Card className="flex flex-col sm:flex-row mt-4  lg:flex-1">
+            <CardContent className="flex-1 pb-0 md:flex-1 ">
                 <ChartContainer
                     config={chartConfig}
                     className="mx-auto aspect-square max-h-[310px]"
@@ -140,12 +140,12 @@ export function Donut({ budgets, totals }: Readonly<DonutProps>) {
             </CardContent>
             <CardFooter
                 id="chart-description"
-                className="left-side flex-col gap-2 text-sm items-start md:flex-1 justify-center"
+                className="left-side flex-col gap-2 text-sm items-start justify-center"
             >
-                <h2 className="text-left text-preset-2 font-bold py-4 text-[hsl(var(--grey-900))]">
+                <h2 className="sr-only">
                     Spending summary
                 </h2>
-                <div className="flex flex-col  w-full">
+                <div className="grid grid-cols-2 sm:grid-cols-1 w-full">
                     {chartData.map((budget) => {
                         return (
                             <div
@@ -168,22 +168,19 @@ export function Donut({ budgets, totals }: Readonly<DonutProps>) {
                                         top: 50%;
                                         transform: translateY(-50%);
                                         width: 0.25rem; /* Adjust width */
-                                        height: 40%; /* Adjust height */
+                                        height: 50%; /* Adjust height */
                                         background-color: var(
                                             --pseudo-bg-color
                                         ); /* Use the custom property */
                                         border-radius: 0.5rem; /* Adjust border radius if needed */
                                     }
                                 `}</style>
-                                <div className="flex justify-between items-center gap-4">
+                                <div className="flex flex-col ">
                                     <p className="text-preset-4 text-[hsl(var(--grey-500))]">
                                         {budget.category}
                                     </p>
                                     <p className="text-preset-3 font-bold text-[hsl(var(--grey-900))]">
-                                        ${budget.amount}{" "}
-                                        <span className="text-preset-5 text-[hsl(var(--grey-500))] font-normal">
-                                            of ${budget.maximum}
-                                        </span>
+                                        ${budget.amount}
                                     </p>
                                 </div>
                             </div>

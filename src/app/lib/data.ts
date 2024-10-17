@@ -58,7 +58,7 @@ export async function fetchTransactions() {
     try {
         console.log("Fetching transactions data...");
 
-        const data = await sql<Transaction>`SELECT * FROM transactions`;
+        const data = await sql<Transaction>`SELECT * FROM transactions LIMIT ${5}`;
 
         return data.rows;
     } catch (error) {
