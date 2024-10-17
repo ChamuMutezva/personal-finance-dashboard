@@ -9,10 +9,10 @@ import { Budget } from "../../lib/definitions";
 import {
     Card,
     CardContent,
-    // CardDescription,
+   // CardDescription,
     CardFooter,
-    // CardHeader,
-    //  CardTitle,
+   // CardHeader,
+  //  CardTitle,
 } from "@/components/ui/card";
 import {
     ChartConfig,
@@ -71,10 +71,18 @@ export function Donut({ budgets, totals }: Readonly<DonutProps>) {
         return chartData.reduce((acc, curr) => acc + curr.amount, 0);
     }, [chartData]);
 
+
+
     const colors = ["#277C78", "#82C9D7", "#F2CDAC", "#626070"];
 
     return (
-        <Card className="flex flex-col sm:flex-row mt-4 lg:flex-col lg:flex-1">
+        <Card className="flex flex-col md:flex-row mt-4 lg:flex-col lg:flex-1">
+            {/*
+            <CardHeader className="items-center pb-0">
+                <CardTitle>Summary of expenses</CardTitle>
+                <CardDescription>August - September 2024</CardDescription>
+            </CardHeader>
+            */}
             <CardContent className="flex-1 pb-0 md:flex-1 lg:flex-none">
                 <ChartContainer
                     config={chartConfig}
@@ -140,7 +148,7 @@ export function Donut({ budgets, totals }: Readonly<DonutProps>) {
             </CardContent>
             <CardFooter
                 id="chart-description"
-                className="left-side flex-col gap-2 text-sm items-start md:flex-1 justify-center"
+                className="left-side flex-col gap-2 text-sm items-start md:flex-1"
             >
                 <h2 className="text-left text-preset-2 font-bold py-4 text-[hsl(var(--grey-900))]">
                     Spending summary
