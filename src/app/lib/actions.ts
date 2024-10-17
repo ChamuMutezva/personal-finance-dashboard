@@ -46,7 +46,6 @@ export async function withdrawMoneyFromPot(
         };
     }
     revalidatePath("/pots");
-    revalidatePath("/");
     redirect("/pots");
 }
 
@@ -87,8 +86,8 @@ export async function addMoneyToPot(id: string, pot: Pot, formData: FormData) {
         };
     }
     revalidatePath("/pots");
-    revalidatePath("/");
     redirect("/pots");
+   
 }
 
 // CREATE A POT
@@ -126,7 +125,6 @@ export async function createPot(formData: FormData) {
     }
 
     revalidatePath("/pots");
-    revalidatePath("/");
     redirect("/pots");
 }
 
@@ -163,7 +161,6 @@ export async function updatePot(id: string, formData: FormData) {
         };
     }
     revalidatePath("/pots");
-    revalidatePath("/");
     redirect("/pots");
 }
 
@@ -180,7 +177,6 @@ export async function deletePot(id: string, pot: Pot) {
         };
     }
     revalidatePath("/pots");
-    revalidatePath("/");
 }
 
 // *****BUDGET ACTIONS*****
@@ -229,7 +225,6 @@ export async function createBudget(prevState: State, formData: FormData) {
         };
     }
     revalidatePath("/budgets");
-    revalidatePath("/");
     redirect("/budgets");
 }
 
@@ -256,7 +251,6 @@ export async function updateBudget(id: string, formData: FormData) {
     }
 
     revalidatePath("/budgets");
-    revalidatePath("/");
     redirect("/budgets");
 }
 
@@ -271,5 +265,4 @@ export async function deleteBudget(id: string) {
         };
     }
     revalidatePath("/budgets");
-    revalidatePath("/");
 }
