@@ -6,7 +6,7 @@ import RecurringBillsTable from "../ui/recurring/RecurringBillsTable";
 
 export default async function Page() {
     const bills = await fetchBills();
-    // console.log(bills);
+    
     const totalBills = bills.reduce((accumulator, budget) => {
         return Number(accumulator) + Number(budget.amount);
     }, 0);
@@ -27,7 +27,6 @@ export default async function Page() {
         },
         0
     );
-    console.log(totalUpcomingBillsFilter);
 
     return (
         <main className="flex-1 min-h-screen px-4 pt-6 pb-16 md:px-10 lg:p-8">

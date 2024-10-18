@@ -101,7 +101,7 @@ const CreatePotFormSchema = z.object({
 
 const CreatePot = CreatePotFormSchema.omit({ id: true });
 export async function createPot(formData: FormData) {
-    console.log(formData);
+
     const { target, theme, name, total } = CreatePot.parse({
         target: formData.get("target"),
         theme: formData.get("theme"),
@@ -144,12 +144,12 @@ const UpdatePot = UpdatePotFormSchema.omit({
     theme: true,
 });
 export async function updatePot(id: string, formData: FormData) {
-    console.log(formData);
+    
     const { target } = UpdatePot.parse({
         target: formData.get("target"),
         theme: formData.get("theme"),
     });
-    console.log(` target - ${target}`);
+    
     try {
         await sql`
         UPDATE pots
@@ -237,8 +237,6 @@ export async function updateBudget(id: string, formData: FormData) {
         theme: formData.get("theme"),
     });
 
-    console.log(maximum);
-
     try {
         await sql`
         UPDATE budgets
@@ -257,7 +255,7 @@ export async function updateBudget(id: string, formData: FormData) {
 export async function deleteBudget(id: string) {
     // throw new Error('Failed to Delete budget');
     try {
-        console.log("hey there, i am in");
+       
         await sql`DELETE FROM budgets WHERE id = ${id}`;
     } catch (error) {
         return {

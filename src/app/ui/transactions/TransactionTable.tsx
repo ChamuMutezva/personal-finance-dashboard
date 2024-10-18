@@ -23,11 +23,11 @@ export default async function TransactionTable({
 }) {
    // const transactions = await fetchTransactions();
     const transactions = await fetchFilteredTransactions(query, currentPage)
-    //console.log(transactions2);
+  
     const totals = transactions.reduce((accumulator, transaction) => {
         return Number(accumulator) + Number(transaction.amount);
     }, 0);
-    console.log(formatPosNegativeCurrency(totals));
+ 
     return (
         <Table>
             <TableCaption>A list of my transactions.</TableCaption>

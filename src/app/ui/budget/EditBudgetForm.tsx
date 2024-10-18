@@ -49,8 +49,6 @@ export default function EditBudgetForm({
         },
     });
 
-    console.log(preBudget);
-
     const usedThemes = budgets.map((budget) => budget.theme);
 
     return (

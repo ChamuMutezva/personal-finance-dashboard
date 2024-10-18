@@ -43,8 +43,7 @@ function WithDrawFromPot({ pot }: Readonly<{ pot: Pot }>) {
     const [withdrawAmount, setWithdrawAmount] = useState(0);
 
     const meterPercentage = ((pot.total - withdrawAmount) / pot.target) * 100;
-    console.log(meterPercentage);
-
+    
     return (
         <Form {...form}>
             <form id="add-pot-form" action={updatePotWithID}>

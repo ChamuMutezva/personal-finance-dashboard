@@ -9,10 +9,10 @@ import { Budget } from "../../lib/definitions";
 import {
     Card,
     CardContent,
-   // CardDescription,
+    // CardDescription,
     CardFooter,
-   // CardHeader,
-  //  CardTitle,
+    // CardHeader,
+    //  CardTitle,
 } from "@/components/ui/card";
 import {
     ChartConfig,
@@ -29,15 +29,16 @@ interface DonutProps {
 }
 
 export function Donut({ budgets, totals }: Readonly<DonutProps>) {
-    console.log(totals);
-
-    const chartData = budgets.map((budget, index) => ({
+  
+    const chartData = budgets && budgets.map((budget, index) => ({
         id: budget.id,
         category: budget.category,
-        maximum: budget.maximum,
+        maximum: Number(budget.maximum),
         fill: budget.theme,
-        amount: totals[index],
+        amount: Number(totals[index]),
     }));
+
+    console.log(chartData);
     const chartConfig = {
         maximum: {
             label: "Maximum",
@@ -71,18 +72,8 @@ export function Donut({ budgets, totals }: Readonly<DonutProps>) {
         return chartData.reduce((acc, curr) => acc + curr.amount, 0);
     }, [chartData]);
 
-
-
-    const colors = ["#277C78", "#82C9D7", "#F2CDAC", "#626070"];
-
     return (
         <Card className="flex flex-col md:flex-row mt-4 lg:flex-col lg:flex-1">
-            {/*
-            <CardHeader className="items-center pb-0">
-                <CardTitle>Summary of expenses</CardTitle>
-                <CardDescription>August - September 2024</CardDescription>
-            </CardHeader>
-            */}
             <CardContent className="flex-1 pb-0 md:flex-1 lg:flex-none">
                 <ChartContainer
                     config={chartConfig}

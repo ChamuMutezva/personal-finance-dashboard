@@ -42,8 +42,7 @@ function AddMoneyToPotForm({ pot }: Readonly<{ pot: Pot }>) {
     const [addAmount, setAddAmount] = useState(0);
 
     const meterPercentage = ((addAmount + pot.total) / pot.target) * 100;
-    console.log(meterPercentage);
-
+    
     return (
         <Form {...form}>
             <form id="add-pot-form" action={updatePotWithID}>

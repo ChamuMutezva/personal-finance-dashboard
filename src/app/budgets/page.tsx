@@ -9,7 +9,6 @@ import Meter from "../ui/budget/Meter";
 import Image from "next/image";
 import dayjs from "dayjs";
 import clsx from "clsx";
-
 import { Button } from "@/components/ui/button";
 import {
     Dialog,
@@ -128,8 +127,6 @@ export default async function Page() {
         totalTransportation,
     ];
 
-    console.log(totals);
-
     const data = budgets.map((budget, index) => ({
         id: budget.id,
         category: budget.category,
@@ -137,8 +134,7 @@ export default async function Page() {
         fill: budget.theme,
         amount: totals[index],
     }));
-
-    console.log(budgets);
+   
 
     return (
         <main className="flex-1 min-h-screen px-4 pt-6 pb-16 md:px-10 lg:p-8">
@@ -181,6 +177,7 @@ export default async function Page() {
                     className={`flex flex-col gap-4 lg:flex-row lg:items-start`}
                 >
                     {/* Left side component */}
+                    
                     <Donut
                         budgets={budgets}
                         totals={[

@@ -42,7 +42,6 @@ export default function EditBudgetForm({
     const updatePotWithID = updatePot.bind(null, id);
     const prePot = pots.find((pot) => pot.id === id);
 
-    console.log(prePot);
     const form = useForm<z.infer<typeof PotFormSchema>>({
         resolver: zodResolver(PotFormSchema),
         defaultValues: {

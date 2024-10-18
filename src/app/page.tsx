@@ -7,8 +7,7 @@ import Link from "next/link";
 export default async function Home() {
     const balance = await fetchBalance();
     const pots = await fetchPots();
-
-    console.log(balance);
+        
     const amountSavedInPots = pots.reduce((accumulator, pot) => {
         return Number(accumulator) + Number(pot.total);
     }, 0);

@@ -37,7 +37,7 @@ export default function CategoryFilter() {
         event: React.ChangeEvent<HTMLSelectElement>
     ) => {
         const selectedCategory = event.target.value;
-        console.log(selectedCategory);
+        
         const params = new URLSearchParams(searchParams);
         params.set("page", "1");
 

@@ -56,8 +56,7 @@ export async function fetchBalance() {
 
 export async function fetchTransactions() {
     try {
-        console.log("Fetching transactions data...");
-
+      
         const data = await sql<Transaction>`SELECT * FROM transactions`;
 
         return data.rows;
@@ -69,9 +68,7 @@ export async function fetchTransactions() {
 
 export async function fetchBudgets() {
     try {
-        console.log("Fetching budgets data...");
-
-        const data = await sql<Budget>`SELECT * FROM budgets`;
+              const data = await sql<Budget>`SELECT * FROM budgets`;
 
         return data.rows;
     } catch (error) {
@@ -82,8 +79,7 @@ export async function fetchBudgets() {
 
 export async function fetchPots() {
     try {
-        console.log("Fetching pots data...");
-
+       
         const data = await sql<Pot>`SELECT * FROM pots`;
 
         return data.rows;
@@ -107,8 +103,7 @@ export async function fetchByCategoryExtendedExp(query: string) {
 }
 export async function fetchByCategory() {
     try {
-        console.log("Fetching transactions by category");
-
+       
         // const generalCategoryPromise  = await sql<Transaction>`SELECT * FROM transactions WHERE category = 'General'`
         const diningCategoryPromise =
             await sql<Transaction>`SELECT * FROM transactions WHERE category = 'Dining Out'`;
