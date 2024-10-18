@@ -10,8 +10,8 @@ import { Card } from "@/components/ui/card";
 import { formatPosNegativeCurrency } from "./lib/utils";
 import Link from "next/link";
 import PotsOverview from "./ui/home/Pots";
-import TransactionTable from "./ui/transactions/TransactionTable";
 import { DonutOverview } from "./ui/home/DonutOverview";
+import TransactionTableOverview from "./ui/home/TransactionsTableOverview";
 
 export default async function Home({
     searchParams,
@@ -30,8 +30,6 @@ export default async function Home({
 
     const query = searchParams?.query || "";
     const currentPage = Number(searchParams?.page) || 1;
-    const totalPages = await fetchTransactionsPages(query);
-
     const budgets = await fetchBudgets();
     const category = await fetchByCategory();
     const {
@@ -102,7 +100,7 @@ export default async function Home({
     const totalGroceries = groceriesCategory.reduce((accumulator, budget) => {
         return Number(accumulator) + Number(-budget.amount);
     }, 0);
-
+    /*
     const totals = [
         totalEntertainment,
         totalBills,
@@ -115,7 +113,7 @@ export default async function Home({
         totalLifestyle,
         totalTransportation,
     ];
-
+*/
     return (
         <main className="flex-1 min-h-screen px-4 pt-6 pb-16 md:px-10 lg:p-8">
             <div className="flex justify-between items-center mb-4">
@@ -180,23 +178,27 @@ export default async function Home({
                             />
                         </Link>
                     </div>
-                    <TransactionTable query={query} currentPage={currentPage} />
-                    <DonutOverview
-                        budgets={budgets}
-                        totals={[
-                            totalEntertainment,
-                            totalBills,
-                            totalDining,
-                            totalPersonal,
-                            totalGroceries,
-                            totalEducation,
-                            totalGeneral,
-                            totalLifestyle,
-                            totalShopping,
-                            totalTransportation,
-                        ]}
+                    <TransactionTableOverview
+                        query={query}
+                        currentPage={currentPage}
                     />
                 </Card>
+
+                <DonutOverview
+                    budgets={budgets}
+                    totals={[
+                        totalEntertainment,
+                        totalBills,
+                        totalDining,
+                        totalPersonal,
+                        totalGroceries,
+                        totalEducation,
+                        totalGeneral,
+                        totalLifestyle,
+                        totalShopping,
+                        totalTransportation,
+                    ]}
+                />
             </div>
         </main>
     );
