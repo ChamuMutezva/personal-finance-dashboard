@@ -4,14 +4,22 @@ import * as React from "react";
 import clsx from "clsx";
 import { Label, Pie, PieChart } from "recharts";
 import { Budget } from "../../lib/definitions";
-
-import { Card, CardContent, CardFooter } from "@/components/ui/card";
+import Image from "next/image";
+import {
+    Card,
+    CardContent,
+    CardFooter,
+    CardHeader,
+    CardTitle,
+    CardDescription,
+} from "@/components/ui/card";
 import {
     ChartConfig,
     ChartContainer,
     ChartTooltip,
     ChartTooltipContent,
 } from "@/components/ui/chart";
+import Link from "next/link";
 
 export const description = "Budget representation using donut chart";
 
@@ -20,7 +28,7 @@ interface DonutProps {
     totals: number[];
 }
 
-export function Donut({ budgets, totals }: Readonly<DonutProps>) {
+export function DonutOverview({ budgets, totals }: Readonly<DonutProps>) {
     const chartData =
         budgets &&
         budgets.map((budget, index) => ({
@@ -66,8 +74,25 @@ export function Donut({ budgets, totals }: Readonly<DonutProps>) {
     }, [chartData]);
 
     return (
-        <Card className="flex flex-col md:flex-row mt-4 lg:flex-col lg:flex-1">
-            <CardContent className="flex-1 pb-0 md:flex-1 lg:flex-none">
+        <Card className="grid sm:grid-cols-2 mt-4 lg:flex-col lg:flex-1">
+            <CardHeader className="flex col-span-2 flex-row justify-between items-center pb-0 w-full">
+                <CardTitle>Budgets</CardTitle>
+                <Link
+                    href={`/budgets`}
+                    className={`p-2 flex items-center gap-2 text-[hsl(var(--grey-500))] text-preset-4
+                                                    focus:outline-dashed focus:outline-current focus:outline-1 focus:-outline-offset-4
+                                                    hover:outline-dashed hover:outline-current hover:outline-1 hover:-outline-offset-4`}
+                >
+                    See all <span className="sr-only">list of budgets</span>
+                    <Image
+                        src="assets/images/icon-caret-right.svg"
+                        alt=""
+                        width={6}
+                        height={11}
+                    />
+                </Link>
+            </CardHeader>
+            <CardContent className="flex-1 col-span-2 sm:col-span-1 pb-0 md:flex-1">
                 <ChartContainer
                     config={chartConfig}
                     className="mx-auto aspect-square max-h-[310px]"
@@ -132,18 +157,16 @@ export function Donut({ budgets, totals }: Readonly<DonutProps>) {
             </CardContent>
             <CardFooter
                 id="chart-description"
-                className="left-side flex-col gap-2 text-sm items-start md:flex-1"
+                className="left-side col-span-2 sm:col-span-1 flex-col gap-2 text-sm  justify-center items-start md:flex-1"
             >
-                <h2 className="text-left text-preset-2 font-bold py-4 text-[hsl(var(--grey-900))]">
-                    Spending summary
-                </h2>
-                <div className="flex flex-col  w-full">
+                <h2 className="sr-only">Spending summary</h2>
+                <div className="grid grid-cols-2 sm:grid-cols-1 w-full">
                     {chartData.map((budget) => {
                         return (
                             <div
                                 key={budget.id}
                                 className={clsx(
-                                    `border-b-2 py-4 last:border-b-0 border-[hsl(var(--grey-100))] relative`
+                                    `py-4 last:border-b-0 border-[hsl(var(--grey-100))] relative`
                                 )}
                                 style={
                                     {
@@ -156,26 +179,23 @@ export function Donut({ budgets, totals }: Readonly<DonutProps>) {
                                     div::before {
                                         content: "";
                                         position: absolute;
-                                        left: -1rem; /* Adjust as needed */
+                                        left: -1rem; 
                                         top: 50%;
                                         transform: translateY(-50%);
                                         width: 0.25rem; /* Adjust width */
-                                        height: 40%; /* Adjust height */
+                                        height: 50%; /* Adjust height */
                                         background-color: var(
                                             --pseudo-bg-color
                                         ); /* Use the custom property */
                                         border-radius: 0.5rem; /* Adjust border radius if needed */
                                     }
                                 `}</style>
-                                <div className="flex justify-between items-center gap-4">
+                                <div className="flex flex-col">
                                     <p className="text-preset-4 text-[hsl(var(--grey-500))]">
                                         {budget.category}
                                     </p>
                                     <p className="text-preset-3 font-bold text-[hsl(var(--grey-900))]">
-                                        ${budget.amount}{" "}
-                                        <span className="text-preset-5 text-[hsl(var(--grey-500))] font-normal">
-                                            of ${budget.maximum}
-                                        </span>
+                                        ${budget.amount}
                                     </p>
                                 </div>
                             </div>

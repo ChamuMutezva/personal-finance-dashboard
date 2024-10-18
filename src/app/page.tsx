@@ -11,7 +11,7 @@ import { formatPosNegativeCurrency } from "./lib/utils";
 import Link from "next/link";
 import PotsOverview from "./ui/home/Pots";
 import TransactionTable from "./ui/transactions/TransactionTable";
-import { Donut } from "./ui/budget/Donut";
+import { DonutOverview } from "./ui/home/DonutOverview";
 
 export default async function Home({
     searchParams,
@@ -181,7 +181,7 @@ export default async function Home({
                         </Link>
                     </div>
                     <TransactionTable query={query} currentPage={currentPage} />
-                    <Donut
+                    <DonutOverview
                         budgets={budgets}
                         totals={[
                             totalEntertainment,
