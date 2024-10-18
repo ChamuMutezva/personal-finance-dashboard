@@ -1,10 +1,17 @@
 import Image from "next/image";
-import { fetchBalance, fetchPots, fetchTransactionsPages } from "./lib/data";
+import {
+    fetchBalance,
+    fetchBudgets,
+    fetchByCategory,
+    fetchPots,
+    fetchTransactionsPages,
+} from "./lib/data";
 import { Card } from "@/components/ui/card";
 import { formatPosNegativeCurrency } from "./lib/utils";
 import Link from "next/link";
 import PotsOverview from "./ui/home/Pots";
 import TransactionTable from "./ui/transactions/TransactionTable";
+import { Donut } from "./ui/budget/Donut";
 
 export default async function Home({
     searchParams,
@@ -24,6 +31,91 @@ export default async function Home({
     const query = searchParams?.query || "";
     const currentPage = Number(searchParams?.page) || 1;
     const totalPages = await fetchTransactionsPages(query);
+
+    const budgets = await fetchBudgets();
+    const category = await fetchByCategory();
+    const {
+        entertainmentCategory,
+        billsCategory,
+        diningCategory,
+        personalCategory,
+        groceriesCategory,
+        generalCategory,
+        shoppingCategory,
+        educationCategory,
+        lifestyleCategory,
+        transportationCategory,
+    } = category;
+
+    // calculate  budget used for Entertainment
+    const totalEntertainment = entertainmentCategory.reduce(
+        (accumulator, budget) => {
+            return Number(accumulator) + Number(-budget.amount);
+        },
+        0
+    );
+
+    // calculate  budget used for Bills
+    const totalTransportation = transportationCategory.reduce(
+        (accumulator, budget) => {
+            return Number(accumulator) + Number(-budget.amount);
+        },
+        0
+    );
+
+    // calculate  budget used for lifestyle
+    const totalLifestyle = lifestyleCategory.reduce((accumulator, budget) => {
+        return Number(accumulator) + Number(-budget.amount);
+    }, 0);
+
+    // calculate  budget used for education
+    const totalEducation = educationCategory.reduce((accumulator, budget) => {
+        return Number(accumulator) + Number(-budget.amount);
+    }, 0);
+
+    // calculate  budget used for shopping
+    const totalShopping = shoppingCategory.reduce((accumulator, budget) => {
+        return Number(accumulator) + Number(-budget.amount);
+    }, 0);
+
+    // calculate  budget used for general
+    const totalGeneral = generalCategory.reduce((accumulator, budget) => {
+        return Number(accumulator) + Number(-budget.amount);
+    }, 0);
+
+    // calculate  budget used for Bills
+    const totalBills = billsCategory.reduce((accumulator, budget) => {
+        return Number(accumulator) + Number(-budget.amount);
+    }, 0);
+
+    // calculate  budget used for Dining Out
+    const totalDining = diningCategory.reduce((accumulator, budget) => {
+        return Number(accumulator) + Number(-budget.amount);
+    }, 0);
+
+    // calculate  budget used for Personal Care
+    const totalPersonal = personalCategory.reduce((accumulator, budget) => {
+        return Number(accumulator) + Number(-budget.amount);
+    }, 0);
+
+    // calculate  budget used for Personal Care
+    const totalGroceries = groceriesCategory.reduce((accumulator, budget) => {
+        return Number(accumulator) + Number(-budget.amount);
+    }, 0);
+
+    const totals = [
+        totalEntertainment,
+        totalBills,
+        totalDining,
+        totalPersonal,
+        totalGroceries,
+        totalGeneral,
+        totalEducation,
+        totalShopping,
+        totalLifestyle,
+        totalTransportation,
+    ];
+
     return (
         <main className="flex-1 min-h-screen px-4 pt-6 pb-16 md:px-10 lg:p-8">
             <div className="flex justify-between items-center mb-4">
@@ -89,6 +181,21 @@ export default async function Home({
                         </Link>
                     </div>
                     <TransactionTable query={query} currentPage={currentPage} />
+                    <Donut
+                        budgets={budgets}
+                        totals={[
+                            totalEntertainment,
+                            totalBills,
+                            totalDining,
+                            totalPersonal,
+                            totalGroceries,
+                            totalEducation,
+                            totalGeneral,
+                            totalLifestyle,
+                            totalShopping,
+                            totalTransportation,
+                        ]}
+                    />
                 </Card>
             </div>
         </main>
