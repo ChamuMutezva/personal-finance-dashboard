@@ -13,6 +13,7 @@ import PotsOverview from "./ui/home/Pots";
 import { DonutOverview } from "./ui/home/DonutOverview";
 import TransactionTableOverview from "./ui/home/TransactionsTableOverview";
 import RecurringBills from "./ui/home/RecurringBills";
+import Summary from "./ui/home/Summary";
 
 export default async function Home({
     searchParams,
@@ -136,44 +137,25 @@ export default async function Home({
                     Overview
                 </h1>
             </div>
+
             <div className="xl:grid items-start gap-4 xl:grid-cols-12">
-                <section className="flex gap-2 flex-col sm:flex-row col-span-1 xl:col-span-12 xl:row-span-1 mb-4 xl:mb-0">
-                    <h2 className="sr-only">Summary</h2>
-                    <Card className="p-5 flex-1 bg-[hsl(var(--grey-900))]">
-                        <h3 className="text-preset-4 text-[hsl(var(--white))]">
-                            Current balance
-                        </h3>
-                        <p className="text-preset-1 font-bold text-[hsl(var(--white))]">
-                            {formatPosNegativeCurrency(balance[0].current)}
-                        </p>
-                    </Card>
-                    <Card className="p-5 flex-1">
-                        <h3 className="text-preset-4 text-[hsl(var(--grey-500))]">
-                            Income
-                        </h3>
-                        <p className="text-preset-1 font-bold text-[hsl(var(--grey-900))]">
-                            {formatPosNegativeCurrency(balance[0].income)}
-                        </p>
-                    </Card>
-                    <Card className="p-5 flex-1">
-                        <h3 className="text-preset-4 text-[hsl(var(--grey-500))]">
-                            Expenses
-                        </h3>
-                        <p className="text-preset-1 font-bold text-[hsl(var(--grey-900))]">
-                            {formatPosNegativeCurrency(balance[0].expenses)}
-                        </p>
-                    </Card>
-                </section>
+                {/* GRID CHILD 1 */}
+                <Summary
+                    current={balance[0].current}
+                    income={balance[0].income}
+                    expenses={balance[0].expenses}
+                />
+                {/* GRID CHILD 2 */}
                 <PotsOverview
                     amountSavedInPots={amountSavedInPots}
                     pots={pots}
                 />
-
+                {/* GRID CHILD 3 */}
                 <TransactionTableOverview
                     query={query}
                     currentPage={currentPage}
                 />
-
+                {/* GRID CHILD 4 */}
                 <DonutOverview
                     budgets={budgets}
                     totals={[
@@ -189,6 +171,7 @@ export default async function Home({
                         totalTransportation,
                     ]}
                 />
+                {/* GRID CHILD 5 */}
                 <RecurringBills
                     totalUpcomingBillsFilterOverview={
                         totalUpcomingBillsFilterOverview
