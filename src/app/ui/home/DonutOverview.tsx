@@ -74,8 +74,8 @@ export function DonutOverview({ budgets, totals }: Readonly<DonutProps>) {
     }, [chartData]);
 
     return (
-        <Card className="grid sm:grid-cols-2 mt-4 lg:flex-col lg:flex-1">
-            <CardHeader className="flex col-span-2 flex-row justify-between items-center pb-0 w-full">
+        <Card className="grid sm:grid-cols-3 lg:flex-col lg:col-span-5 lg:row-start-2 lg:col-start-8">
+            <CardHeader className="flex col-span-3 flex-row justify-between items-center pb-0 w-full">
                 <CardTitle>Budgets</CardTitle>
                 <Link
                     href={`/budgets`}
@@ -92,7 +92,7 @@ export function DonutOverview({ budgets, totals }: Readonly<DonutProps>) {
                     />
                 </Link>
             </CardHeader>
-            <CardContent className="flex-1 col-span-2 sm:col-span-1 pb-0 md:flex-1">
+            <CardContent className="flex-1 col-span-3 sm:col-span-2 pb-0 md:flex-1">
                 <ChartContainer
                     config={chartConfig}
                     className="mx-auto aspect-square max-h-[310px]"
@@ -157,7 +157,7 @@ export function DonutOverview({ budgets, totals }: Readonly<DonutProps>) {
             </CardContent>
             <CardFooter
                 id="chart-description"
-                className="left-side col-span-2 sm:col-span-1 flex-col gap-2 text-sm  justify-center items-start md:flex-1"
+                className="left-side col-span-3 sm:col-span-1 flex-col gap-2 text-sm  justify-center items-start md:flex-1"
             >
                 <h2 className="sr-only">Spending summary</h2>
                 <div className="grid grid-cols-2 sm:grid-cols-1 w-full">

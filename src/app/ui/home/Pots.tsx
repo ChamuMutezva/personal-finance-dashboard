@@ -13,7 +13,7 @@ function PotsOverview({
     pots: Pot[];
 }) {
     return (
-        <Card aria-label="pots" className="p-4">
+        <Card aria-label="pots" className="p-4 lg:col-span-7 lg:row-span-2">
             <div className="flex items-center justify-between pb-4">
                 <h2
                     className={`text-preset-3 text-[hsl(var(--grey-900))] font-bold`}
@@ -36,7 +36,7 @@ function PotsOverview({
                 </Link>
             </div>
             <div className="sm:flex gap-4">
-                <Card className="flex flex-1 p-5 gap-4 bg-[hsl(var(--beige-100))]">
+                <Card className="flex flex-1 items-center p-5 gap-4 bg-[hsl(var(--beige-100))]">
                     <Image
                         src="assets/images/icon-pot.svg"
                         alt=""

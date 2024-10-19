@@ -4,7 +4,7 @@ import {
     fetchBudgets,
     fetchByCategory,
     fetchPots,
-    fetchTransactionsPages,
+    fetchBills,
 } from "./lib/data";
 import { Card } from "@/components/ui/card";
 import { formatPosNegativeCurrency } from "./lib/utils";
@@ -12,6 +12,7 @@ import Link from "next/link";
 import PotsOverview from "./ui/home/Pots";
 import { DonutOverview } from "./ui/home/DonutOverview";
 import TransactionTableOverview from "./ui/home/TransactionsTableOverview";
+import RecurringBills from "./ui/home/RecurringBills";
 
 export default async function Home({
     searchParams,
@@ -100,20 +101,32 @@ export default async function Home({
     const totalGroceries = groceriesCategory.reduce((accumulator, budget) => {
         return Number(accumulator) + Number(-budget.amount);
     }, 0);
-    /*
-    const totals = [
-        totalEntertainment,
-        totalBills,
-        totalDining,
-        totalPersonal,
-        totalGroceries,
-        totalGeneral,
-        totalEducation,
-        totalShopping,
-        totalLifestyle,
-        totalTransportation,
-    ];
-*/
+
+    const bills = await fetchBills();
+
+    const totalBillsOverview = bills.reduce((accumulator, budget) => {
+        return Number(accumulator) + Number(budget.amount);
+    }, 0);
+
+    const paidBillsFilterOverview = bills.filter(
+        (bill) => bill.recurring === false
+    );
+    const upcomingBillsFilter = bills.filter((bill) => bill.recurring === true);
+
+    const totalPaidBillsFilterOverview = paidBillsFilterOverview.reduce(
+        (accumulator, budget) => {
+            return Number(accumulator) + Number(budget.amount);
+        },
+        0
+    );
+
+    const totalUpcomingBillsFilterOverview = upcomingBillsFilter.reduce(
+        (accumulator, budget) => {
+            return Number(accumulator) + Number(budget.amount);
+        },
+        0
+    );
+
     return (
         <main className="flex-1 min-h-screen px-4 pt-6 pb-16 md:px-10 lg:p-8">
             <div className="flex justify-between items-center mb-4">
@@ -123,8 +136,8 @@ export default async function Home({
                     Overview
                 </h1>
             </div>
-            <div className="grid gap-4">
-                <section className="flex gap-2 flex-col sm:flex-row">
+            <div className="grid items-start gap-4 lg:grid-cols-12">
+                <section className="flex gap-2 flex-col sm:flex-row lg:col-span-12 lg:row-span-1">
                     <h2 className="sr-only">Summary</h2>
                     <Card className="p-5 flex-1 bg-[hsl(var(--grey-900))]">
                         <h3 className="text-preset-4 text-[hsl(var(--white))]">
@@ -155,34 +168,11 @@ export default async function Home({
                     amountSavedInPots={amountSavedInPots}
                     pots={pots}
                 />
-                <Card className="p-4">
-                    <div className="flex items-center justify-between pb-4">
-                        <h2
-                            className={`text-preset-3 text-[hsl(var(--grey-900))] font-bold`}
-                        >
-                            Transactions
-                        </h2>
-                        <Link
-                            href={`/transactions`}
-                            className={`p-2 flex items-center gap-2 text-[hsl(var(--grey-500))] text-preset-4
-                                                    focus:outline-dashed focus:outline-current focus:outline-1 focus:-outline-offset-4
-                                                    hover:outline-dashed hover:outline-current hover:outline-1 hover:-outline-offset-4`}
-                        >
-                            See all{" "}
-                            <span className="sr-only">list of pots</span>
-                            <Image
-                                src="assets/images/icon-caret-right.svg"
-                                alt=""
-                                width={6}
-                                height={11}
-                            />
-                        </Link>
-                    </div>
-                    <TransactionTableOverview
-                        query={query}
-                        currentPage={currentPage}
-                    />
-                </Card>
+
+                <TransactionTableOverview
+                    query={query}
+                    currentPage={currentPage}
+                />
 
                 <DonutOverview
                     budgets={budgets}
@@ -198,6 +188,13 @@ export default async function Home({
                         totalShopping,
                         totalTransportation,
                     ]}
+                />
+                <RecurringBills
+                    totalUpcomingBillsFilterOverview={
+                        totalUpcomingBillsFilterOverview
+                    }
+                    totalBillsOverview={totalBillsOverview}
+                    totalPaidBillsFilterOverview={totalPaidBillsFilterOverview}
                 />
             </div>
         </main>
