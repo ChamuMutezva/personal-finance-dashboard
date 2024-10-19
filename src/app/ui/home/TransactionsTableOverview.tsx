@@ -33,29 +33,28 @@ export default async function TransactionTableOverview({
     }, 0);
 
     return (
-        <Card className="p-4 lg:col-span-7 lg:row-start-4 lg:row-span-4">
-             <div className="flex items-center justify-between pb-4">
-                        <h2
-                            className={`text-preset-3 text-[hsl(var(--grey-900))] font-bold`}
-                        >
-                            Transactions
-                        </h2>
-                        <Link
-                            href={`/transactions`}
-                            className={`p-2 flex items-center gap-2 text-[hsl(var(--grey-500))] text-preset-4
+        <Card className="p-4 xl:col-span-7 xl:row-start-4 xl:row-span-4 mb-4 xl:mb-0">
+            <div className="flex items-center justify-between pb-4">
+                <h2
+                    className={`text-preset-3 text-[hsl(var(--grey-900))] font-bold`}
+                >
+                    Transactions
+                </h2>
+                <Link
+                    href={`/transactions`}
+                    className={`p-2 flex items-center gap-2 text-[hsl(var(--grey-500))] text-preset-4
                                                     focus:outline-dashed focus:outline-current focus:outline-1 focus:-outline-offset-4
                                                     hover:outline-dashed hover:outline-current hover:outline-1 hover:-outline-offset-4`}
-                        >
-                            See all{" "}
-                            <span className="sr-only">list of pots</span>
-                            <Image
-                                src="assets/images/icon-caret-right.svg"
-                                alt=""
-                                width={6}
-                                height={11}
-                            />
-                        </Link>
-                    </div>
+                >
+                    See all <span className="sr-only">list of pots</span>
+                    <Image
+                        src="assets/images/icon-caret-right.svg"
+                        alt=""
+                        width={6}
+                        height={11}
+                    />
+                </Link>
+            </div>
             <Table>
                 <TableCaption className="sr-only">
                     A list of my transactions.

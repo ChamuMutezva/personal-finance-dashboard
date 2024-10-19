@@ -38,7 +38,7 @@ export default async function Page() {
     const pots = await fetchPots();
 
     return (
-        <main className="flex-1 min-h-screen px-4 pt-6 pb-16 md:px-10 lg:p-8">
+        <main className="flex-1 min-h-screen px-4 pt-6 pb-16 md:px-10 lg:p-4">
             <div className="flex justify-between items-center mb-4">
                 <h1
                     className={`text-preset-1 font-bold text-[hsl(var(--grey-900))]`}

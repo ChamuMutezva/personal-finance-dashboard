@@ -74,7 +74,7 @@ export function DonutOverview({ budgets, totals }: Readonly<DonutProps>) {
     }, [chartData]);
 
     return (
-        <Card className="grid sm:grid-cols-3 lg:flex-col lg:col-span-5 lg:row-start-2 lg:row-span-5 lg:col-start-8">
+        <Card className="grid sm:grid-cols-3 lg:flex-col lg:col-span-5 lg:row-start-2 lg:row-span-5 lg:col-start-8 mb-4 xl:mb-0">
             <CardHeader className="flex col-span-3 flex-row justify-between items-center pb-0 w-full">
                 <CardTitle>Budgets</CardTitle>
                 <Link
@@ -161,7 +161,7 @@ export function DonutOverview({ budgets, totals }: Readonly<DonutProps>) {
             >
                 <h2 className="sr-only">Spending summary</h2>
                 <div className="grid grid-cols-2 sm:grid-cols-1 w-full">
-                    {chartData.map((budget) => {
+                    {chartData.slice(0, 3).map((budget) => {
                         return (
                             <div
                                 key={budget.id}
@@ -179,7 +179,7 @@ export function DonutOverview({ budgets, totals }: Readonly<DonutProps>) {
                                     div::before {
                                         content: "";
                                         position: absolute;
-                                        left: -1rem; 
+                                        left: -1rem;
                                         top: 50%;
                                         transform: translateY(-50%);
                                         width: 0.25rem; /* Adjust width */

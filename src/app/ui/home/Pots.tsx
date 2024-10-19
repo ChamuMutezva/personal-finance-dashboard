@@ -13,7 +13,10 @@ function PotsOverview({
     pots: Pot[];
 }) {
     return (
-        <Card aria-label="pots" className="p-4 lg:col-span-7 lg:row-span-2">
+        <Card
+            aria-label="pots"
+            className="p-4 xl:col-span-7 xl:row-span-2 mb-4 xl:mb-0"
+        >
             <div className="flex items-center justify-between pb-4">
                 <h2
                     className={`text-preset-3 text-[hsl(var(--grey-900))] font-bold`}
@@ -54,7 +57,7 @@ function PotsOverview({
                 </Card>
 
                 <div className="grid flex-1 grid-cols-2 gap-2 m-4">
-                    {pots.map((pot) => (
+                    {pots.slice(0, 4).map((pot) => (
                         <div key={pot.id} className="relative">
                             <h3>{pot.name}</h3>
                             <p>{formatPosNegativeCurrency(pot.total)}</p>
