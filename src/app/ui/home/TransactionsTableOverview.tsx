@@ -33,7 +33,7 @@ export default async function TransactionTableOverview({
     }, 0);
 
     return (
-        <Card className="p-4 lg:col-span-7">
+        <Card className="p-4 lg:col-span-7 lg:row-start-4 lg:row-span-4">
              <div className="flex items-center justify-between pb-4">
                         <h2
                             className={`text-preset-3 text-[hsl(var(--grey-900))] font-bold`}

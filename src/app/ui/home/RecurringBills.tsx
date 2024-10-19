@@ -14,7 +14,7 @@ function RecurringBills({
     totalBillsOverview: number;
 }) {
     return (
-        <Card aria-label="recurring bills" className="p-4 lg:col-span-5">
+        <Card aria-label="recurring bills" className="p-4 lg:col-span-6 lg:col-start-8 lg:row-start-7">
             <div className="flex items-center justify-between pb-4">
                 <h2
                     className={`text-preset-3 text-[hsl(var(--grey-900))] font-bold`}

@@ -74,7 +74,7 @@ export function DonutOverview({ budgets, totals }: Readonly<DonutProps>) {
     }, [chartData]);
 
     return (
-        <Card className="grid sm:grid-cols-3 lg:flex-col lg:col-span-5 lg:row-start-2 lg:col-start-8">
+        <Card className="grid sm:grid-cols-3 lg:flex-col lg:col-span-5 lg:row-start-2 lg:row-span-5 lg:col-start-8">
             <CardHeader className="flex col-span-3 flex-row justify-between items-center pb-0 w-full">
                 <CardTitle>Budgets</CardTitle>
                 <Link
