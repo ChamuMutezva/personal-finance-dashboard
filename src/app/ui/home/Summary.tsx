@@ -6,11 +6,11 @@ function Summary({
     current,
     income,
     expenses,
-}: {
+}: Readonly<{
     current: number;
     income: number;
     expenses: number;
-}) {
+}>) {
     return (
         <section className="flex gap-2 flex-col sm:flex-row col-span-1 xl:col-span-12 xl:row-span-1 mb-4 xl:mb-0">
             <h2 className="sr-only">Summary</h2>

@@ -45,9 +45,9 @@ export async function withdrawMoneyFromPot(
             message: "Database Error: Failed to withdraw money from pot.",
         };
     }
-    revalidatePath("/pots");
-    revalidatePath("/");
-    redirect("/pots");
+    revalidatePath("/dashboard/pots");
+    revalidatePath("/dashboard");
+    redirect("/dashboard/pots");
 }
 
 // ADD MONEY TO POT
@@ -86,10 +86,9 @@ export async function addMoneyToPot(id: string, pot: Pot, formData: FormData) {
             message: "Database Error: Failed to add money to pot.",
         };
     }
-    revalidatePath("/pots");
-    revalidatePath("/");
-    redirect("/pots");
-   
+    revalidatePath("/dashboard/pots");
+    revalidatePath("/dashboard");
+    redirect("/dashboard/pots");
 }
 
 // CREATE A POT
@@ -103,7 +102,6 @@ const CreatePotFormSchema = z.object({
 
 const CreatePot = CreatePotFormSchema.omit({ id: true });
 export async function createPot(formData: FormData) {
-
     const { target, theme, name, total } = CreatePot.parse({
         target: formData.get("target"),
         theme: formData.get("theme"),
@@ -126,9 +124,9 @@ export async function createPot(formData: FormData) {
         };
     }
 
-    revalidatePath("/pots");
-    revalidatePath("/");
-    redirect("/pots");
+    revalidatePath("/dashboard/pots");
+    revalidatePath("/dashboard");
+    redirect("/dashboard/pots");
 }
 
 // UPDATE A POT
@@ -147,12 +145,11 @@ const UpdatePot = UpdatePotFormSchema.omit({
     theme: true,
 });
 export async function updatePot(id: string, formData: FormData) {
-    
     const { target } = UpdatePot.parse({
         target: formData.get("target"),
         theme: formData.get("theme"),
     });
-    
+
     try {
         await sql`
         UPDATE pots
@@ -163,9 +160,9 @@ export async function updatePot(id: string, formData: FormData) {
             message: "Database Error: Failed to update pot.",
         };
     }
-    revalidatePath("/pots");
-    revalidatePath("/");
-    redirect("/pots");
+    revalidatePath("/dashboard/pots");
+    revalidatePath("/dashboard");
+    redirect("/dashboard/pots");
 }
 
 export async function deletePot(id: string, pot: Pot) {
@@ -180,8 +177,8 @@ export async function deletePot(id: string, pot: Pot) {
             message: "Database Error: Failed to delete budget.",
         };
     }
-    revalidatePath("/pots");
-    revalidatePath("/");
+    revalidatePath("/dashboard/pots");
+    revalidatePath("/dashboard");
 }
 
 // *****BUDGET ACTIONS*****
@@ -229,9 +226,9 @@ export async function createBudget(prevState: State, formData: FormData) {
             message: "Database Error: Failed to create budget",
         };
     }
-    revalidatePath("/budgets");
-    revalidatePath("/");
-    redirect("/budgets");
+    revalidatePath("/dashboard/budgets");
+    revalidatePath("/dashboard");
+    redirect("/dashboard/budgets");
 }
 
 // update budget
@@ -254,21 +251,20 @@ export async function updateBudget(id: string, formData: FormData) {
         };
     }
 
-    revalidatePath("/budgets");
-    revalidatePath("/");
-    redirect("/budgets");
+    revalidatePath("/dashboard/budgets");
+    revalidatePath("/dashboard");
+    redirect("/dashboard/budgets");
 }
 
 export async function deleteBudget(id: string) {
     // throw new Error('Failed to Delete budget');
     try {
-       
         await sql`DELETE FROM budgets WHERE id = ${id}`;
     } catch (error) {
         return {
             message: "Database Error: Failed to delete budget.",
         };
     }
-    revalidatePath("/budgets");
-    revalidatePath("/");
+    revalidatePath("/dashboard/budgets");
+    revalidatePath("/dashboard");
 }

@@ -1,11 +1,11 @@
 import React from "react";
 import Link from "next/link";
-import { fetchBudgets, fetchByCategory } from "../lib/data";
+import { fetchBudgets, fetchByCategory } from "../../lib/data";
 import { Card } from "@/components/ui/card";
-import { Donut } from "../ui/budget/Donut";
-import { formatPosNegativeCurrency } from "../lib/utils";
+import { Donut } from "../../ui/budget/Donut";
+import { formatPosNegativeCurrency } from "../../lib/utils";
 // import { Progress } from "@/components/ui/progress";
-import Meter from "../ui/budget/Meter";
+import Meter from "../../ui/budget/Meter";
 import Image from "next/image";
 import dayjs from "dayjs";
 import clsx from "clsx";
@@ -37,10 +37,10 @@ import {
     AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 
-import AddBudgetForm from "../ui/budget/AddBudgetForm";
-import { DeleteBudget } from "../ui/budget/DeleteBudgetForm";
+import AddBudgetForm from "../../ui/budget/AddBudgetForm";
+import { DeleteBudget } from "../../ui/budget/DeleteBudgetForm";
 import { Separator } from "@/components/ui/separator";
-import EditBudgetForm from "../ui/budget/EditBudgetForm";
+import EditBudgetForm from "../../ui/budget/EditBudgetForm";
 
 export default async function Page() {
     const budgets = await fetchBudgets();
@@ -254,7 +254,7 @@ export default async function Page() {
                                                             hover:outline-dashed hover:outline-current hover:outline-1 hover:-outline-offset-4`}
                                             >
                                                 <Image
-                                                    src="assets/images/icon-ellipsis.svg"
+                                                    src="/assets/images/icon-ellipsis.svg"
                                                     alt=""
                                                     width={14}
                                                     height={4}
@@ -408,7 +408,7 @@ export default async function Page() {
                                                 Latest spending
                                             </h3>
                                             <Link
-                                                href={`/transactions?page=1&query=${budget.category}`}
+                                                href={`/dashboard/transactions?page=1&query=${budget.category}`}
                                                 className={`p-2 flex items-center gap-2 text-[hsl(var(--grey-500))] text-preset-4
                                                 focus:outline-dashed focus:outline-current focus:outline-1 focus:-outline-offset-4
                                                 hover:outline-dashed hover:outline-current hover:outline-1 hover:-outline-offset-4`}
@@ -418,7 +418,7 @@ export default async function Page() {
                                                     list of transactions
                                                 </span>
                                                 <Image
-                                                    src="assets/images/icon-caret-right.svg"
+                                                    src="/assets/images/icon-caret-right.svg"
                                                     alt=""
                                                     width={6}
                                                     height={11}

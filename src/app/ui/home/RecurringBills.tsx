@@ -22,7 +22,7 @@ function RecurringBills({
                     Recurring bills
                 </h2>
                 <Link
-                    href={`/recurring-bills`}
+                    href={`/dashboard/recurring-bills`}
                     className={`p-2 flex items-center gap-2 text-[hsl(var(--grey-500))] text-preset-4
                                     focus:outline-dashed focus:outline-current focus:outline-1 focus:-outline-offset-4
                                     hover:outline-dashed hover:outline-current hover:outline-1 hover:-outline-offset-4`}

@@ -1,5 +1,5 @@
 import React from "react";
-import { fetchPots } from "../lib/data";
+import { fetchPots } from "../../lib/data";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import Image from "next/image";
@@ -11,7 +11,7 @@ import {
     DialogTitle,
     DialogTrigger,
 } from "@/components/ui/dialog";
-import AddPotForm from "../ui/pots/AddPotForm";
+import AddPotForm from "../../ui/pots/AddPotForm";
 import {
     Popover,
     PopoverContent,
@@ -28,11 +28,11 @@ import {
     AlertDialogTitle,
     AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
-import { DeletePot } from "../ui/pots/DeletePotForm";
-import MeterPots from "../ui/pots/MeterPots";
-import EditPotForm from "../ui/pots/EditPotForm";
-import AddMoneyToPotForm from "../ui/pots/AddMoneyToPotForm";
-import WithDrawFromPot from "../ui/pots/WithdrawFromPot";
+import { DeletePot } from "../../ui/pots/DeletePotForm";
+import MeterPots from "../../ui/pots/MeterPots";
+import EditPotForm from "../../ui/pots/EditPotForm";
+import AddMoneyToPotForm from "../../ui/pots/AddMoneyToPotForm";
+import WithDrawFromPot from "../../ui/pots/WithdrawFromPot";
 
 export default async function Page() {
     const pots = await fetchPots();
@@ -94,7 +94,7 @@ export default async function Page() {
                                                             hover:outline-dashed hover:outline-current hover:outline-1 hover:-outline-offset-4`}
                                 >
                                     <Image
-                                        src="assets/images/icon-ellipsis.svg"
+                                        src="/assets/images/icon-ellipsis.svg"
                                         alt=""
                                         width={14}
                                         height={4}

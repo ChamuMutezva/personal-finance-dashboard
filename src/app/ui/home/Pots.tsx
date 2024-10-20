@@ -8,10 +8,10 @@ import { Pot } from "@/app/lib/definitions";
 function PotsOverview({
     amountSavedInPots,
     pots,
-}: {
+}: Readonly<{
     amountSavedInPots: number;
     pots: Pot[];
-}) {
+}>) {
     return (
         <Card
             aria-label="pots"
@@ -24,7 +24,7 @@ function PotsOverview({
                     Pots
                 </h2>
                 <Link
-                    href={`/pots`}
+                    href={`/dashboard/pots`}
                     className={`p-2 flex items-center gap-2 text-[hsl(var(--grey-500))] text-preset-4
                                                     focus:outline-dashed focus:outline-current focus:outline-1 focus:-outline-offset-4
                                                     hover:outline-dashed hover:outline-current hover:outline-1 hover:-outline-offset-4`}
@@ -43,8 +43,8 @@ function PotsOverview({
                     <Image
                         src="assets/images/icon-pot.svg"
                         alt=""
-                        width={36}
-                        height={28}
+                        width={28}
+                        height={36}
                     />
                     <div>
                         <h3 className="text-preset-4 text-[hsl(var(--grey-500))]">

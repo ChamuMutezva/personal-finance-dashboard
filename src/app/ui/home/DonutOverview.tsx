@@ -29,15 +29,13 @@ interface DonutProps {
 }
 
 export function DonutOverview({ budgets, totals }: Readonly<DonutProps>) {
-    const chartData =
-        budgets &&
-        budgets.map((budget, index) => ({
-            id: budget.id,
-            category: budget.category,
-            maximum: Number(budget.maximum),
-            fill: budget.theme,
-            amount: Number(totals[index]),
-        }));
+    const chartData = budgets?.map((budget, index) => ({
+        id: budget.id,
+        category: budget.category,
+        maximum: Number(budget.maximum),
+        fill: budget.theme,
+        amount: Number(totals[index]),
+    }));
 
     console.log(chartData);
     const chartConfig = {
@@ -78,7 +76,7 @@ export function DonutOverview({ budgets, totals }: Readonly<DonutProps>) {
             <CardHeader className="flex col-span-3 flex-row justify-between items-center pb-0 w-full">
                 <CardTitle>Budgets</CardTitle>
                 <Link
-                    href={`/budgets`}
+                    href={`/dashboard/budgets`}
                     className={`p-2 flex items-center gap-2 text-[hsl(var(--grey-500))] text-preset-4
                                                     focus:outline-dashed focus:outline-current focus:outline-1 focus:-outline-offset-4
                                                     hover:outline-dashed hover:outline-current hover:outline-1 hover:-outline-offset-4`}

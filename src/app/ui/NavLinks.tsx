@@ -13,28 +13,28 @@ import RecurringBillsSvg from "../components/recurring.svg";
 const links = [
     {
         name: "Overview",
-        href: "/",
+        href: "/dashboard",
         Icon: <OverviewSvg className="fill-current" />,
     },
     {
         name: "Transactions",
-        href: "/transactions",
+        href: "/dashboard/transactions",
         Icon: <TransactionsSvg className="fill-current" />,
     },
     {
         name: "Budgets",
-        href: "/budgets",
+        href: "/dashboard/budgets",
 
         Icon: <BudgetsSvg className="fill-current" />,
     },
     {
         name: "Pots",
-        href: "/pots",
+        href: "/dashboard/pots",
         Icon: <PotsSvg className="fill-current" />,
     },
     {
         name: "Recurring bills",
-        href: "/recurring-bills",
+        href: "/dashboard/recurring-bills",
         Icon: <RecurringBillsSvg className="fill-current" />,
     },
 ];
@@ -86,7 +86,7 @@ function NavLinks() {
                             alt=""
                             width={122}
                             height={22}
-                            src="assets/images/logo-large.svg"
+                            src="/assets/images/logo-large.svg"
                             priority
                         />
                     )}
@@ -151,7 +151,7 @@ function NavLinks() {
                     )}
                 >
                     <Image
-                        src={"assets/images/icon-minimize-menu.svg"}
+                        src={"/assets/images/icon-minimize-menu.svg"}
                         alt=""
                         width={20}
                         height={20}

@@ -1,11 +1,11 @@
 import { Suspense } from "react";
-import TransactionTable from "../ui/transactions/TransactionTable";
-import { fetchTransactionsPages } from "../lib/data";
-import { SkeletonLoader } from "../ui/transactions/TransactionTableSkeleton";
+import TransactionTable from "../../ui/transactions/TransactionTable";
+import { fetchTransactionsPages } from "../../lib/data";
+import { SkeletonLoader } from "../../ui/transactions/TransactionTableSkeleton";
 
-import Search from "../ui/transactions/search";
-import Pagination from "../ui/transactions/Pagination";
-import CategoryFilter from "../ui/transactions/CategoryFilter";
+import Search from "../../ui/transactions/search";
+import Pagination from "../../ui/transactions/Pagination";
+import CategoryFilter from "../../ui/transactions/CategoryFilter";
 
 export default async function Page({
     searchParams,

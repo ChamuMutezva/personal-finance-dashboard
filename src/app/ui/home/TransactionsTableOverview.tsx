@@ -41,7 +41,7 @@ export default async function TransactionTableOverview({
                     Transactions
                 </h2>
                 <Link
-                    href={`/transactions`}
+                    href={`/dashboard/transactions`}
                     className={`p-2 flex items-center gap-2 text-[hsl(var(--grey-500))] text-preset-4
                                                     focus:outline-dashed focus:outline-current focus:outline-1 focus:-outline-offset-4
                                                     hover:outline-dashed hover:outline-current hover:outline-1 hover:-outline-offset-4`}

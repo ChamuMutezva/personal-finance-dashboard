@@ -1,8 +1,8 @@
 import React from "react";
 import Image from "next/image";
-import { fetchBills } from "../lib/data";
+import { fetchBills } from "../../lib/data";
 import { Card } from "@/components/ui/card";
-import RecurringBillsTable from "../ui/recurring/RecurringBillsTable";
+import RecurringBillsTable from "../../ui/recurring/RecurringBillsTable";
 
 export default async function Page() {
     const bills = await fetchBills();

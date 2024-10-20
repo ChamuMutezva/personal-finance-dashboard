@@ -34,7 +34,7 @@ const formSchema = z.object({
     theme: z.string().min(1, "Category is required"),
 });
 
-function AddBudgetForm({ budgets }: { budgets: Budget[] }) {
+function AddBudgetForm({ budgets }: Readonly<{ budgets: Budget[] }>) {
     // 1. Define your form.
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
