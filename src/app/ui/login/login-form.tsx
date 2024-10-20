@@ -19,7 +19,7 @@ export default function LoginForm() {
     console.log(isPending);
 
     return (
-        <form action={dispatch}>
+        <form action={dispatch} className="max-w-[35rem] w-full">
             <div className="rounded-lg bg-gray-50 p-4">
                 <h1 className={` mb-3 text-2xl`}>Please log in to continue.</h1>
                 <div className="w-full">

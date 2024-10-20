@@ -1,4 +1,4 @@
-import LoginForm from "../ui/login/login.form";
+import LoginForm from "../ui/login/login-form";
 export default function LoginPage() {
     return (
         <main className="flex items-center justify-center min-h-screen w-full">

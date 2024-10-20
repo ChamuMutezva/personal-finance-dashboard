@@ -8,7 +8,7 @@ export default function RootLayout({
     return (
         <html lang="en">
             <body
-                className={`antialiased flex flex-col-reverse lg:flex-row bg-[hsl(var(--beige-100))]`}
+                className={`flex flex-col-reverse max-h-screen lg:flex-row bg-[hsl(var(--beige-100))] p-4`}
             >
                 <SideNav />
                 {children}
