@@ -12,6 +12,7 @@ import { DonutOverview } from "../ui/home/DonutOverview";
 import TransactionTableOverview from "../ui/home/TransactionsTableOverview";
 import RecurringBills from "../ui/home/RecurringBills";
 import Summary from "../ui/home/Summary";
+import SignOutForm from "../ui/sign-out-form";
 
 export default async function Home({
     searchParams,
@@ -134,6 +135,7 @@ export default async function Home({
                 >
                     Overview
                 </h1>
+                <SignOutForm />
             </div>
 
             <div className="xl:grid items-start gap-4 xl:grid-cols-12">

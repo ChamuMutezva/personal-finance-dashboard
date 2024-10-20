@@ -41,6 +41,7 @@ import AddBudgetForm from "../../ui/budget/AddBudgetForm";
 import { DeleteBudget } from "../../ui/budget/DeleteBudgetForm";
 import { Separator } from "@/components/ui/separator";
 import EditBudgetForm from "../../ui/budget/EditBudgetForm";
+import SignOutForm from "@/app/ui/sign-out-form";
 
 export default async function Page() {
     const budgets = await fetchBudgets();
@@ -144,6 +145,8 @@ export default async function Page() {
                 >
                     Budgets
                 </h1>
+
+                <SignOutForm />
                 {/* Dialog component */}
                 <Dialog>
                     <DialogTrigger asChild>

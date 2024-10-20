@@ -6,6 +6,7 @@ import { SkeletonLoader } from "../../ui/transactions/TransactionTableSkeleton";
 import Search from "../../ui/transactions/search";
 import Pagination from "../../ui/transactions/Pagination";
 import CategoryFilter from "../../ui/transactions/CategoryFilter";
+import SignOutForm from "@/app/ui/sign-out-form";
 
 export default async function Page({
     searchParams,
@@ -21,12 +22,13 @@ export default async function Page({
 
     return (
         <main className="flex-1 min-h-screen flex-col items-center justify-between px-4 pt-6 md:px-10 lg:p-8">
-            <div className="flex w-full  items-center mb-4">
+            <div className="flex w-full justify-between items-center mb-4">
                 <h1
                     className={`text-preset-1 font-bold text-[hsl(var(--grey-900))]`}
                 >
                     Transactions
                 </h1>
+                <SignOutForm />
             </div>
             <div className={"w-full mb-20 lg:mb-0"}>
                 <div className="flex gap-2">

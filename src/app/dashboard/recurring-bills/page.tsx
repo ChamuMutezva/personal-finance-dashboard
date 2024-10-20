@@ -3,10 +3,11 @@ import Image from "next/image";
 import { fetchBills } from "../../lib/data";
 import { Card } from "@/components/ui/card";
 import RecurringBillsTable from "../../ui/recurring/RecurringBillsTable";
+import SignOutForm from "@/app/ui/sign-out-form";
 
 export default async function Page() {
     const bills = await fetchBills();
-    
+
     const totalBills = bills.reduce((accumulator, budget) => {
         return Number(accumulator) + Number(budget.amount);
     }, 0);
@@ -31,12 +32,16 @@ export default async function Page() {
     return (
         <main className="flex-1 min-h-screen px-4 pt-6 pb-16 md:px-10 lg:p-4">
             <div className="mb-4">
-                <h1
-                    className={`text-preset-1 font-bold text-[hsl(var(--grey-900))]`}
-                >
-                    Recurring bills
-                </h1>
+                <div className="flex w-full justify-between items-center mb-4">
+                    <h1
+                        className={`text-preset-1 font-bold text-[hsl(var(--grey-900))]`}
+                    >
+                        Recurring bills
+                    </h1>
 
+                    <SignOutForm />
+                </div>
+                
                 <div className="lg:flex lg:gap-8">
                     <div
                         className={`flex flex-col gap-4 sm:flex-row lg:flex-col lg:items-start my-8`}
