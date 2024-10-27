@@ -4,7 +4,7 @@ import LoginForm from "../ui/login/login-form";
 
 export default function Login() {
     return (
-        <main className="flex items-center relative justify-center min-h-screen w-full lg:p-2">
+        <main className="flex items-center relative justify-center min-h-screen w-full lg:p-4">
             <div
                 className="hidden lg:flex flex-col justify-between items-stretch w-full h-dvh bg-[hsl(var(--grey-900))]
                              lg:w-5/12 p-6 rounded-b-xl lg:rounded-2xl object-cover bg-none
