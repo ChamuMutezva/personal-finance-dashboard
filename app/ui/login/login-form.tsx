@@ -10,17 +10,13 @@ import { useFormState, useFormStatus } from "react-dom";
 import { authenticate } from "@/lib/action";
 import Link from "next/link";
 
-
 export default function LoginForm() {
-    const [errorMessage, formAction] = useFormState(
-        authenticate,
-        undefined,
-      );
+    const [errorMessage, formAction] = useFormState(authenticate, undefined);
 
     return (
         <form action={formAction} className="max-w-[35rem] w-full">
             <div className="rounded-lg bg-gray-50 p-4">
-                <h1 className={` mb-3 text-2xl`}>Please log in to continue.</h1>
+                <h2 className={` mb-3 text-2xl`}>Please log in to continue.</h2>
                 <div className="w-full">
                     <div>
                         <label
@@ -37,6 +33,9 @@ export default function LoginForm() {
                                 name="email"
                                 placeholder="Enter your email address"
                                 required
+                                aria-describedby={
+                                    errorMessage ? "email-error" : undefined
+                                }
                             />
                             <AtSymbolIcon className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500 peer-focus:text-gray-900" />
                         </div>
@@ -57,6 +56,9 @@ export default function LoginForm() {
                                 placeholder="Enter password"
                                 required
                                 minLength={6}
+                                aria-describedby={
+                                    errorMessage ? "password-error" : undefined
+                                }
                             />
                             <KeyIcon className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500 peer-focus:text-gray-900" />
                         </div>
@@ -79,7 +81,14 @@ export default function LoginForm() {
                     {errorMessage && (
                         <>
                             <ExclamationCircleIcon className="h-5 w-5 text-red-500" />
-                            <p className="text-sm text-red-500">
+                            <p
+                                id={
+                                    errorMessage.includes("email")
+                                        ? "email-error"
+                                        : "password-error"
+                                }
+                                className="text-sm text-red-500"
+                            >
                                 {errorMessage}
                             </p>
                         </>
@@ -87,7 +96,7 @@ export default function LoginForm() {
                 </div>
             </div>
             <p className="text-center my-2">
-                Need to create an account? <Link href={"/signup"}>Sign up</Link>
+                Need to create an account? <Link href={"/sign-up"}>Sign up</Link>
             </p>
         </form>
     );

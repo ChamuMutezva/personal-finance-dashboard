@@ -63,6 +63,7 @@ function AddMoneyToPotForm({ pot }: Readonly<{ pot: Pot }>) {
                         aria-valuenow={pot.total}
                         aria-valuemin={0}
                         aria-valuemax={pot.target}
+                        aria-label={`${pot.total} amount`}
                         style={{
                             backgroundColor: pot.theme,
                             transition: "width 0.3s ease-in-out",
@@ -75,6 +76,7 @@ function AddMoneyToPotForm({ pot }: Readonly<{ pot: Pot }>) {
                         aria-valuenow={addAmount}
                         aria-valuemin={pot.total}
                         aria-valuemax={pot.target - pot.total}
+                        aria-label={`${addAmount} amount`}
                         style={{
                             position: "absolute",
                             backgroundColor: "yellowgreen",

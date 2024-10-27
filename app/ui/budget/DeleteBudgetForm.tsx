@@ -4,7 +4,7 @@ import React from "react";
 import { deleteBudget } from "@/lib/action";
 import { AlertDialogAction } from "@/components/ui/alert-dialog";
 
-export function DeleteBudget({ id }: { id: string }) {
+export function DeleteBudget({ id }: Readonly<{ id: string }>) {
     // const deleteBudgetWithId = deleteBudget.bind(null, id);
     const deleteBudgetWithId = async (formData: FormData): Promise<void> => {
         // Call your delete function and handle its response

@@ -40,7 +40,7 @@ export default function EditBudgetForm({
     // const updateBudgetWithID = updateBudget.bind(null, id);
     const updateBudgetWithID = async (formData: FormData): Promise<void> => {
         await updateBudget(id, formData); // Call your update function
-        return; // Ensure this returns void
+       // return; // Ensure this returns void
     };
 
     const preBudget = budgets.find((budget) => budget.id === id);

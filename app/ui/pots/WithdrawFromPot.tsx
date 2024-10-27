@@ -64,6 +64,7 @@ function WithDrawFromPot({ pot }: Readonly<{ pot: Pot }>) {
                         aria-valuenow={pot.total - withdrawAmount}
                         aria-valuemin={0}
                         aria-valuemax={pot.target}
+                        aria-label={`withdrawal amount balance`}
                         style={{
                             backgroundColor: pot.theme,
                             transition: "width 0.3s ease-in-out",
@@ -78,6 +79,7 @@ function WithDrawFromPot({ pot }: Readonly<{ pot: Pot }>) {
                         role="meter"
                         aria-valuenow={withdrawAmount}
                         aria-valuemin={0}
+                        aria-label={`${withdrawAmount}`}
                         aria-valuemax={pot.target - pot.total - withdrawAmount}
                         style={{
                             position: "absolute",

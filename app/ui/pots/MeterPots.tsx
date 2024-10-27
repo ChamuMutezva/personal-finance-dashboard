@@ -23,6 +23,7 @@ const MeterPots = ({
                     aria-valuenow={value}
                     aria-valuemin={min}
                     aria-valuemax={max}
+                    aria-label={`meter for category`}
                     aria-labelledby="meter-usage"
                     className={`h-2 rounded`}
                     style={{

@@ -104,17 +104,16 @@ function AddBudgetForm({ budgets }: Readonly<{ budgets: Budget[] }>) {
                                 aria-live="polite"
                                 aria-atomic="true"
                             >
-                                {state.errors?.category &&
-                                    state.errors.category.map(
-                                        (error: string) => (
-                                            <p
-                                                className="mt-2 text-sm text-red-500"
-                                                key={error}
-                                            >
-                                                {error}
-                                            </p>
-                                        )
-                                    )}
+                                {state.errors?.category?.map(
+                                    (error: string) => (
+                                        <p
+                                            className="mt-2 text-sm text-red-500"
+                                            key={error}
+                                        >
+                                            {error}
+                                        </p>
+                                    )
+                                )}
                             </div>
                         </FormItem>
                     )}
@@ -144,17 +143,14 @@ function AddBudgetForm({ budgets }: Readonly<{ budgets: Budget[] }>) {
                                 aria-live="polite"
                                 aria-atomic="true"
                             >
-                                {state.errors?.maximum &&
-                                    state.errors.maximum.map(
-                                        (error: string) => (
-                                            <p
-                                                className="mt-2 text-sm text-red-500"
-                                                key={error}
-                                            >
-                                                {error}
-                                            </p>
-                                        )
-                                    )}
+                                {state.errors?.maximum?.map((error: string) => (
+                                    <p
+                                        className="mt-2 text-sm text-red-500"
+                                        key={error}
+                                    >
+                                        {error}
+                                    </p>
+                                ))}
                             </div>
                         </FormItem>
                     )}

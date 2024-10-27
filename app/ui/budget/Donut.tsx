@@ -21,15 +21,13 @@ interface DonutProps {
 }
 
 export function Donut({ budgets, totals }: Readonly<DonutProps>) {
-    const chartData =
-        budgets &&
-        budgets.map((budget, index) => ({
-            id: budget.id,
-            category: budget.category,
-            maximum: Number(budget.maximum),
-            fill: budget.theme,
-            amount: Number(totals[index]),
-        }));
+    const chartData = budgets?.map((budget, index) => ({
+        id: budget.id,
+        category: budget.category,
+        maximum: Number(budget.maximum),
+        fill: budget.theme,
+        amount: Number(totals[index]),
+    }));
 
     console.log(chartData);
     const chartConfig = {
