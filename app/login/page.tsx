@@ -7,7 +7,7 @@ export default function Login() {
         <main className="flex items-center relative justify-center h-screen w-full lg:p-2">
             <div
                 className="absolute lg:relative left-0 top-0 w-full max-h-[100%] flex bg-[hsl(var(--grey-900))]
-      lg:w-5/12 justify-center p-6 rounded-b-xl lg:rounded-2xl object-cover"
+                                 lg:w-5/12 justify-center p-6 rounded-b-xl lg:rounded-2xl object-cover"
             >
                 <Image
                     alt=""

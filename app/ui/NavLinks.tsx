@@ -78,7 +78,7 @@ function NavLinks() {
                             alt=""
                             width={14}
                             height={22}
-                            src="assets/images/logo-small.svg"
+                            src="/assets/images/logo-small.svg"
                             priority
                         />
                     ) : (
