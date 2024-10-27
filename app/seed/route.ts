@@ -1,12 +1,13 @@
 import bcrypt from "bcrypt";
 import { db } from "@vercel/postgres";
+
 import {
     transactions,
     balances,
     budgets,
     pots,
     users,
-} from "../lib/placeholder-data";
+} from "@/lib/placeholder-data";
 
 const client = await db.connect();
 
@@ -133,8 +134,7 @@ async function seedPots() {
     return insertedPots;
 }
 
-export async function GET() {  
-    
+export async function GET() {
     try {
         await client.sql`BEGIN`;
         await seedUsers();
@@ -148,5 +148,4 @@ export async function GET() {
         await client.sql`ROLLBACK`;
         return Response.json({ error }, { status: 500 });
     }
-        
 }
