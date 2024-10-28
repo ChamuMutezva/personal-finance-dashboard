@@ -112,7 +112,7 @@ function SignUpButton() {
             onClick={handleClick}
             aria-disabled={pending}
         >
-            Log in <ArrowRightIcon className="h-5 w-5 text-gray-50" />
+            Sign up<ArrowRightIcon className="h-5 w-5 text-gray-50" />
         </Button>
     );
 }

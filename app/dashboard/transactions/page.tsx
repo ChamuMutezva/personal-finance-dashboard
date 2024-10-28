@@ -21,7 +21,7 @@ export default async function Page({
     const totalPages = await fetchTransactionsPages(query);
 
     return (
-        <main className="flex-1 min-h-screen flex-col items-center justify-between px-4 pt-6 md:px-10 lg:p-8">
+        <>
             <div className="flex w-full justify-between items-center mb-4">
                 <h1
                     className={`text-preset-1 font-bold text-[hsl(var(--grey-900))]`}
@@ -45,6 +45,6 @@ export default async function Page({
                     <Pagination totalPages={totalPages} />
                 </div>
             </div>
-        </main>
+        </>
     );
 }

@@ -46,7 +46,7 @@ function NavLinks() {
         <header
             className={clsx(
                 `sidebar fixed z-10 left-0 bottom-0 border-solid border-gray-300 pt-2 px-4 backdrop-blur-2xl w-full
-             bg-[hsl(var(--grey-900))] lg:static lg:h-screen lg:border lg:pt-4 lg:px-0 rounded-t-lg lg:rounded-tl-none
+             bg-[hsl(var(--grey-900))] lg:sticky lg:h-screen lg:border lg:pt-4 lg:px-0 rounded-t-lg lg:rounded-tl-none
              lg:rounded-r-2xl lg:flex lg:flex-col justify-start items-center transition-all duration-300 lg:pb-4`,
                 {
                     "lg:w-[18.75rem]": !minimize,

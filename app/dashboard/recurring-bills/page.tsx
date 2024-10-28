@@ -30,7 +30,7 @@ export default async function Page() {
     );
 
     return (
-        <main className="flex-1 min-h-screen px-4 pt-6 pb-16 md:px-10 lg:p-4">
+        <>
             <div className="mb-4">
                 <div className="flex w-full justify-between items-center mb-4">
                     <h1
@@ -90,6 +90,6 @@ export default async function Page() {
                     </div>
                 </div>
             </div>
-        </main>
+        </>
     );
 }
