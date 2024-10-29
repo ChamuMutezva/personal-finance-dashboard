@@ -28,7 +28,7 @@ export default function SortBy() {
     //const [sortBy, setSortBy] = useState(sortList[0]);
 
     return (
-        <div className="flex items-center mb-4">
+        <div className="flex items-center">
             <label htmlFor="sort" className="sr-only sm:not-sr-only">
                 Sort by
             </label>

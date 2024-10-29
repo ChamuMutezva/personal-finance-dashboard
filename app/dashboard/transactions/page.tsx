@@ -2,7 +2,7 @@ import { Suspense } from "react";
 import TransactionTable from "../../ui/transactions/TransactionTable";
 import { fetchTransactionsPages } from "@/lib/data";
 import { SkeletonLoader } from "../../ui/transactions/TransactionTableSkeleton";
-
+import SortBy from "@/app/ui/transactions/SortBy";
 import Search from "../../ui/transactions/search";
 import Pagination from "../../ui/transactions/Pagination";
 import CategoryFilter from "../../ui/transactions/CategoryFilter";
@@ -31,8 +31,9 @@ export default async function Page({
                 <SignOutForm />
             </div>
             <div className={"w-full pb-10 lg:mb-0"}>
-                <div className="flex gap-2">
+                <div className="flex items-center justify-center gap-2">
                     <Search placeholder="Search transactions" />
+                    <SortBy />
                     <CategoryFilter />
                 </div>
                 <Suspense
