@@ -4,10 +4,10 @@ import LoginForm from "../ui/login/login-form";
 
 export default function Login() {
     return (
-        <main className="flex items-center relative justify-center min-h-screen w-full lg:p-4">
+        <main className="flex flex-col items-center relative lg:justify-around  min-h-screen  lg:flex-row w-full lg:p-4">
             <div
-                className="hidden lg:flex flex-col justify-between items-stretch w-full h-dvh bg-[hsl(var(--grey-900))]
-                             lg:w-5/12 p-6 rounded-b-xl lg:rounded-2xl object-cover bg-none
+                className="flex flex-col justify-between items-center lg:items-stretch w-full lg:h-dvh bg-[hsl(var(--grey-900))]
+                            lg:w-5/12 p-6 rounded-b-xl lg:rounded-2xl object-cover bg-none
                              lg:bg-[url('/assets/images/illustration-authentication.svg')] bg-top bg-auto bg-no-repeat"
             >
                 <Image
@@ -33,7 +33,7 @@ export default function Login() {
                     </p>
                 </div>
             </div>
-            <div className="flex justify-center lg:w-7/12  max-w-[30rem] lg:max-w-full  p-4">
+            <div className="flex justify-center lg:w-7/12  max-w-[30rem] w-full lg:max-w-full  p-4">
                 <LoginForm />
             </div>
         </main>

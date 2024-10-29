@@ -15,7 +15,7 @@ export default function SignUpForm() {
     return (
         <form className="max-w-[35rem] w-full">
             <div className="rounded-lg bg-gray-50 p-4">
-                <h2 className={` mb-3 text-2xl`}>Sign up</h2>
+                <h2 className={`mb-3 text-preset-1 font-bold`}>Sign up</h2>
                 <div className="w-full">
                     <div>
                         <label
