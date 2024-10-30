@@ -19,7 +19,7 @@ export default function Search({ placeholder }: { placeholder: string }) {
     }, 300)
 
     return (
-        <div className="relative flex flex-1 flex-shrink-0">
+        <div className="relative flex flex-1 flex-shrink-0 col-span-2 sm:col-span-1">
             <label htmlFor="search" className="sr-only">
                 Search
             </label>

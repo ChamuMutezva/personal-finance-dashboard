@@ -33,10 +33,9 @@ export default function SortBy() {
                 Sort by
             </label>
             <select
-                id="sort"
-               
+                id="sort"               
                 onChange={handleSortChange}
-                className="ml-4 border rounded-md p-2"
+                className="border rounded-md p-2 flex-1"
             >
                 {sortList.map((list, idx) => (
                     <option key={idx} value={list}>

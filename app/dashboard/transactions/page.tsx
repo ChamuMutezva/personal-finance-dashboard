@@ -31,7 +31,7 @@ export default async function Page({
                 <SignOutForm />
             </div>
             <div className={"w-full pb-10 lg:mb-0"}>
-                <div className="flex items-center justify-center gap-2">
+                <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
                     <Search placeholder="Search transactions" />
                     <SortBy />
                     <CategoryFilter />

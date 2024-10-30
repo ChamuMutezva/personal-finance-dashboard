@@ -59,7 +59,7 @@ export default function CategoryFilter() {
             <select
                 id="categories"
                 onChange={handleCategoryChange}
-                className="ml-4 border rounded-md p-2"
+                className="border flex-1 rounded-md p-2"
             >
                 {categories.map((category) => (
                     <option key={category} value={category}>
