@@ -34,7 +34,7 @@ export default async function Page({
                 <SignOutForm />
             </div>
             <div className={"w-full pb-10 lg:mb-0"}>
-                <div className="flex justify-between gap-2 my-4">
+                <div className="flex justify-between gap-2">
                     <Search placeholder="Search transactions" />                    
                     <CategoryFilter />
                 </div>
