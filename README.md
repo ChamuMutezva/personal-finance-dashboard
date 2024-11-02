@@ -342,18 +342,11 @@ export async function GET() {
 
 ```
 
-### Continued development
-
-Use this section to outline areas that you want to continue focusing on in future projects. These could be concepts you're still not completely comfortable with or techniques you found useful that you want to refine and perfect.
-
-**Note: Delete this note and the content within this section and replace with your own plans for continued development.**
+- The Transaction page has data displayed in tabular for, this was achieved through the use of Shadcn and the Tanstack Table. The combination of the 2 offers some out of the box pagination , sorting and many more
 
 ### Useful resources
 
-- [Example resource 1](https://www.example.com) - This helped me for XYZ reason. I really liked this pattern and will use it going forward.
-- [Example resource 2](https://www.example.com) - This is an amazing article which helped me finally understand XYZ. I'd recommend it to anyone still learning this concept.
-
-**Note: Delete this note and replace the list above with resources that helped you during the challenge. These could come in handy for anyone viewing your solution or for yourself when you look back on this project in the future.**
+- [Tables in NextJs Using shadcn/ui and TanStack Table](https://www.youtube.com/watch?v=kHfDLN9w1KQ&t=1144s). A tutorial by a YouTuber Hamed Bahran where he used NextJs. The table was created using [Shadcn - Data Table](https://ui.shadcn.com/docs/components/data-table) and the powerful [TanStack Table](https://tanstack.com/table/latest)
 
 ## Author
 

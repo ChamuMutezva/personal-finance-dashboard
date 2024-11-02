@@ -41,6 +41,7 @@ export function DataTable<TData, TValue>({
     const [columnVisibility, setColumnVisibility] = useState<VisibilityState>(
         {}
     );
+    const [rowSelection, setRowSelection] = useState({});
 
     const table = useReactTable({
         data,
@@ -49,9 +50,11 @@ export function DataTable<TData, TValue>({
         onSortingChange: setSorting,
         getSortedRowModel: getSortedRowModel(),
         onColumnVisibilityChange: setColumnVisibility,
+        onRowSelectionChange: setRowSelection,
         state: {
             sorting,
             columnVisibility,
+            rowSelection,
         },
     });
 
@@ -61,7 +64,7 @@ export function DataTable<TData, TValue>({
                 <DropdownMenuTrigger asChild>
                     <Button variant="outline" className="ml-auto my-2">
                         <span className="sr-only">Select</span>Columns
-                    <span className="sr-only">to visually display</span>
+                        <span className="sr-only">to visually display</span>
                     </Button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent align="end">
@@ -136,6 +139,10 @@ export function DataTable<TData, TValue>({
                         )}
                     </TableBody>
                 </Table>
+            </div>
+            <div className="flex-1 text-sm text-muted-foreground">
+                {table.getFilteredSelectedRowModel().rows.length} of{" "}
+                {table.getFilteredRowModel().rows.length} row(s) selected.
             </div>
         </div>
     );

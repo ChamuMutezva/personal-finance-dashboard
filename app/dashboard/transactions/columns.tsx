@@ -3,6 +3,7 @@
 import { ColumnDef } from "@tanstack/react-table";
 import { MoreHorizontal, ArrowUpDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Checkbox } from "@/components/ui/checkbox";
 import {
     DropdownMenu,
     DropdownMenuContent,
@@ -13,11 +14,35 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Transaction } from "@/lib/definitions";
 import Image from "next/image";
+import dayjs from "dayjs";
 
 export const columns: ColumnDef<Transaction>[] = [
     {
+        id: "select",
+        header: ({ table }) => (
+            <Checkbox
+                checked={
+                    table.getIsAllPageRowsSelected() ||
+                    (table.getIsSomePageRowsSelected() && "indeterminate")
+                }
+                onCheckedChange={(value) =>
+                    table.toggleAllPageRowsSelected(!!value)
+                }
+                aria-label="Select all"
+            />
+        ),
+        cell: ({ row }) => (
+            <Checkbox
+                checked={row.getIsSelected()}
+                onCheckedChange={(value) => row.toggleSelected(!!value)}
+                aria-label="Select row"
+            />
+        ),
+        enableSorting: false,
+        enableHiding: false,
+    },
+    {
         accessorKey: "name",
-
         header: ({ column }) => {
             return (
                 <Button
@@ -71,13 +96,14 @@ export const columns: ColumnDef<Transaction>[] = [
         cell: ({ row }) => {
             const date = new Date(row.getValue("date"));
 
-            // Get day, month, and year
-            const day = String(date.getDate()).padStart(2, "0"); // Pad single digits with leading zero
-            const month = String(date.getMonth() + 1).padStart(2, "0"); // Months are zero-indexed
-            const year = date.getFullYear();
-            const formatted = `${day}/${month}/${year}`;
-
-            return <div className="font-medium">{formatted}</div>;
+            return (
+                <time
+                    className="text-preset-5 text-[hsl(var(--grey-500))] text-left"
+                    dateTime={dayjs(date).format("D MMM YYYY")}
+                >
+                    {dayjs(date).format("D MMM YYYY")}
+                </time>
+            );
         },
     },
     {
@@ -91,13 +117,13 @@ export const columns: ColumnDef<Transaction>[] = [
                 <div className="flex items-center justify-end">
                     <Button
                         variant="ghost"
-                        className="self-end"
+                        className="text-center"
                         onClick={() =>
                             column.toggleSorting(column.getIsSorted() === "asc")
                         }
                     >
-                        Amount
                         <ArrowUpDown className="ml-2 h-4 w-4" />
+                        Amount
                     </Button>
                 </div>
             );
