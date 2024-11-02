@@ -12,10 +12,12 @@ import {
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Transaction } from "@/lib/definitions";
+import Image from "next/image";
 
 export const columns: ColumnDef<Transaction>[] = [
     {
         accessorKey: "name",
+
         header: ({ column }) => {
             return (
                 <Button
@@ -27,6 +29,23 @@ export const columns: ColumnDef<Transaction>[] = [
                     Name
                     <ArrowUpDown className="ml-2 h-4 w-4" />
                 </Button>
+            );
+        },
+        cell: ({ row }) => {
+            const transaction = row.original;
+
+            return (
+                <div className="flex flex-col justify-start gap-2 items-start md:flex-row md:items-center font-medium">
+                    <Image
+                        src={transaction.avatar}
+                        width={32}
+                        height={32}
+                        alt=""
+                        className="rounded-[50%]"
+                        unoptimized
+                    />
+                    <span>{transaction.name}</span>
+                </div>
             );
         },
     },
@@ -60,6 +79,10 @@ export const columns: ColumnDef<Transaction>[] = [
 
             return <div className="font-medium">{formatted}</div>;
         },
+    },
+    {
+        accessorKey: "recurring",
+        header: "Recurring",
     },
     {
         accessorKey: "amount",
