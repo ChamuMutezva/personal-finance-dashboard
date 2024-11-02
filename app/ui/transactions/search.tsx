@@ -2,7 +2,7 @@
 import { useDebouncedCallback} from "use-debounce"
 import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 import { useSearchParams, usePathname, useRouter } from "next/navigation";
-export default function Search({ placeholder }: { placeholder: string }) {
+export default function Search({ placeholder }: Readonly<{ placeholder: string }>) {
     const searchParams = useSearchParams();
     const pathname = usePathname();
     const { replace } = useRouter();
@@ -19,7 +19,7 @@ export default function Search({ placeholder }: { placeholder: string }) {
     }, 300)
 
     return (
-        <div className="relative flex flex-1 flex-shrink-0 col-span-2 sm:col-span-1">
+        <div className="relative flex  flex-shrink-0 col-span-2 sm:col-span-1">
             <label htmlFor="search" className="sr-only">
                 Search
             </label>
