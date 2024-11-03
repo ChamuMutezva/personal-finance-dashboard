@@ -25,7 +25,7 @@ export default async function Page({
 
     return (
         <>
-            <div className="flex w-full justify-between items-center mb-4">
+            <div className="flex w-full justify-between items-center">
                 <h1
                     className={`text-preset-1 font-bold text-[hsl(var(--grey-900))]`}
                 >

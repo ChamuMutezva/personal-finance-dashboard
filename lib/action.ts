@@ -1,31 +1,112 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 "use server";
 import { z } from "zod";
 import { sql } from "@vercel/postgres";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
-import { Pot } from "./definitions";
+import { Pot, FormState } from "./definitions";
 import { signIn } from "@/auth";
 import { AuthError } from "next-auth";
+import bcrypt from "bcrypt";
 
+// SignUp
+const signupSchema = z.object({
+    id: z.string(),
+    name: z.string().min(2),
+    email: z.string().email(),
+    password: z.string().min(6),
+});
+
+const CreateUser = signupSchema.omit({ id: true });
+
+export async function createUser(
+    state: {
+        message?: string;
+        errors?: {name?: string[]; email?: string[]; password?: string[] };
+    },
+    formData: FormData
+): Promise<{
+    message?: string;
+    errors?: {name?: string[]; email?: string[]; password?: string[] };
+}> {
+    const validatedFields = CreateUser.safeParse({
+        name: formData.get("name"),
+        email: formData.get("email"),
+        password: formData.get("password"),
+    });
+
+    if (!validatedFields.success) {
+        return {
+            ...state,
+            errors: validatedFields.error.flatten().fieldErrors,
+            message: "Missing Fields. Failed to Create new user.",
+        };
+    }
+
+    const {name, email, password } = validatedFields.data;
+
+    try {
+        const existingUser =
+            await sql`SELECT * FROM users WHERE email=${email}`;
+
+        if (
+            existingUser &&
+            existingUser.rowCount &&
+            existingUser.rowCount > 0
+        ) {
+            return {
+                ...state,
+                errors: {
+                    email: [
+                        "Email already exists. Please use a different email.",
+                    ],
+                },
+                message: "Email already exists.",
+            };
+        }
+
+        const hashedPassword = await bcrypt.hash(password, 10);
+
+       const data = await sql`INSERT INTO users (name, email, password) VALUES (${name}, ${email}, ${hashedPassword}) RETURNING *;`;
+        const user = data.rows[0]
+
+        if (!user) {
+            return {
+              message: 'An error occurred while creating your account.',
+            }
+          }
+       /*  return {
+            ...state,
+            message: "User created successfully.",
+        };
+        */
+    } catch (error) {
+        return {
+            ...state,
+            message: "Database Error: Failed to create user",
+        };
+    }
+    redirect("/login");
+}
+
+// Login
 export async function authenticate(
     prevState: string | undefined,
-    formData: FormData,
-  ) {
+    formData: FormData
+) {
     try {
-      await signIn('credentials', formData);
+        await signIn("credentials", formData);
     } catch (error) {
-      if (error instanceof AuthError) {
-        switch (error.type) {
-          case 'CredentialsSignin':
-            return 'Invalid credentials.';
-          default:
-            return 'Something went wrong.';
+        if (error instanceof AuthError) {
+            switch (error.type) {
+                case "CredentialsSignin":
+                    return "Invalid credentials.";
+                default:
+                    return "Something went wrong.";
+            }
         }
-      }
-      throw error;
+        throw error;
     }
-  }
+}
 
 // WITHDRAW MONEY FROM POT
 const WithdrawMoneyFromPotFormSchema = z.object({

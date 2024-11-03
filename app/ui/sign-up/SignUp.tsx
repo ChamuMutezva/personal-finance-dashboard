@@ -3,17 +3,25 @@ import {
     AtSymbolIcon,
     KeyIcon,
     ExclamationCircleIcon,
-    UserIcon
+    UserIcon,
 } from "@heroicons/react/24/outline";
 import { ArrowRightIcon } from "@heroicons/react/20/solid";
 import { Button } from "@/components/ui/button";
 import { useFormState, useFormStatus } from "react-dom";
-import { authenticate } from "@/lib/action";
+import { createUser } from "@/lib/action";
 import Link from "next/link";
 
+const INITIAL_STATE = {
+    message: "",
+    errors: {},
+};
+
 export default function SignUpForm() {
+    const [state, action] = useFormState(createUser, INITIAL_STATE);
+    console.log(state);
+
     return (
-        <form className="max-w-[35rem] w-full">
+        <form action={action} className="max-w-[35rem] w-full">
             <div className="rounded-lg bg-gray-50 p-4">
                 <h2 className={`mb-3 text-preset-1 font-bold`}>Sign up</h2>
                 <div className="w-full">
@@ -35,7 +43,13 @@ export default function SignUpForm() {
                             />
                             <UserIcon className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500 peer-focus:text-gray-900" />
                         </div>
+                        {state?.errors?.name && (
+                            <p className="text-red-500 text-sm">
+                                {state.errors.name.join(", ")}
+                            </p>
+                        )}
                     </div>
+
                     <div>
                         <label
                             className="mb-3 mt-5 block text-xs font-medium text-gray-900"
@@ -54,6 +68,11 @@ export default function SignUpForm() {
                             />
                             <AtSymbolIcon className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500 peer-focus:text-gray-900" />
                         </div>
+                        {state?.errors?.email && (
+                            <p className="text-red-500 text-sm">
+                                {state.errors.email.join(", ")}
+                            </p>
+                        )}
                     </div>
                     <div className="mt-4">
                         <label
@@ -74,24 +93,45 @@ export default function SignUpForm() {
                             />
                             <KeyIcon className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500 peer-focus:text-gray-900" />
                         </div>
+                        {state?.errors?.password && (
+                            <div>
+                                <p>Password must:</p>
+                                <ul>
+                                    {state.errors.password.map((error) => (
+                                        <li key={error}>- {error}</li>
+                                    ))}
+                                </ul>
+                            </div>
+                        )}
                     </div>
                 </div>
                 <SignUpButton />
-
+                {/*
                 <div
                     className="flex h-8 items-end space-x-1"
                     aria-live="polite"
                     aria-atomic="true"
                 >
-                    <>
-                        <ExclamationCircleIcon className="h-5 w-5 text-red-500" />
-                        <p className="text-sm text-red-500"></p>
-                    </>
+                    {errorMessage && (
+                        <>
+                            <ExclamationCircleIcon className="h-5 w-5 text-red-500" />
+                            <p
+                                id={
+                                    errorMessage.includes("email")
+                                        ? "email-error"
+                                        : "password-error"
+                                }
+                                className="text-sm text-red-500"
+                            >
+                                {errorMessage}
+                            </p>
+                        </>
+                    )}
                 </div>
+                */}
             </div>
             <p className="text-center my-2">
-                Already have an account?{" "}
-                <Link href={"/login"}>Login</Link>
+                Already have an account? <Link href={"/login"}>Login</Link>
             </p>
         </form>
     );
@@ -112,7 +152,8 @@ function SignUpButton() {
             onClick={handleClick}
             aria-disabled={pending}
         >
-            Sign up<ArrowRightIcon className="h-5 w-5 text-gray-50" />
+            Sign up
+            <ArrowRightIcon className="h-5 w-5 text-gray-50" />
         </Button>
     );
 }

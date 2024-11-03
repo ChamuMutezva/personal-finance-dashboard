@@ -135,7 +135,19 @@ export const columns: ColumnDef<Transaction>[] = [
                 currency: "USD",
             }).format(amount);
 
-            return <div className="text-right font-medium">{formatted}</div>;
+            return (
+                <div
+                    className="text-right font-medium"
+                    style={{
+                        color:
+                            amount > 0
+                                ? "hsl(var(--green))"
+                                : "hsl(var(--grey-900))",
+                    }}
+                >
+                    {formatted}
+                </div>
+            );
         },
     },
     {

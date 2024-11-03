@@ -51,7 +51,7 @@ export default function CategoryFilter() {
     };
 
     return (
-        <div className="flex items-center ">
+        <div className="flex items-center gap-2">
             <label htmlFor="categories" className="sr-only sm:not-sr-only">
                 Categories
             </label>

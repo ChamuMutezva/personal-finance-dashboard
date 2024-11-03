@@ -5,6 +5,15 @@ export type User = {
     password: string;
 };
 
+export type FormState = {
+    errors?: {
+        name?: string[];
+        email?: string[];
+        password?: string[];
+    };
+    message?: string;
+};
+
 export type Balance = {
     current: number;
     income: number;
