@@ -16,8 +16,12 @@ export default function LoginForm() {
     return (
         <form action={formAction} className="max-w-[35rem] w-full">
             <div className="rounded-lg bg-gray-50 p-4">
-                <h2 className={` mb-3 text-preset-1 font-bold`}>Please log in to continue.</h2>
+                <h2 className={` mb-3 text-preset-1 font-bold`}>
+                    Please log in to continue.
+                </h2>
+
                 <div className="w-full">
+                    {/* EMAIL */}
                     <div>
                         <label
                             className="mb-3 mt-5 block text-xs font-medium text-gray-900"
@@ -40,6 +44,8 @@ export default function LoginForm() {
                             <AtSymbolIcon className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500 peer-focus:text-gray-900" />
                         </div>
                     </div>
+
+                    {/* PASSWORD */}
                     <div className="mt-4">
                         <label
                             className="mb-3 mt-5 block text-xs font-medium text-gray-900"
@@ -65,14 +71,7 @@ export default function LoginForm() {
                     </div>
                 </div>
                 <LoginButton />
-                {/*
-                <Button
-                    className="mt-4 py-4 w-full flex justify-center items-center"
-                    aria-disabled={isPending}
-                >
-                    Log in <ArrowRightIcon className="h-5 w-5 text-gray-50" />
-                </Button>
-                */}
+
                 <div
                     className="flex h-8 items-end space-x-1"
                     aria-live="polite"
@@ -96,7 +95,13 @@ export default function LoginForm() {
                 </div>
             </div>
             <p className="text-center my-2">
-                Need to create an account? <Link href={"/sign-up"}>Sign up</Link>
+                Need to create an account?{" "}
+                <Link
+                    href={"/sign-up"}
+                    className="font-bold text-[hsl(var(--grey-500))]"
+                >
+                    Sign up
+                </Link>
             </p>
         </form>
     );

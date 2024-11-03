@@ -5,6 +5,12 @@ export type User = {
     password: string;
 };
 
+export type SessionPayload = {
+    userId: string,
+    expires: Date,
+  //  role: "admin" || "user",
+}
+
 export type FormState = {
     errors?: {
         name?: string[];

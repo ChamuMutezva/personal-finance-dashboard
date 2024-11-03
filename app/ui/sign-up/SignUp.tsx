@@ -131,7 +131,13 @@ export default function SignUpForm() {
                 */}
             </div>
             <p className="text-center my-2">
-                Already have an account? <Link href={"/login"}>Login</Link>
+                Already have an account?{" "}
+                <Link
+                    href={"/login"}
+                    className="font-bold text-preset-4 text-[hsl(var(--grey-900))]"
+                >
+                    Login
+                </Link>
             </p>
         </form>
     );

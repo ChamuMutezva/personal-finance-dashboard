@@ -1,5 +1,3 @@
-import Link from "next/link";
-import { Card } from "@/components/ui/card";
 import SignUpForm from "../ui/sign-up/SignUp";
 import Image from "next/image";
 

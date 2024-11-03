@@ -7,6 +7,7 @@ import { Pot, FormState } from "./definitions";
 import { signIn } from "@/auth";
 import { AuthError } from "next-auth";
 import bcrypt from "bcrypt";
+import { createSession } from "./session";
 
 // SignUp
 const signupSchema = z.object({
@@ -74,6 +75,7 @@ export async function createUser(
               message: 'An error occurred while creating your account.',
             }
           }
+        await createSession(user.id)
        /*  return {
             ...state,
             message: "User created successfully.",
