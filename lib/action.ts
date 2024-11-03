@@ -12,9 +12,9 @@ import { createSession } from "./session";
 // SignUp
 const signupSchema = z.object({
     id: z.string(),
-    name: z.string().min(2),
+    name: z.string().min(2, {message: "Name must be 2 or more characters long"}),
     email: z.string().email(),
-    password: z.string().min(6),
+    password: z.string().min(6, {message: "Password must be 6 characters or more"}),
 });
 
 const CreateUser = signupSchema.omit({ id: true });

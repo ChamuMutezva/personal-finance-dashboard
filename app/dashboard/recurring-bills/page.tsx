@@ -85,7 +85,7 @@ export default async function Page() {
                             </div>
                         </Card>
                     </div>
-                    <div className="w-full">
+                    <div className="w-full mb-10">
                         <RecurringBillsTable />
                     </div>
                 </div>

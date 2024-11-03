@@ -33,7 +33,7 @@ export default async function Page({
                 </h1>
                 <SignOutForm />
             </div>
-            <div className={"w-full pb-10 lg:mb-0"}>
+            <div className={"w-full lg:mb-0"}>
                 <div className="flex justify-between gap-2">
                     <Search placeholder="Search transactions" />                    
                     <CategoryFilter />

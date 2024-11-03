@@ -40,11 +40,17 @@ export default function SignUpForm() {
                                 name="name"
                                 placeholder="Enter your name"
                                 required
+                                aria-describedby="name-errors"
                             />
                             <UserIcon className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500 peer-focus:text-gray-900" />
                         </div>
                         {state?.errors?.name && (
-                            <p className="text-red-500 text-sm">
+                            <p
+                                id="name-errors"
+                                className="text-red-500 text-sm"
+                                aria-live="polite"
+                                aria-atomic="true"
+                            >
                                 {state.errors.name.join(", ")}
                             </p>
                         )}
@@ -59,17 +65,23 @@ export default function SignUpForm() {
                         </label>
                         <div className="relative">
                             <input
-                                className="peer block w-full rounded-md border border-gray-200 py-[9px] pl-10 text-sm outline-2 placeholder:text-gray-500"
+                                className="peer block w-full rounded-md border border-gray-200 py-[12px] pl-10 text-sm outline-2 placeholder:text-gray-500"
                                 id="email"
                                 type="email"
                                 name="email"
                                 placeholder="Enter your email address"
+                                aria-describedby="email-errors"
                                 required
                             />
                             <AtSymbolIcon className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500 peer-focus:text-gray-900" />
                         </div>
                         {state?.errors?.email && (
-                            <p className="text-red-500 text-sm">
+                            <p
+                                id="email-errors"
+                                className="text-red-500 text-sm"
+                                aria-live="polite"
+                                aria-atomic="true"
+                            >
                                 {state.errors.email.join(", ")}
                             </p>
                         )}
@@ -83,22 +95,32 @@ export default function SignUpForm() {
                         </label>
                         <div className="relative">
                             <input
-                                className="peer block w-full rounded-md border border-gray-200 py-[9px] pl-10 text-sm outline-2 placeholder:text-gray-500"
+                                className="peer block w-full rounded-md border border-gray-200 py-[12px] pl-10 text-sm outline-2 placeholder:text-gray-500"
                                 id="password"
                                 type="password"
                                 name="password"
                                 placeholder="Enter password"
                                 required
                                 minLength={6}
+                                aria-describedby="password-errors"
                             />
                             <KeyIcon className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500 peer-focus:text-gray-900" />
                         </div>
                         {state?.errors?.password && (
                             <div>
                                 <p>Password must:</p>
-                                <ul>
+                                <ul
+                                    id="password-errors"
+                                    aria-live="polite"
+                                    aria-atomic="true"
+                                >
                                     {state.errors.password.map((error) => (
-                                        <li key={error}>- {error}</li>
+                                        <li
+                                            className="text-red-500 text-sm"
+                                            key={error}
+                                        >
+                                            - {error}
+                                        </li>
                                     ))}
                                 </ul>
                             </div>
@@ -154,7 +176,7 @@ function SignUpButton() {
 
     return (
         <Button
-            className="mt-4 py-4 w-full flex justify-center items-center"
+            className="mt-4 py-7 w-full flex justify-center items-center"
             onClick={handleClick}
             aria-disabled={pending}
         >

@@ -31,7 +31,7 @@ export default function LoginForm() {
                         </label>
                         <div className="relative">
                             <input
-                                className="peer block w-full rounded-md border border-gray-200 py-[9px] pl-10 text-sm outline-2 placeholder:text-gray-500"
+                                className="peer block w-full rounded-md border border-gray-200 py-[12px] pl-10 text-sm outline-2 placeholder:text-gray-500"
                                 id="email"
                                 type="email"
                                 name="email"
@@ -55,7 +55,7 @@ export default function LoginForm() {
                         </label>
                         <div className="relative">
                             <input
-                                className="peer block w-full rounded-md border border-gray-200 py-[9px] pl-10 text-sm outline-2 placeholder:text-gray-500"
+                                className="peer block w-full rounded-md border border-gray-200 py-[12px] pl-10 text-sm outline-2 placeholder:text-gray-500"
                                 id="password"
                                 type="password"
                                 name="password"
@@ -98,7 +98,7 @@ export default function LoginForm() {
                 Need to create an account?{" "}
                 <Link
                     href={"/sign-up"}
-                    className="font-bold text-[hsl(var(--grey-500))]"
+                    className="font-bold text-preset-4 text-[hsl(var(--grey-900))]"
                 >
                     Sign up
                 </Link>
@@ -118,7 +118,7 @@ function LoginButton() {
 
     return (
         <Button
-            className="mt-4 py-4 w-full flex justify-center items-center"
+            className="mt-4 py-7 w-full flex justify-center items-center"
             onClick={handleClick}
             aria-disabled={pending}
         >

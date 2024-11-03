@@ -70,7 +70,7 @@ export default async function Page() {
                     </DialogContent>
                 </Dialog>
             </div>
-            <div className={`grid gap-4 lg:grid-cols-2`}>
+            <div className={`grid gap-4 lg:grid-cols-2 pb-16 lg:pb-8`}>
                 {pots.map((pot) => (
                     <Card
                         key={pot.id}

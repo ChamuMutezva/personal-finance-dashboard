@@ -347,6 +347,7 @@ export async function GET() {
 ### Useful resources
 
 - [Tables in NextJs Using shadcn/ui and TanStack Table](https://www.youtube.com/watch?v=kHfDLN9w1KQ&t=1144s). A tutorial by a YouTuber Hamed Bahran where he used NextJs. The table was created using [Shadcn - Data Table](https://ui.shadcn.com/docs/components/data-table) and the powerful [TanStack Table](https://tanstack.com/table/latest)
+- [Next.js: Authentication (Best Practices for Server Components, Actions, Middleware - by Delba)](https://www.youtube.com/watch?v=N_sUsq_y10U)
 
 ## Author
 
