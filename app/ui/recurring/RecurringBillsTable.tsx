@@ -1,5 +1,5 @@
 import React from "react";
-import { fetchBills } from "@/lib/data";
+import { fetchRecurringBills } from "@/lib/data";
 import Image from "next/image";
 import dayjs from "dayjs";
 import {
@@ -15,7 +15,7 @@ import {
 import { formatPosNegativeCurrency } from "@/lib/utils";
 
 export default async function RecurringBillsTable() {
-    const bills = await fetchBills();
+    const bills = await fetchRecurringBills();
     return (
         <Table>
             <TableCaption>Recurring Bills Table</TableCaption>

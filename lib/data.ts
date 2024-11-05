@@ -57,7 +57,6 @@ export async function fetchBalance() {
 
 export async function fetchTransactions() {
     try {
-      
         const data = await sql<Transaction>`SELECT * FROM transactions`;
 
         return data.rows;
@@ -69,7 +68,7 @@ export async function fetchTransactions() {
 
 export async function fetchBudgets() {
     try {
-              const data = await sql<Budget>`SELECT * FROM budgets`;
+        const data = await sql<Budget>`SELECT * FROM budgets`;
 
         return data.rows;
     } catch (error) {
@@ -80,7 +79,6 @@ export async function fetchBudgets() {
 
 export async function fetchPots() {
     try {
-       
         const data = await sql<Pot>`SELECT * FROM pots`;
 
         return data.rows;
@@ -104,7 +102,6 @@ export async function fetchByCategoryExtendedExp(query: string) {
 }
 export async function fetchByCategory() {
     try {
-       
         // const generalCategoryPromise  = await sql<Transaction>`SELECT * FROM transactions WHERE category = 'General'`
         const diningCategoryPromise =
             await sql<Transaction>`SELECT * FROM transactions WHERE category = 'Dining Out'`;
@@ -241,6 +238,16 @@ export async function fetchBudgetById(id: string) {
     }
 }
 
+export async function fetchRecurringBills() {
+    try {
+        const data =
+            await sql<Transaction>`SELECT DISTINCT ON (name) * FROM transactions WHERE recurring = true ORDER BY name, date`;
+        return data.rows;
+    } catch (error) {
+        console.error("Database Error:", error);
+        throw new Error("Failed to fetch transactions data.");
+    }
+}
 /*
 export async function fetchLatestInvoices() {
     try {

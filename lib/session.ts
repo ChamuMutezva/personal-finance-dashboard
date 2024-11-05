@@ -32,6 +32,7 @@ export async function decrypt(session: string | undefined = "") {
     }
 }
 
+// helper function for creating a new session
 export async function createSession(userId: string) {
     const expires = new Date(Date.now() + cookie.duration);
     const session = await encrypt({ userId, expires });
@@ -39,6 +40,7 @@ export async function createSession(userId: string) {
     redirect("/dashboard");
 }
 
+// updateSession. Checks user if session is valid
 export async function verifySession() {
     const cookie = cookies().get("session")?.value;
     const session = await decrypt(cookie);

@@ -4,6 +4,8 @@ import { fetchBills } from "@/lib/data";
 import { Card } from "@/components/ui/card";
 import RecurringBillsTable from "../../ui/recurring/RecurringBillsTable";
 import SignOutForm from "@/app/ui/SignOutForm";
+import CategoryFilter from "@/app/ui/transactions/CategoryFilter";
+import Search from "@/app/ui/transactions/search";
 
 export default async function Page() {
     const bills = await fetchBills();
@@ -41,7 +43,7 @@ export default async function Page() {
 
                     <SignOutForm />
                 </div>
-                
+
                 <div className="lg:flex lg:gap-8">
                     <div
                         className={`flex flex-col gap-4 sm:flex-row lg:flex-col lg:items-start my-8`}
@@ -86,6 +88,10 @@ export default async function Page() {
                         </Card>
                     </div>
                     <div className="w-full mb-10">
+                        <div className="flex justify-between gap-2">
+                            <Search placeholder="Search transactions" />
+                            <CategoryFilter />
+                        </div>
                         <RecurringBillsTable />
                     </div>
                 </div>
