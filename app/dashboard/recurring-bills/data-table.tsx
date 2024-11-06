@@ -30,7 +30,6 @@ import {
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import CategoryFilter from "@/app/ui/transactions/CategoryFilter";
 
 interface DataTableProps<TData, TValue> {
     columns: ColumnDef<TData, TValue>[];
@@ -66,24 +65,81 @@ export function DataTable<TData, TValue>({
         },
     });
 
+    const categories = [
+        "All",
+        "Entertainment",
+        "Bills",
+        "Groceries",
+        "Dining Out",
+        "Transportation",
+        "Personal Care",
+        "Education",
+        "Lifestyle",
+        "Shopping",
+        "General",
+    ];
+
     return (
         <div>
             <div className="flex items-center justify-between gap-2 py-4">
-                <Input
-                    placeholder="Filter name..."
-                    value={
-                        (table
-                            .getColumn("name")
-                            ?.getFilterValue() as string) ?? ""
-                    }
-                    onChange={(event) =>
-                        table
-                            .getColumn("name")
-                            ?.setFilterValue(event.target.value)
-                    }
-                    className="max-w-sm"
-                />
-                 <CategoryFilter />
+                 {/* Name Filter using text input */}
+                <div>
+                    <label
+                        htmlFor="name-filter"
+                        className="sr-only sm:not-sr-only"
+                    >
+                        <span className="sr-only">Filter by name</span>
+                    </label>
+                    <Input
+                        id="name-filter"
+                        placeholder="Filter name..."
+                        value={
+                            (table
+                                .getColumn("name")
+                                ?.getFilterValue() as string) ?? ""
+                        }
+                        onChange={(event) =>
+                            table
+                                .getColumn("name")
+                                ?.setFilterValue(event.target.value)
+                        }
+                        className="max-w-sm"
+                    />
+                </div>
+                {/* Category Filter using select input */}
+                <div className="flex items-center gap-2">
+                    <label
+                        htmlFor="categories"
+                        className="sr-only sm:not-sr-only"
+                    >
+                        <span className="sr-only">Filter by</span> Categories
+                    </label>
+
+                    <select
+                        id="categories"
+                        onChange={(event) => {
+                            const selectedCategory = event.target.value;
+                            if (selectedCategory === "All") {
+                                // If "All" is selected, clear the filter to show all data
+                                table
+                                    .getColumn("category")
+                                    ?.setFilterValue(undefined);
+                            } else {
+                                // Otherwise, set the filter to the selected category
+                                table
+                                    .getColumn("category")
+                                    ?.setFilterValue(selectedCategory);
+                            }
+                        }}
+                        className="border flex-1 rounded-md p-2"
+                    >
+                        {categories.map((category) => (
+                            <option key={category} value={category}>
+                                {category}
+                            </option>
+                        ))}
+                    </select>
+                </div>
             </div>
             <DropdownMenu>
                 <DropdownMenuTrigger asChild>

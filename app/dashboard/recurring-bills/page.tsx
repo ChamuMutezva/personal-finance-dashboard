@@ -2,7 +2,6 @@ import React from "react";
 import Image from "next/image";
 import { fetchBills, fetchRecurringBills } from "@/lib/data";
 import { Card } from "@/components/ui/card";
-import RecurringBillsTable from "../../ui/recurring/RecurringBillsTable";
 import SignOutForm from "@/app/ui/SignOutForm";
 import { DataTable } from "./data-table";
 import { columns } from "./columns";
