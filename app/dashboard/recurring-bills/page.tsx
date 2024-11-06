@@ -1,14 +1,27 @@
 import React from "react";
 import Image from "next/image";
-import { fetchBills } from "@/lib/data";
+import { fetchBills, fetchRecurringBills } from "@/lib/data";
 import { Card } from "@/components/ui/card";
 import RecurringBillsTable from "../../ui/recurring/RecurringBillsTable";
 import SignOutForm from "@/app/ui/SignOutForm";
-import CategoryFilter from "@/app/ui/transactions/CategoryFilter";
-import Search from "@/app/ui/transactions/search";
+import { DataTable } from "./data-table";
+import { columns } from "./columns";
+import { Suspense } from "react";
+import { SkeletonLoader } from "@/app/ui/transactions/TransactionTableSkeleton";
 
-export default async function Page() {
+export default async function Page({
+    searchParams,
+}: Readonly<{
+    searchParams?: {
+        query?: string;
+        page?: string;
+    };
+}>) {
+    const query = searchParams?.query || "";
+    const currentPage = Number(searchParams?.page) || 1;
+
     const bills = await fetchBills();
+    const data = await fetchRecurringBills();
 
     const totalBills = bills.reduce((accumulator, budget) => {
         return Number(accumulator) + Number(budget.amount);
@@ -88,11 +101,12 @@ export default async function Page() {
                         </Card>
                     </div>
                     <div className="w-full mb-10">
-                        <div className="flex justify-between gap-2">
-                            <Search placeholder="Search transactions" />
-                            <CategoryFilter />
-                        </div>
-                        <RecurringBillsTable />
+                        <Suspense
+                            key={query + currentPage}
+                            fallback={<SkeletonLoader />}
+                        >
+                            <DataTable columns={columns} data={data} />
+                        </Suspense>
                     </div>
                 </div>
             </div>
