@@ -82,10 +82,7 @@ export const columns: ColumnDef<Transaction>[] = [
             );
         },
     },
-    {
-        accessorKey: "category",
-        header: "Category",
-    },
+
     {
         accessorKey: "date",
         header: ({ column }) => {
@@ -153,11 +150,11 @@ export const columns: ColumnDef<Transaction>[] = [
             );
         },
         cell: ({ row }) => {
-            const amount = parseFloat(row.getValue("amount"));
+            const amount = parseInt(row.getValue("amount"));
             const formatted = new Intl.NumberFormat("en-US", {
                 style: "currency",
                 currency: "USD",
-            }).format(amount);
+            }).format(-amount);
 
             return (
                 <div
@@ -172,6 +169,12 @@ export const columns: ColumnDef<Transaction>[] = [
                     {formatted}
                 </div>
             );
+        },
+        // Add sorting function here
+        sortingFn: (rowA, rowB) => {
+            const amountA = parseInt(rowA.getValue("amount"));
+            const amountB = parseInt(rowB.getValue("amount"));
+            return amountA - amountB; // Ascending order
         },
     },
 ];
