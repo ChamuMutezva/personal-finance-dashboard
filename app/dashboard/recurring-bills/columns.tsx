@@ -8,6 +8,22 @@ import { Transaction } from "@/lib/definitions";
 import Image from "next/image";
 import dayjs from "dayjs";
 
+function getOrdinal(n: number) {
+    const suffixes = ["th", "st", "nd", "rd"];
+    const modulo100 = n % 100;
+    const modulo10 = n % 10;
+
+    if (modulo10 === 1 && modulo100 !== 11) {
+        return n + suffixes[1]; // "st"
+    } else if (modulo10 === 2 && modulo100 !== 12) {
+        return n + suffixes[2]; // "nd"
+    } else if (modulo10 === 3 && modulo100 !== 13) {
+        return n + suffixes[3]; // "rd"
+    } else {
+        return n + suffixes[0]; // "th"
+    }
+}
+
 export const columns: ColumnDef<Transaction>[] = [
     {
         id: "select",
@@ -86,19 +102,38 @@ export const columns: ColumnDef<Transaction>[] = [
             );
         },
         cell: ({ row }) => {
-            const date = new Date(row.getValue("date"));
+            const date = dayjs(new Date(row.getValue("date")));
+            const dayOfMonth = date.date();
 
             return (
-                <time
-                    className="text-preset-5 text-[hsl(var(--grey-500))] text-left"
-                    dateTime={dayjs(date).format("D MMM YYYY")}
-                >
-                    {dayjs(date).format("D MMM YYYY")}
-                </time>
+                <div className="flex items-center gap-4 justify-start">
+                    <p>Monthly - {getOrdinal(dayOfMonth)}</p>
+                    {dayOfMonth >= 29 ? (
+                        ""
+                    ) : dayOfMonth >= 12 ? (
+                        <Image
+                            src={"/assets/images/icon-bill-due.svg"}
+                            width={14}
+                            height={14}
+                            alt=""
+                            className="rounded-[50%]"
+                            unoptimized
+                        />
+                    ) : (
+                        <Image
+                            src={"/assets/images/icon-bill-paid.svg"}
+                            width={14}
+                            height={14}
+                            alt=""
+                            className="rounded-[50%]"
+                            unoptimized
+                        />
+                    )}
+                </div>
             );
         },
     },
-    
+
     {
         accessorKey: "amount",
         header: ({ column }) => {
@@ -139,5 +174,4 @@ export const columns: ColumnDef<Transaction>[] = [
             );
         },
     },
-   
 ];
