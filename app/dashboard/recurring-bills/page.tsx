@@ -56,12 +56,13 @@ export default async function Page({
                     <SignOutForm />
                 </div>
 
-                <div className="lg:flex lg:gap-8">
+                <div className="lg:flex items-start lg:gap-8">
                     <div
                         className={`flex flex-col gap-4 sm:flex-row lg:flex-col lg:items-start my-8`}
                     >
                         <div
-                            className={`bg-[hsl(var(--grey-900))] text-[hsl(var(--white))] rounded-xl p-4 flex-1 flex items-center gap-4 lg:min-w-[21rem]`}
+                            className={`bg-[hsl(var(--grey-900))] text-[hsl(var(--white))] rounded-xl p-4 flex-1
+                                 flex items-center gap-4 lg:min-w-[21rem] lg:flex-col lg:items-start`}
                         >
                             <Image
                                 src={"/assets/images/icon-recurring-bills.svg"}
@@ -95,7 +96,18 @@ export default async function Page({
                                         {-totalUpcomingBillsFilter})
                                     </span>
                                 </p>
-                                <p>Due soon</p>
+                                <p className="flex justify-between items-center gap-4">
+                                    Due soon
+                                    <span>
+                                        R
+                                        {
+                                            -(
+                                                totalUpcomingBillsFilter -
+                                                totalPaidBillsFilter
+                                            )
+                                        }
+                                    </span>
+                                </p>
                             </div>
                         </Card>
                     </div>

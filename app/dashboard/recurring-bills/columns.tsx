@@ -1,7 +1,7 @@
 "use client";
 
 import { ColumnDef } from "@tanstack/react-table";
-import { MoreHorizontal, ArrowUpDown } from "lucide-react";
+import { ArrowUpDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Transaction } from "@/lib/definitions";
@@ -22,6 +22,48 @@ function getOrdinal(n: number) {
     } else {
         return n + suffixes[0]; // "th"
     }
+}
+
+function ShowPaymentStatus(
+    dateInObject: string | number | dayjs.Dayjs | Date | null | undefined
+) {
+    const today = dayjs();
+
+    // Create a Day.js object for the date in your object
+    const dateToCompare = dayjs(dateInObject);
+
+    // Check if the month and day are the same as today
+    const isCurrentDay = dateToCompare.date() < today.date();
+    const comingSoon =
+        dateToCompare.date() > today.date() &&
+        dateToCompare.date() < today.date() + 7;
+    console.log(`isCurrent ${isCurrentDay}`);
+    // Compare the dates
+    // const isFutureDate = dateToCompare.isAfter(today);
+
+    // Conditional rendering based on comparison
+
+    return isCurrentDay ? (
+        <Image
+            src={"/assets/images/icon-bill-paid.svg"}
+            width={14}
+            height={14}
+            alt=""
+            className="rounded-[50%]"
+            unoptimized
+        />
+    ) : comingSoon ? (
+        <Image
+            src={"/assets/images/icon-bill-due.svg"}
+            width={14}
+            height={14}
+            alt=""
+            className="rounded-[50%]"
+            unoptimized
+        />
+    ) : (
+        ""
+    );
 }
 
 export const columns: ColumnDef<Transaction>[] = [
@@ -105,27 +147,7 @@ export const columns: ColumnDef<Transaction>[] = [
             return (
                 <div className="flex items-center gap-4 justify-start">
                     <p>Monthly - {getOrdinal(dayOfMonth)}</p>
-                    {dayOfMonth >= 29 ? (
-                        ""
-                    ) : dayOfMonth >= 12 ? (
-                        <Image
-                            src={"/assets/images/icon-bill-due.svg"}
-                            width={14}
-                            height={14}
-                            alt=""
-                            className="rounded-[50%]"
-                            unoptimized
-                        />
-                    ) : (
-                        <Image
-                            src={"/assets/images/icon-bill-paid.svg"}
-                            width={14}
-                            height={14}
-                            alt=""
-                            className="rounded-[50%]"
-                            unoptimized
-                        />
-                    )}
+                    {ShowPaymentStatus(date)}
                 </div>
             );
         },
@@ -158,7 +180,7 @@ export const columns: ColumnDef<Transaction>[] = [
 
             return (
                 <div
-                    className="text-right font-medium"
+                    className="text-center sm:text-right font-medium"
                     style={{
                         color:
                             amount > 0
