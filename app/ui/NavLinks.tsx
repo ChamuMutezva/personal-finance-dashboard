@@ -107,6 +107,7 @@ function SideNav() {
                         <Link
                             key={link.name}
                             href={link.href}
+                            aria-label={link.name}
                             className={clsx(
                                 `flex w-full h-[32px] items-center justify-center gap-4 rounded-t-lg lg:rounded-l-none lg:rounded-r-xl
                                 bg-inherit text-sm font-medium text-white hover:text-[hsl(var(--green))] hover:bg-sky-100 

@@ -135,10 +135,9 @@ export default async function Page() {
         fill: budget.theme,
         amount: totals[index],
     }));
-   
 
     return (
-        <> 
+        <>
             <div className="flex justify-between items-center mb-4">
                 <h1
                     className={`text-preset-1 font-bold text-[hsl(var(--grey-900))]`}
@@ -146,7 +145,6 @@ export default async function Page() {
                     Budgets
                 </h1>
 
-                <SignOutForm />
                 {/* Dialog component */}
                 <Dialog>
                     <DialogTrigger asChild>
@@ -170,6 +168,8 @@ export default async function Page() {
                         <AddBudgetForm budgets={budgets} />
                     </DialogContent>
                 </Dialog>
+
+                <SignOutForm />
             </div>
             {data.length === 0 ? (
                 <div>
@@ -180,7 +180,7 @@ export default async function Page() {
                     className={`flex flex-col gap-4 lg:flex-row lg:items-start`}
                 >
                     {/* Left side component */}
-                    
+
                     <Donut
                         budgets={budgets}
                         totals={[
@@ -263,7 +263,7 @@ export default async function Page() {
                                                     height={4}
                                                 />
                                                 <span className="sr-only">
-                                                    edit or delete 
+                                                    edit or delete
                                                 </span>
                                             </PopoverTrigger>
                                             <PopoverContent className="flex relative flex-col gap-2 w-[134px] h-[91px] mr-8">

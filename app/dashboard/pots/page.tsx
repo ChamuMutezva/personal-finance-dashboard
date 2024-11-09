@@ -46,7 +46,7 @@ export default async function Page() {
                 >
                     Pots
                 </h1>
-                <SignOutForm />
+              
                 <Dialog>
                     <DialogTrigger asChild>
                         <Button
@@ -69,6 +69,7 @@ export default async function Page() {
                         <AddPotForm pots={pots} />
                     </DialogContent>
                 </Dialog>
+                <SignOutForm />
             </div>
             <div className={`grid gap-4 lg:grid-cols-2 pb-16 lg:pb-8`}>
                 {pots.map((pot) => (
