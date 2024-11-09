@@ -11,7 +11,7 @@ import { authenticate } from "@/lib/action";
 import Link from "next/link";
 
 export default function LoginForm() {
-    const [errorMessage, formAction] = useFormState(authenticate, undefined);
+    const [state, formAction] = useFormState(authenticate, undefined);
 
     return (
         <form action={formAction} className="max-w-[35rem] w-full">
@@ -35,11 +35,16 @@ export default function LoginForm() {
                                 id="email"
                                 type="email"
                                 name="email"
-                                placeholder="Enter your email address"                                
+                                placeholder="Enter your email address"
                                 aria-describedby={
-                                    errorMessage ? "email-error" : undefined
+                                    state ? "email-error" : undefined
                                 }
                             />
+                            {state?.errors?.email && (
+                                <p className="text-sm text-red-500">
+                                    {state.errors.email}
+                                </p>
+                            )}
                             <AtSymbolIcon className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500 peer-focus:text-gray-900" />
                         </div>
                     </div>
@@ -58,12 +63,17 @@ export default function LoginForm() {
                                 id="password"
                                 type="password"
                                 name="password"
-                                placeholder="Enter password"                                
+                                placeholder="Enter password"
                                 minLength={6}
                                 aria-describedby={
-                                    errorMessage ? "password-error" : undefined
+                                    state ? "password-error" : undefined
                                 }
                             />
+                            {state?.errors?.password && (
+                                <p className="text-sm text-red-500">
+                                    {state.errors.password}
+                                </p>
+                            )}
                             <KeyIcon className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500 peer-focus:text-gray-900" />
                         </div>
                     </div>
@@ -75,18 +85,11 @@ export default function LoginForm() {
                     aria-live="polite"
                     aria-atomic="true"
                 >
-                    {errorMessage && (
+                    {state?.message && (
                         <>
                             <ExclamationCircleIcon className="h-5 w-5 text-red-500" />
-                            <p
-                                id={
-                                    errorMessage.includes("email")
-                                        ? "email-error"
-                                        : "password-error"
-                                }
-                                className="text-sm text-red-500"
-                            >
-                                {errorMessage}
+                            <p className="text-sm text-red-500">
+                                {state.message}
                             </p>
                         </>
                     )}
@@ -120,7 +123,12 @@ function LoginButton() {
             onClick={handleClick}
             aria-disabled={pending}
         >
-            Log in <ArrowRightIcon className="h-5 w-5 text-gray-50" />
+            {pending ? (
+                <span className="text-[red]">Submitting...</span>
+            ) : (
+                <span> Log in</span>
+            )}
+            <ArrowRightIcon className="h-5 w-5 text-gray-50" />
         </Button>
     );
 }

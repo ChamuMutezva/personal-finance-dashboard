@@ -10,14 +10,14 @@ const encodedKey = new TextEncoder().encode(secretKey);
 const cookie = {
     name: "session",
     options: { httpOnly: true, secure: true, sameSite: "lax", path: "/" },
-    duration: 24 * 60 * 60 * 1000,
+    duration: 60 * 60 * 1000,
 };
 
 export async function encrypt(payload: SessionPayload) {
     return new SignJWT(payload)
         .setProtectedHeader({ alg: "HS256" })
         .setIssuedAt()
-        .setExpirationTime("1d")
+        .setExpirationTime("1h")
         .sign(encodedKey);
 }
 
@@ -29,6 +29,7 @@ export async function decrypt(session: string | undefined = "") {
         return payload;
     } catch (error) {
         console.log("Failed to verify session");
+        return null;
     }
 }
 
@@ -48,6 +49,24 @@ export async function verifySession() {
         redirect("/login");
     }
     return { userId: session.userId };
+}
+
+export async function updateSession() {
+    const session = cookies().get("session")?.value;
+    const payload = await decrypt(session);
+
+    if (!session || !payload) {
+        return null;
+    }
+
+    const expires = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000);
+    cookies().set("session", session, {
+        httpOnly: true,
+        secure: true,
+        expires: expires,
+        sameSite: "lax",
+        path: "/",
+    });
 }
 
 export async function deleteSession() {

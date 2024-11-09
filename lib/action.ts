@@ -3,44 +3,28 @@ import { z } from "zod";
 import { sql } from "@vercel/postgres";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
-import { Pot, FormState } from "./definitions";
+import {
+    Pot,
+    FormState,
+    User,
+    signupSchema,
+    authenticateSchema,
+    WithdrawMoneyFromPotFormSchema,
+    AddMoneyToPotFormSchema,
+    CreatePotFormSchema,
+    UpdatePotFormSchema,
+} from "./definitions";
 import { signIn } from "@/auth";
-import { AuthError } from "next-auth";
+// import { AuthError } from "next-auth";
 import bcrypt from "bcrypt";
-import { createSession } from "./session";
+import { createSession, deleteSession } from "./session";
 
-// SignUp
-const signupSchema = z.object({
-    id: z.string(),
-    name: z
-        .string()
-        .min(2, { message: "Name must be 2 or more characters long" }),
-    email: z.string().email(),
-    password: z
-        .string()
-        .min(6, { message: "Password must be 6 characters or more" }),
-});
-
-const authenticateSchema = z.object({
-    email: z.string().email({ message: "Please enter a valid email." }),
-    password: z
-        .string()
-        .min(6, { message: "Password must be at least 6 characters long." }),
-});
-
+// SIGN UP SECTION
 const CreateUser = signupSchema.omit({ id: true });
-
 export async function createUser(
     state: FormState,
-    /* {
-        message?: string;
-        errors?: {name?: string[]; email?: string[]; password?: string[] };
-    },*/
     formData: FormData
-): Promise<FormState /*{
-    message?: string;
-    errors?: {name?: string[]; email?: string[]; password?: string[] };
-}*/> {
+): Promise<FormState> {
     const validatedFields = CreateUser.safeParse({
         name: formData.get("name"),
         email: formData.get("email"),
@@ -57,80 +41,81 @@ export async function createUser(
 
     const { name, email, password } = validatedFields.data;
 
-    try {
-        const existingUser =
-            await sql`SELECT * FROM users WHERE email=${email}`;
+    const existingUser = await sql`SELECT * FROM users WHERE email=${email}`;
 
-        if (
-            existingUser &&
-            existingUser.rowCount &&
-            existingUser.rowCount > 0
-        ) {
-            return {
-                ...state,
-                errors: {
-                    email: [
-                        "Email already exists. Please use a different email.",
-                    ],
-                },
-                message: "Email already exists.",
-            };
-        }
-
-        const hashedPassword = await bcrypt.hash(password, 10);
-
-        const data =
-            await sql`INSERT INTO users (name, email, password) VALUES (${name}, ${email}, ${hashedPassword}) RETURNING *;`;
-        const user = data.rows[0];
-
-        if (!user) {
-            return {
-                message: "An error occurred while creating your account.",
-            };
-        }
-        await createSession(user.id);
-        /*  return {
-            ...state,
-            message: "User created successfully.",
-        };
-        */
-    } catch (error) {
+    if (existingUser && existingUser.rowCount && existingUser.rowCount > 0) {
         return {
             ...state,
-            message: "Database Error: Failed to create user",
+            errors: {
+                email: ["Email already exists. Please use a different email."],
+            },
+            message: "Email already exists.",
         };
     }
-    redirect("/login");
-}
 
-// Login
-export async function authenticate(
-    prevState: string | undefined,
-    formData: FormData
-) {
-    try {
-        await signIn("credentials", formData);
-    } catch (error) {
-        if (error instanceof AuthError) {
-            switch (error.type) {
-                case "CredentialsSignin":
-                    return "Invalid credentials.";
-                default:
-                    return "Something went wrong.";
-            }
-        }
-        throw error;
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    const data =
+        await sql`INSERT INTO users (name, email, password) VALUES (${name}, ${email}, ${hashedPassword}) RETURNING *;`;
+    const user = data.rows[0];
+
+    if (!user) {
+        return {
+            message: "An error occurred while creating your account.",
+        };
     }
+    // 4. Create a session for the user
+    const userId = user.id.toString();
+    await createSession(userId);
+    // redirect("/login");
 }
 
-// WITHDRAW MONEY FROM POT
-const WithdrawMoneyFromPotFormSchema = z.object({
-    id: z.string(),
-    name: z.string().max(30, "Name is required"),
-    target: z.coerce.number(),
-    total: z.coerce.number(),
-    theme: z.string(),
-});
+// LOGIN SESSION
+export async function authenticate(
+    state: FormState,
+    formData: FormData
+): Promise<FormState> {
+    // 1. Validate form fields
+    const validatedFields = authenticateSchema.safeParse({
+        email: formData.get("email"),
+        password: formData.get("password"),
+    });
+    const errorMessage = { message: "Invalid login credentials." };
+
+    // If any form fields are invalid, return early
+    if (!validatedFields.success) {
+        return {
+            errors: validatedFields.error.flatten().fieldErrors,
+        };
+    }
+
+    // 2. Query the database for the user with the given email
+    const user = (await signIn("credentials", formData)) as User | null;
+    if (!user) {
+        return errorMessage;
+    }
+
+    console.log(user);
+
+    // 3. Compare the user's password with the hashed password in the database
+    const passwordMatch = await bcrypt.compare(
+        validatedFields.data.password,
+        user?.password
+    );
+
+    // If the password does not match, return early
+    if (!passwordMatch) {
+        return errorMessage;
+    }
+
+    // 4. If login successful, create a session for the user and redirect
+    const userId = user.id.toString();
+    await createSession(userId);
+}
+
+export async function logout() {
+    deleteSession();
+}
 
 const WithdrawMoney = WithdrawMoneyFromPotFormSchema.omit({
     id: true,
@@ -168,15 +153,6 @@ export async function withdrawMoneyFromPot(
     redirect("/dashboard/pots");
 }
 
-// ADD MONEY TO POT
-const AddMoneyToPotFormSchema = z.object({
-    id: z.string(),
-    name: z.string().max(30, "Name is required"),
-    target: z.coerce.number(),
-    total: z.coerce.number(),
-    theme: z.string(),
-});
-
 const AddMoney = AddMoneyToPotFormSchema.omit({
     id: true,
     name: true,
@@ -209,15 +185,6 @@ export async function addMoneyToPot(id: string, pot: Pot, formData: FormData) {
     redirect("/dashboard/pots");
 }
 
-// CREATE A POT
-const CreatePotFormSchema = z.object({
-    id: z.string(),
-    name: z.string().max(30, "Name is required"),
-    target: z.coerce.number(),
-    total: z.coerce.number(),
-    theme: z.string(),
-});
-
 const CreatePot = CreatePotFormSchema.omit({ id: true });
 export async function createPot(formData: FormData) {
     const { target, theme, name, total } = CreatePot.parse({
@@ -246,15 +213,6 @@ export async function createPot(formData: FormData) {
     revalidatePath("/dashboard");
     redirect("/dashboard/pots");
 }
-
-// UPDATE A POT
-const UpdatePotFormSchema = z.object({
-    id: z.string(),
-    name: z.string().max(30, "Name is required"),
-    target: z.coerce.number(),
-    total: z.coerce.number(),
-    theme: z.string(),
-});
 
 const UpdatePot = UpdatePotFormSchema.omit({
     id: true,
