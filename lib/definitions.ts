@@ -19,6 +19,7 @@ export type FormState =
         name?: string[];
         email?: string[];
         password?: string[];
+        general?: string;
       };
       message?: string;
     }

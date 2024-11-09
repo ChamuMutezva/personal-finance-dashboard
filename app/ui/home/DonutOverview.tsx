@@ -35,8 +35,7 @@ export function DonutOverview({ budgets, totals }: Readonly<DonutProps>) {
         fill: budget.theme,
         amount: Number(totals[index]),
     }));
-
-    console.log(chartData);
+    
     const chartConfig = {
         maximum: {
             label: "Maximum",

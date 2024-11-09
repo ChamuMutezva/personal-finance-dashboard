@@ -39,7 +39,7 @@ export default function LoginForm() {
                                 aria-required="true"
                                 aria-describedby={
                                     state?.errors?.email
-                                        ? "email-error"
+                                        ? "email-error errors"
                                         : undefined
                                 }
                                 aria-invalid={!!state?.errors?.email}
@@ -75,7 +75,7 @@ export default function LoginForm() {
                                 minLength={6}
                                 aria-describedby={
                                     state?.errors?.password
-                                        ? "password-error"
+                                        ? "password-error errors"
                                         : undefined
                                 }
                                 aria-invalid={!!state?.errors?.password}
@@ -100,11 +100,11 @@ export default function LoginForm() {
                     aria-live="polite"
                     aria-atomic="true"
                 >
-                    {state?.message && (
+                    {state?.errors && (
                         <>
                             <ExclamationCircleIcon className="h-5 w-5 text-red-500" />
-                            <p className="text-sm text-red-500">
-                                {state.message}
+                            <p id={"errors"} className="text-sm text-red-500">
+                                {state.errors.general}
                             </p>
                         </>
                     )}

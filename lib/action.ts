@@ -15,7 +15,7 @@ import {
     UpdatePotFormSchema,
 } from "./definitions";
 import { signIn } from "@/auth";
-// import { AuthError } from "next-auth";
+import { AuthError } from "next-auth";
 import bcrypt from "bcrypt";
 import { createSession, deleteSession } from "./session";
 
@@ -71,46 +71,34 @@ export async function createUser(
 }
 
 // LOGIN SESSION
+
 export async function authenticate(
     state: FormState,
     formData: FormData
 ): Promise<FormState> {
-    // 1. Validate form fields
-    const validatedFields = authenticateSchema.safeParse({
-        email: formData.get("email"),
-        password: formData.get("password"),
-    });
-    const errorMessage = { message: "Invalid login credentials." };
-
-    // If any form fields are invalid, return early
-    if (!validatedFields.success) {
-        return {
-            errors: validatedFields.error.flatten().fieldErrors,
-        };
+    try {
+        await signIn("credentials", formData);
+    } catch (error) {
+        if (error instanceof AuthError) {
+            switch (error.type) {
+                case "CredentialsSignin":
+                    return {
+                        ...state,
+                        errors: {
+                            general: "invalid credentials",
+                        },
+                    };
+                default:
+                    return {
+                        ...state,
+                        errors: {
+                            general: "Something went wrong",
+                        },
+                    };
+            }
+        }
+        throw error;
     }
-
-    // 2. Query the database for the user with the given email
-    const user = (await signIn("credentials", formData)) as User | null;
-    if (!user) {
-        return errorMessage;
-    }
-
-    console.log(user);
-
-    // 3. Compare the user's password with the hashed password in the database
-    const passwordMatch = await bcrypt.compare(
-        validatedFields.data.password,
-        user?.password
-    );
-
-    // If the password does not match, return early
-    if (!passwordMatch) {
-        return errorMessage;
-    }
-
-    // 4. If login successful, create a session for the user and redirect
-    const userId = user.id.toString();
-    await createSession(userId);
 }
 
 export async function logout() {

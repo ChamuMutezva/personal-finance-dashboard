@@ -13,7 +13,7 @@ const INITIAL_STATE = {
 
 export default function SignUpForm() {
     const [state, action] = useFormState(createUser, INITIAL_STATE);
-    console.log(state);
+    
 
     return (
         <form action={action} className="max-w-[35rem] w-full">
