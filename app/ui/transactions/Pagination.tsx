@@ -90,6 +90,7 @@ function PaginationNumber({
         <div className={className}>{page}</div>
     ) : (
         <Link href={href} className={className}>
+            <span className="sr-only">Page </span>
             {page}
         </Link>
     );
@@ -128,11 +129,17 @@ function PaginationArrow({
     ) : (
         <Link className={className} href={href}>
             {direction === "right" && (
-                <span className="hidden sm:block">{text}</span>
+                <>
+                    <span className="hidden sm:block">{text}</span>
+                    <span className="sr-only">Page</span>
+                </>
             )}
             {icon}
             {direction === "left" && (
-                <span className="hidden sm:block">{text}</span>
+                <>
+                    <span className="hidden sm:block">{text}</span>
+                    <span className="sr-only">Page</span>
+                </>
             )}
         </Link>
     );
