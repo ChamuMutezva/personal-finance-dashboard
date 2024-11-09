@@ -36,12 +36,19 @@ export default function LoginForm() {
                                 type="email"
                                 name="email"
                                 placeholder="Enter your email address"
+                                aria-required="true"
                                 aria-describedby={
-                                    state ? "email-error" : undefined
+                                    state?.errors?.email
+                                        ? "email-error"
+                                        : undefined
                                 }
+                                aria-invalid={!!state?.errors?.email}
                             />
                             {state?.errors?.email && (
-                                <p className="text-sm text-red-500">
+                                <p
+                                    id="email-error"
+                                    className="text-sm text-red-500"
+                                >
                                     {state.errors.email}
                                 </p>
                             )}
@@ -64,16 +71,24 @@ export default function LoginForm() {
                                 type="password"
                                 name="password"
                                 placeholder="Enter password"
+                                aria-required="true"
                                 minLength={6}
                                 aria-describedby={
-                                    state ? "password-error" : undefined
+                                    state?.errors?.password
+                                        ? "password-error"
+                                        : undefined
                                 }
+                                aria-invalid={!!state?.errors?.password}
                             />
                             {state?.errors?.password && (
-                                <p className="text-sm text-red-500">
+                                <p
+                                    id="password-error"
+                                    className="text-sm text-red-500"
+                                >
                                     {state.errors.password}
                                 </p>
                             )}
+
                             <KeyIcon className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500 peer-focus:text-gray-900" />
                         </div>
                     </div>

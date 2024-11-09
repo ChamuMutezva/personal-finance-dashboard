@@ -34,14 +34,19 @@ export default function SignUpForm() {
                                 type="text"
                                 name="name"
                                 placeholder="Enter your name"
-                                // required
-                                aria-describedby="name-errors"
+                                aria-required="true"
+                                aria-describedby={
+                                    state?.errors?.name
+                                        ? "name-error"
+                                        : undefined
+                                }
+                                aria-invalid={!!state?.errors?.name}
                             />
                             <UserIcon className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500 peer-focus:text-gray-900" />
                         </div>
                         {state?.errors?.name && (
                             <p
-                                id="name-errors"
+                                id="name-error"
                                 className="text-red-500 text-sm"
                                 aria-live="polite"
                                 aria-atomic="true"
@@ -64,15 +69,20 @@ export default function SignUpForm() {
                                 id="email"
                                 type="email"
                                 name="email"
-                                placeholder="Enter your email address"
-                                aria-describedby="email-errors"
-                                // required
+                                placeholder="Enter your email address"                              
+                                aria-required="true"
+                                aria-describedby={
+                                    state?.errors?.email
+                                        ? "email-error"
+                                        : undefined
+                                }
+                                aria-invalid={!!state?.errors?.email}
                             />
                             <AtSymbolIcon className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500 peer-focus:text-gray-900" />
                         </div>
                         {state?.errors?.email && (
                             <p
-                                id="email-errors"
+                                id="email-error"
                                 className="text-red-500 text-sm"
                                 aria-live="polite"
                                 aria-atomic="true"
@@ -94,10 +104,15 @@ export default function SignUpForm() {
                                 id="password"
                                 type="password"
                                 name="password"
-                                placeholder="Enter password"
-                                // required
+                                placeholder="Enter password"                                
+                                aria-required="true"
                                 minLength={6}
-                                aria-describedby="password-errors"
+                                aria-describedby={
+                                    state?.errors?.password
+                                        ? "password-error"
+                                        : undefined
+                                }
+                                aria-invalid={!!state?.errors?.password}
                             />
                             <KeyIcon className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500 peer-focus:text-gray-900" />
                         </div>
@@ -105,7 +120,7 @@ export default function SignUpForm() {
                             <div>
                                 <p>Password must:</p>
                                 <ul
-                                    id="password-errors"
+                                    id="password-error"
                                     aria-live="polite"
                                     aria-atomic="true"
                                 >
