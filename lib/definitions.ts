@@ -11,14 +11,16 @@ export type SessionPayload = {
   //  role: "admin" || "user",
 }
 
-export type FormState = {
-    errors?: {
+export type FormState =
+  | {
+      errors?: {
         name?: string[];
         email?: string[];
         password?: string[];
-    };
-    message?: string;
-};
+      };
+      message?: string;
+    }
+  | undefined;
 
 export type Balance = {
     current: number;

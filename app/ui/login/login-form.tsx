@@ -35,8 +35,7 @@ export default function LoginForm() {
                                 id="email"
                                 type="email"
                                 name="email"
-                                placeholder="Enter your email address"
-                                required
+                                placeholder="Enter your email address"                                
                                 aria-describedby={
                                     errorMessage ? "email-error" : undefined
                                 }
@@ -59,8 +58,7 @@ export default function LoginForm() {
                                 id="password"
                                 type="password"
                                 name="password"
-                                placeholder="Enter password"
-                                required
+                                placeholder="Enter password"                                
                                 minLength={6}
                                 aria-describedby={
                                     errorMessage ? "password-error" : undefined

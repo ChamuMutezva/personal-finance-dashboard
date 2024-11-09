@@ -12,23 +12,35 @@ import { createSession } from "./session";
 // SignUp
 const signupSchema = z.object({
     id: z.string(),
-    name: z.string().min(2, {message: "Name must be 2 or more characters long"}),
+    name: z
+        .string()
+        .min(2, { message: "Name must be 2 or more characters long" }),
     email: z.string().email(),
-    password: z.string().min(6, {message: "Password must be 6 characters or more"}),
+    password: z
+        .string()
+        .min(6, { message: "Password must be 6 characters or more" }),
+});
+
+const authenticateSchema = z.object({
+    email: z.string().email({ message: "Please enter a valid email." }),
+    password: z
+        .string()
+        .min(6, { message: "Password must be at least 6 characters long." }),
 });
 
 const CreateUser = signupSchema.omit({ id: true });
 
 export async function createUser(
-    state: {
+    state: FormState,
+    /* {
         message?: string;
         errors?: {name?: string[]; email?: string[]; password?: string[] };
-    },
+    },*/
     formData: FormData
-): Promise<{
+): Promise<FormState /*{
     message?: string;
     errors?: {name?: string[]; email?: string[]; password?: string[] };
-}> {
+}*/> {
     const validatedFields = CreateUser.safeParse({
         name: formData.get("name"),
         email: formData.get("email"),
@@ -43,7 +55,7 @@ export async function createUser(
         };
     }
 
-    const {name, email, password } = validatedFields.data;
+    const { name, email, password } = validatedFields.data;
 
     try {
         const existingUser =
@@ -67,16 +79,17 @@ export async function createUser(
 
         const hashedPassword = await bcrypt.hash(password, 10);
 
-       const data = await sql`INSERT INTO users (name, email, password) VALUES (${name}, ${email}, ${hashedPassword}) RETURNING *;`;
-        const user = data.rows[0]
+        const data =
+            await sql`INSERT INTO users (name, email, password) VALUES (${name}, ${email}, ${hashedPassword}) RETURNING *;`;
+        const user = data.rows[0];
 
         if (!user) {
             return {
-              message: 'An error occurred while creating your account.',
-            }
-          }
-        await createSession(user.id)
-       /*  return {
+                message: "An error occurred while creating your account.",
+            };
+        }
+        await createSession(user.id);
+        /*  return {
             ...state,
             message: "User created successfully.",
         };
