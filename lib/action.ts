@@ -105,6 +105,7 @@ export async function logout() {
     deleteSession();
 }
 
+// POT ACTIONS
 const WithdrawMoney = WithdrawMoneyFromPotFormSchema.omit({
     id: true,
     name: true,
