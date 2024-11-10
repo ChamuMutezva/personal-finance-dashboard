@@ -1,12 +1,22 @@
 import React from "react";
 import Image from "next/image";
-import { fetchBills, fetchRecurringBills } from "@/lib/data";
+import { fetchRecurringBills } from "@/lib/data";
 import { Card } from "@/components/ui/card";
 import SignOutForm from "@/app/ui/SignOutForm";
 import { DataTable } from "./data-table";
 import { columns } from "./columns";
 import { Suspense } from "react";
 import { SkeletonLoader } from "@/app/ui/transactions/TransactionTableSkeleton";
+import dayjs from "dayjs";
+import isSameOrBefore from "dayjs/plugin/isSameOrBefore";
+import isSameOrAfter from "dayjs/plugin/isSameOrAfter";
+import isBetween from "dayjs/plugin/isBetween";
+
+// Extend dayjs with the isSameOrBefore plugin
+dayjs.extend(isSameOrBefore);
+// Extend dayjs with the isBetween plugin
+dayjs.extend(isBetween);
+dayjs.extend(isSameOrAfter);
 
 export default async function Page({
     searchParams,
@@ -19,24 +29,51 @@ export default async function Page({
     const query = searchParams?.query ?? "";
     const currentPage = Number(searchParams?.page) || 1;
 
-    const bills = await fetchBills();
     const data = await fetchRecurringBills();
 
-    const totalBills = bills.reduce((accumulator, budget) => {
+    const totalBills = data.reduce((accumulator, budget) => {
         return Number(accumulator) + Number(budget.amount);
     }, 0);
 
-    const paidBillsFilter = bills.filter((bill) => bill.recurring === false);
-    const upcomingBillsFilter = bills.filter((bill) => bill.recurring === true);
+    // Get today's date using Day.js
+    const today = dayjs().startOf("day"); // Start of the day to compare only dates
 
-    const totalPaidBillsFilter = paidBillsFilter.reduce(
+    // Filter transactions that are not greater than today
+    const filteredPaidTransactions = data.filter((transaction) => {
+        // Parse the transaction date and compare it with today's date
+        return dayjs(transaction.date).isSameOrBefore(today);
+    });
+
+    const totalPaidBills = filteredPaidTransactions.reduce(
         (accumulator, budget) => {
             return Number(accumulator) + Number(budget.amount);
         },
         0
     );
 
-    const totalUpcomingBillsFilter = upcomingBillsFilter.reduce(
+    // Get tomorrow's date and the date five days from now
+    const tomorrow = dayjs().add(1, "day").startOf("day"); // Tomorrow at the start of the day
+    const fiveDaysFromNow = dayjs().add(5, "day").endOf("day"); // Five days from now at the end of the day
+
+    // Filter transactions that are due to be paid soon (tomorrow to five days from now)
+    const dueSoonFilter = data.filter((transaction) => {
+        const transactionDate = dayjs(transaction.date); // Parse the transaction date
+        return transactionDate.isBetween(tomorrow, fiveDaysFromNow, null, "[]"); // Inclusive range
+    });
+    const dueSoonTotalPayments = dueSoonFilter.reduce((accumulator, budget) => {
+        return Number(accumulator) + Number(budget.amount);
+    }, 0);
+
+    const endOfMonth = dayjs().endOf("month"); // End of the current month
+    // Filter transactions that have not been paid yet (from tomorrow to end of month)
+    const upcomingPaymentsFilter = data.filter((transaction) => {
+        const transactionDate = dayjs(transaction.date); // Parse the transaction date
+        return (
+            transactionDate.isSameOrAfter(tomorrow) &&
+            transactionDate.isSameOrBefore(endOfMonth)
+        );
+    });
+    const upcomingTotalPayments = upcomingPaymentsFilter.reduce(
         (accumulator, budget) => {
             return Number(accumulator) + Number(budget.amount);
         },
@@ -79,32 +116,27 @@ export default async function Page({
                         </p>
                     </div>
                     <Card className="p-4 flex-1 w-full">
-                        <h2>Summary</h2>
+                        <h2 className="text-preset-2 font-bold">Summary</h2>
                         <div>
                             <p className="flex justify-between items-center gap-4">
                                 Paid bills{" "}
-                                <span>
-                                    {paidBillsFilter.length}(R
-                                    {-totalPaidBillsFilter})
+                                <span className="font-bold">
+                                    {filteredPaidTransactions.length}(R
+                                    {-totalPaidBills})
                                 </span>
                             </p>
                             <p className="flex justify-between items-center gap-4">
                                 Total upcoming{" "}
-                                <span>
-                                    {upcomingBillsFilter.length}(R
-                                    {-totalUpcomingBillsFilter})
+                                <span className="font-bold">
+                                    {upcomingPaymentsFilter.length}(R
+                                    {-upcomingTotalPayments})
                                 </span>
                             </p>
-                            <p className="flex justify-between items-center gap-4">
+                            <p className="flex justify-between items-center text-preset-4 text-[hsl(var(--red))] gap-4">
                                 Due soon
-                                <span>
-                                    R
-                                    {
-                                        -(
-                                            totalUpcomingBillsFilter -
-                                            totalPaidBillsFilter
-                                        )
-                                    }
+                                <span className="font-bold">
+                                    {dueSoonFilter.length} (R
+                                    {-dueSoonTotalPayments})
                                 </span>
                             </p>
                         </div>

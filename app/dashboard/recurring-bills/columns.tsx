@@ -36,8 +36,8 @@ function ShowPaymentStatus(
     const isCurrentDay = dateToCompare.date() < today.date();
     const comingSoon =
         dateToCompare.date() > today.date() &&
-        dateToCompare.date() < today.date() + 7;
-    console.log(`isCurrent ${isCurrentDay}`);
+        dateToCompare.date() < today.date() + 5;
+   // console.log(`isCurrent ${isCurrentDay}`);
     // Compare the dates
     // const isFutureDate = dateToCompare.isAfter(today);
 
@@ -147,7 +147,7 @@ export const columns: ColumnDef<Transaction>[] = [
             return (
                 <div className="flex items-center gap-4 justify-start">
                     <p>Monthly - {getOrdinal(dayOfMonth)}</p>
-                    {ShowPaymentStatus(date)}
+                {ShowPaymentStatus(date)} 
                 </div>
             );
         },
