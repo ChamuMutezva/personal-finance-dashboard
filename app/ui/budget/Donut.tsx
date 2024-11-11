@@ -79,11 +79,19 @@ export function Donut({ budgets, totals }: Readonly<DonutProps>) {
                             cursor={false}
                             content={<ChartTooltipContent hideLabel />}
                         />
+                         <Pie
+                            data={chartData}
+                            dataKey="maximum"
+                            nameKey="category"
+                            outerRadius={100}
+                            innerRadius={90}
+                        ></Pie>
                         <Pie
                             data={chartData}
                             dataKey="maximum"
                             nameKey="category"
-                            innerRadius={70}
+                            innerRadius={100}
+                            outerRadius={120}
                             strokeWidth={5}
                         >
                             <Label

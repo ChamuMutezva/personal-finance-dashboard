@@ -71,13 +71,44 @@ export async function createUser(
 }
 
 // LOGIN SESSION
-
+const LoginUser = authenticateSchema.omit({});
 export async function authenticate(
     state: FormState,
     formData: FormData
 ): Promise<FormState> {
+    const validatedFields = LoginUser.safeParse({
+        email: formData.get("email"),
+        password: formData.get("password"),
+    });
+
+    if (!validatedFields.success) {
+        return {
+            ...state,
+            errors: validatedFields.error.flatten().fieldErrors,
+            message: "Missing Fields. Failed to Create new user.",
+        };
+    }
+    const errorMessage = { message: "Invalid login credentials." };
+
     try {
-        await signIn("credentials", formData);
+        const user = (await signIn("credentials", formData)) as User;
+        // If user is not found, return early
+        if (!user) {
+            return errorMessage;
+        }
+        // 3. Compare the user's password with the hashed password in the database
+        const passwordMatch = await bcrypt.compare(
+            validatedFields.data.password,
+            user.password
+        );
+
+        // If the password does not match, return early
+        if (!passwordMatch) {
+            return errorMessage;
+        }
+        // 4. If login successful, create a session for the user and redirect
+        const userId = user.id.toString();
+        await createSession(userId);
     } catch (error) {
         if (error instanceof AuthError) {
             switch (error.type) {
