@@ -106,10 +106,7 @@ export const columns: ColumnDef<Transaction>[] = [
             );
         },
     },
-    {
-        accessorKey: "recurring",
-        header: "Recurring",
-    },
+
     {
         accessorKey: "amount",
         header: ({ column }) => {
