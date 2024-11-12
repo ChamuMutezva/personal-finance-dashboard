@@ -434,7 +434,7 @@ export default async function Page() {
                                                 <div
                                                     key={item.id}
                                                     className={clsx(
-                                                        `flex justify-between border-b-[1px] py-4 last:border-b-0 border-[hsl(var(--beige-500))]`
+                                                        `flex justify-between border-b-[1px] border-opacity-15 py-4 last:border-b-0 border-[hsl(var(--beige-500))]`
                                                     )}
                                                 >
                                                     <div>

@@ -139,7 +139,7 @@ export function Donut({ budgets, totals }: Readonly<DonutProps>) {
                 id="chart-description"
                 className="left-side flex-col gap-2 text-sm items-start md:flex-1"
             >
-                <h2 className="text-left text-preset-2 font-bold py-4 text-[hsl(var(--grey-900))]">
+                <h2 className="text-left -ml-4 capitalize text-preset-2 font-bold py-4 text-[hsl(var(--grey-900))]">
                     Spending summary
                 </h2>
                 <div className="flex flex-col  w-full">
