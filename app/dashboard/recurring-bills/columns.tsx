@@ -37,7 +37,7 @@ function ShowPaymentStatus(
     const comingSoon =
         dateToCompare.date() > today.date() &&
         dateToCompare.date() < today.date() + 5;
-   // console.log(`isCurrent ${isCurrentDay}`);
+    // console.log(`isCurrent ${isCurrentDay}`);
     // Compare the dates
     // const isFutureDate = dateToCompare.isAfter(today);
 
@@ -134,8 +134,9 @@ export const columns: ColumnDef<Transaction>[] = [
                     onClick={() =>
                         column.toggleSorting(column.getIsSorted() === "asc")
                     }
+                    className="capitalize"
                 >
-                    Date
+                    Due date
                     <ArrowUpDown className="ml-2 h-4 w-4" />
                 </Button>
             );
@@ -147,7 +148,7 @@ export const columns: ColumnDef<Transaction>[] = [
             return (
                 <div className="flex items-center gap-4 justify-start">
                     <p>Monthly - {getOrdinal(dayOfMonth)}</p>
-                {ShowPaymentStatus(date)} 
+                    {ShowPaymentStatus(date)}
                 </div>
             );
         },

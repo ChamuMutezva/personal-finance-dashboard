@@ -57,7 +57,6 @@ function AddBudgetForm({ budgets }: Readonly<{ budgets: Budget[] }>) {
             <form
                 id="add-budget-form"
                 action={formAction}
-                /*  onSubmit={form.handleSubmit(onSubmit)} */
                 className="space-y-8"
             >
                 {/* Step 2: Connect Select with React Hook Form */}
@@ -69,7 +68,6 @@ function AddBudgetForm({ budgets }: Readonly<{ budgets: Budget[] }>) {
                             <FormLabel>Budget Category</FormLabel>
                             <Select
                                 onValueChange={field.onChange}
-                                // value={field.value}
                                 {...field}
                                 aria-describedby="category-error"
                             >
@@ -205,24 +203,19 @@ function AddBudgetForm({ budgets }: Readonly<{ budgets: Budget[] }>) {
                                 aria-live="polite"
                                 aria-atomic="true"
                             >
-                                {state.errors?.theme &&
-                                    state.errors.theme.map((error: string) => (
-                                        <p
-                                            className="mt-2 text-sm text-red-500"
-                                            key={error}
-                                        >
-                                            {error}
-                                        </p>
-                                    ))}
+                                {state.errors?.theme?.map((error: string) => (
+                                    <p
+                                        className="mt-2 text-sm text-red-500"
+                                        key={error}
+                                    >
+                                        {error}
+                                    </p>
+                                ))}
                             </div>
                         </FormItem>
                     )}
                 />
-                {/*
-                <Button type="submit" className="w-full">
-                    Submit
-                </Button>
-                */}
+
                 <DialogFooter className="sm:justify-start">
                     <DialogClose asChild>
                         <Button type="submit" className="w-full">
