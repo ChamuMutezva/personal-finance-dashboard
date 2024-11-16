@@ -4,18 +4,15 @@ import { fetchBudgets, fetchByCategory } from "@/lib/data";
 import { Card } from "@/components/ui/card";
 import { Donut } from "../../ui/budget/Donut";
 import { formatPosNegativeCurrency } from "@/lib/utils";
-// import { Progress } from "@/components/ui/progress";
 import Meter from "../../ui/budget/Meter";
 import Image from "next/image";
 import dayjs from "dayjs";
 import clsx from "clsx";
 import { Button } from "@/components/ui/button";
 import {
-    Dialog,
-    // DialogClose,
+    Dialog,    
     DialogContent,
-    DialogDescription,
-    // DialogFooter,
+    DialogDescription,    
     DialogHeader,
     DialogTitle,
     DialogTrigger,
@@ -26,8 +23,7 @@ import {
     PopoverTrigger,
 } from "@/components/ui/popover";
 import {
-    AlertDialog,
-    // AlertDialogAction,
+    AlertDialog,    
     AlertDialogCancel,
     AlertDialogContent,
     AlertDialogDescription,
@@ -41,7 +37,6 @@ import AddBudgetForm from "../../ui/budget/AddBudgetForm";
 import { DeleteBudget } from "../../ui/budget/DeleteBudgetForm";
 import { Separator } from "@/components/ui/separator";
 import EditBudgetForm from "../../ui/budget/EditBudgetForm";
-import SignOutForm from "@/app/ui/SignOutForm";
 
 export default async function Page() {
     const budgets = await fetchBudgets();
@@ -168,8 +163,6 @@ export default async function Page() {
                         <AddBudgetForm budgets={budgets} />
                     </DialogContent>
                 </Dialog>
-
-                <SignOutForm />
             </div>
             {data.length === 0 ? (
                 <div>

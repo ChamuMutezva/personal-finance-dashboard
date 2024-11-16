@@ -2,7 +2,6 @@ import React from "react";
 import Image from "next/image";
 import { fetchRecurringBills } from "@/lib/data";
 import { Card } from "@/components/ui/card";
-import SignOutForm from "@/app/ui/SignOutForm";
 import { DataTable } from "./data-table";
 import { columns } from "./columns";
 import { Suspense } from "react";
@@ -87,9 +86,7 @@ export default async function Page({
                     className={`text-preset-1 font-bold text-[hsl(var(--grey-900))]`}
                 >
                     Recurring bills
-                </h1>
-
-                <SignOutForm />
+                </h1>                
             </div>
 
             <div className="lg:flex items-start lg:gap-8">

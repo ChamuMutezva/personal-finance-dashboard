@@ -43,16 +43,11 @@ function SideNav() {
     const pathname = usePathname();
     const [minimize, setMinimize] = useState(false);
     return (
-        <header
-            className={clsx(
-                `sidebar fixed z-10 left-0 bottom-0 border-solid border-gray-300 pt-2 px-4 backdrop-blur-2xl w-full
-             bg-[hsl(var(--grey-900))] lg:sticky lg:top-0 lg:h-screen lg:border lg:pt-4 lg:px-0 rounded-t-lg lg:rounded-tl-none
-             lg:rounded-r-2xl lg:flex lg:flex-col justify-start items-center transition-all duration-300 lg:pb-4`,
-                {
-                    "lg:w-[18.75rem]": !minimize,
-                    "lg:w-[5rem]": minimize,
-                }
-            )}
+        <div
+            className={clsx( `sidebar flex-1`,{
+                "lg:w-[18.75rem]": !minimize,
+                "lg:w-[5rem]": minimize,
+            })}
         >
             <div
                 className={clsx(`hidden lg:block w-full`, {
@@ -66,7 +61,7 @@ function SideNav() {
                     className={clsx(
                         `w-full hover:outline-dashed hover:outline-1 hover:outline-[hsl(var(--white))] hover:outline-offset-[0.35em] 
                      focus:outline-dashed focus:outline-1 focus:outline-[hsl(var(--white))] focus:outline-offset-[0.35em] p-1
-                     flex  items-center`,
+                     flex  items-center transition-all duration-300`,
                         {
                             "justify-center": minimize,
                             "justify-start lg:pl-6": !minimize,
@@ -171,7 +166,7 @@ function SideNav() {
                     </span>
                 </button>
             </div>
-        </header>
+        </div>
     );
 }
 

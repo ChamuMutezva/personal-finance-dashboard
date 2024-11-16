@@ -33,7 +33,6 @@ import MeterPots from "../../ui/pots/MeterPots";
 import EditPotForm from "../../ui/pots/EditPotForm";
 import AddMoneyToPotForm from "../../ui/pots/AddMoneyToPotForm";
 import WithDrawFromPot from "../../ui/pots/WithdrawFromPot";
-import SignOutForm from "@/app/ui/SignOutForm";
 
 export default async function Page() {
     const pots = await fetchPots();
@@ -69,7 +68,7 @@ export default async function Page() {
                         <AddPotForm pots={pots} />
                     </DialogContent>
                 </Dialog>
-                <SignOutForm />
+                
             </div>
             <div className={`grid gap-4 lg:grid-cols-2 pb-16 lg:pb-8`}>
                 {pots.map((pot) => (
