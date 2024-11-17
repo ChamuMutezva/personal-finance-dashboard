@@ -45,16 +45,16 @@ Users should be able to:
 This is a five page project namely:
 
 - Overview
-  - This page should display all the information at-a-glance and allow for easy navigation.
-  - We recommend building this page last, as it will require logic from the other pages (e.g., recurring bills) in order to display the data correctly.
+  - The page display all the information at-a-glance and allow for easy navigation.
+  - navigate to other pages from the dashboard.
 - Transactions
-  - Output the transactions from the `data.json` file, paginating results for every ten transactions.
-  - The search should allow for name search, but feel free to add other functionality like searching for transaction amounts if you want to test yourself.
-  - The sorting options include: Latest (most recent), Oldest, A to Z, Z to A, Highest (transaction amount), Lowest.
+  - Output the transactions from the database (vercel - postgres) and paginating results for every ten transactions.
+  - Search using name  and category.
+  - Sorting options using the powerful Tanstack Tables include: Latest (most recent), Oldest, A to Z, Z to A, Highest (transaction amount), Lowest.
   - The filter is by transaction category, which are: Entertainment, Bills, Groceries, Dining Out, Transportation, Personal Care, Education, Lifestyle, Shopping, General. Filtering by category should only show transactions from the selected category.
 - Budgets
-  - Don't worry if you can't create a donut pie chart exactly like in the design. Do your best to get close, but feel free to go in your own direction.
-  - The "Spent" amount should calculate the money spent within the category for the current month (August 2024 in the app).
+  - Donut pie chart to visually represent the budget categories.
+  - The "Spent" amount should calculate the money spent within the category for the current month.
   - The "Latest Spending" component should display the three last transactions for that category regardless of the month.
   - Clicking "See All" on a budget should navigate to the Transactions page with the filter set to the relevant category. For example, clicking "See All" on Entertainment should only show transactions with the Entertainment category.
   - Adding a new budget should automatically pull in the three latest transactions from the created budget category and calculate the amount spent so far for August 2024.
@@ -348,6 +348,7 @@ export async function GET() {
 
 - [Tables in NextJs Using shadcn/ui and TanStack Table](https://www.youtube.com/watch?v=kHfDLN9w1KQ&t=1144s). A tutorial by a YouTuber Hamed Bahran where he used NextJs. The table was created using [Shadcn - Data Table](https://ui.shadcn.com/docs/components/data-table) and the powerful [TanStack Table](https://tanstack.com/table/latest)
 - [Next.js: Authentication (Best Practices for Server Components, Actions, Middleware - by Delba)](https://www.youtube.com/watch?v=N_sUsq_y10U)
+- [Codefinity - nextjs authentication](https://codefinity.com/courses/v2/383258e5-c318-41bc-b29c-0495ff30ccbe/70678d9f-6131-4f11-b464-e6c859dbed27/dec25b72-99c2-4ff1-9105-aceffd559d94)
 
 ## Author
 
@@ -360,5 +361,3 @@ export async function GET() {
 ## Acknowledgments
 
 This is where you can give a hat tip to anyone who helped you out on this project. Perhaps you worked in a team or got some inspiration from someone else's solution. This is the perfect place to give them some credit.
-
-**Note: Delete this note and edit this section's content as necessary. If you completed this challenge by yourself, feel free to delete this section entirely.**

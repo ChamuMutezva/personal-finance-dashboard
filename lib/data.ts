@@ -165,7 +165,7 @@ export async function fetchByCategory() {
     }
 }
 
-const ITEMS_PER_PAGE = 6;
+const ITEMS_PER_PAGE = 10;
 export async function fetchFilteredTransactions(
     query: string,
     currentPage: number

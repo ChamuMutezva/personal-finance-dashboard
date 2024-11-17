@@ -173,7 +173,7 @@ export const columns: ColumnDef<Transaction>[] = [
             );
         },
         cell: ({ row }) => {
-            const amount = parseInt(row.getValue("amount"));
+            const amount = parseFloat(row.getValue("amount"));
             const formatted = new Intl.NumberFormat("en-US", {
                 style: "currency",
                 currency: "USD",

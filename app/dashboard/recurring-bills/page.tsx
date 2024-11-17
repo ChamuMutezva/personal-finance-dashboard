@@ -86,7 +86,7 @@ export default async function Page({
                     className={`text-preset-1 font-bold text-[hsl(var(--grey-900))]`}
                 >
                     Recurring bills
-                </h1>                
+                </h1>
             </div>
 
             <div className="lg:flex items-start lg:gap-8">
@@ -113,23 +113,23 @@ export default async function Page({
                         </p>
                     </div>
                     <Card className="p-4 flex-1 w-full">
-                        <h2 className="text-preset-2 font-bold">Summary</h2>
-                        <div>
-                            <p className="flex justify-between items-center gap-4">
+                        <h2 className="text-preset-2 font-bold pb-4">Summary</h2>
+                        <div className="flex flex-col gap-4">
+                            <p className="flex justify-between items-center gap-4 border-b pb-2 border-gray-300">
                                 Paid bills{" "}
                                 <span className="font-bold">
                                     {filteredPaidTransactions.length}(R
                                     {-totalPaidBills})
                                 </span>
                             </p>
-                            <p className="flex justify-between items-center gap-4">
+                            <p className="flex justify-between items-center gap-4 border-b pb-2 border-gray-300">
                                 Total upcoming{" "}
                                 <span className="font-bold">
                                     {upcomingPaymentsFilter.length}(R
                                     {-upcomingTotalPayments})
                                 </span>
                             </p>
-                            <p className="flex justify-between items-center text-preset-4 text-[hsl(var(--red))] gap-4">
+                            <p className="flex justify-between items-center text-preset-4 text-[hsl(var(--red))] pb-2 gap-4">
                                 Due soon
                                 <span className="font-bold">
                                     {dueSoonFilter.length} (R

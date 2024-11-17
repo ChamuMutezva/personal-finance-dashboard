@@ -139,7 +139,7 @@ function LoginButton() {
             aria-disabled={pending}
         >
             {pending ? (
-                <span className="text-[red]">Submitting...</span>
+                <span>Submitting...</span>
             ) : (
                 <span> Log in</span>
             )}

@@ -5,7 +5,7 @@ import Search from "../../ui/transactions/search";
 import Pagination from "../../ui/transactions/Pagination";
 import CategoryFilter from "../../ui/transactions/CategoryFilter";
 import { DataTable } from "./data-table";
-import {columns} from "./columns"
+import { columns } from "./columns";
 
 export default async function Page({
     searchParams,
@@ -18,7 +18,7 @@ export default async function Page({
     const query = searchParams?.query || "";
     const currentPage = Number(searchParams?.page) || 1;
     const totalPages = await fetchTransactionsPages(query);
-    const data = await fetchFilteredTransactions(query, currentPage)
+    const data = await fetchFilteredTransactions(query, currentPage);
 
     return (
         <>
@@ -27,18 +27,17 @@ export default async function Page({
                     className={`text-preset-1 font-bold text-[hsl(var(--grey-900))]`}
                 >
                     Transactions
-                </h1>                
+                </h1>
             </div>
             <div className={"w-full lg:mb-0"}>
                 <div className="flex justify-between gap-2">
-                    <Search placeholder="Search transactions" />                    
+                    <Search placeholder="Search transactions" />
                     <CategoryFilter />
                 </div>
                 <Suspense
                     key={query + currentPage}
                     fallback={<SkeletonLoader />}
                 >
-                   {/* <TransactionTable query={query} currentPage={currentPage} /> */}
                     <DataTable columns={columns} data={data} />
                 </Suspense>
                 <div className="mt-5 mb-8 flex w-full justify-center">
