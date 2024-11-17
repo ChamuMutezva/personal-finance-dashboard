@@ -92,6 +92,7 @@ export async function authenticate(
 
     try {
         const user = (await signIn("credentials", formData)) as User;
+
         // If user is not found, return early
         if (!user) {
             return errorMessage;

@@ -70,11 +70,11 @@ export default async function Page() {
                 </Dialog>
                 
             </div>
-            <div className={`grid gap-4 lg:grid-cols-2 pb-16 lg:pb-8`}>
+            <div className={`grid gap-4 sm:grid-cols-2 pb-16 lg:pb-8`}>
                 {pots.map((pot) => (
                     <Card
                         key={pot.id}
-                        className="rounded-xl py-6 px-5 flex-1 flex flex-col gap-4"
+                        className="rounded-xl py-6 px-4 flex-1 flex flex-col gap-4"
                     >
                         <div className="flex justify-between items-center relative">
                             <h2
@@ -189,7 +189,7 @@ export default async function Page() {
                             </span>{" "}
                             <span>Target of ${pot.target}</span>
                         </p>
-                        <div className="flex justify-between items-center">
+                        <div className="flex justify-between gap-2 items-center">
                             <Dialog>
                                 <DialogTrigger asChild>
                                     <Button
