@@ -66,60 +66,63 @@ export function DataTable<TData, TValue>({
     });
 
     return (
-        <div>
-            <div className="flex items-center justify-between gap-2 py-4">
-                {/* Name Filter using text input */}
-                <div>
-                    <label
-                        htmlFor="name-filter"
-                        className="sr-only sm:not-sr-only"
-                    >
-                        <span className="sr-only">Filter by name</span>
-                    </label>
-                    <Input
-                        id="name-filter"
-                        placeholder="Filter name..."
-                        value={
-                            (table
-                                .getColumn("name")
-                                ?.getFilterValue() as string) ?? ""
-                        }
-                        onChange={(event) =>
-                            table
-                                .getColumn("name")
-                                ?.setFilterValue(event.target.value)
-                        }
-                        className="max-w-sm"
-                    />
+        <div className="bg-white p-4 rounded-xl">
+            <div className="flex items-center justify-between">
+                <div className="flex items-center justify-between gap-2 py-4">
+                    {/* Name Filter using text input */}
+                    <div>
+                        <label
+                            htmlFor="name-filter"
+                            className="sr-only sm:not-sr-only"
+                        >
+                            <span className="sr-only">Filter by name</span>
+                        </label>
+                        <Input
+                            id="name-filter"
+                            placeholder="Filter by name..."
+                            value={
+                                (table
+                                    .getColumn("name")
+                                    ?.getFilterValue() as string) ?? ""
+                            }
+                            onChange={(event) =>
+                                table
+                                    .getColumn("name")
+                                    ?.setFilterValue(event.target.value)
+                            }
+                            className="max-w-sm"
+                        />
+                    </div>
                 </div>
+
+                <DropdownMenu>
+                    <DropdownMenuTrigger asChild>
+                        <Button variant="outline" className="ml-auto my-2">
+                            <span className="sr-only">Select</span>Columns
+                            <span className="sr-only">see</span>
+                        </Button>
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent align="end">
+                        {table
+                            .getAllColumns()
+                            .filter((column) => column.getCanHide())
+                            .map((column) => {
+                                return (
+                                    <DropdownMenuCheckboxItem
+                                        key={column.id}
+                                        className="capitalize"
+                                        checked={column.getIsVisible()}
+                                        onCheckedChange={(value) =>
+                                            column.toggleVisibility(!!value)
+                                        }
+                                    >
+                                        {column.id}
+                                    </DropdownMenuCheckboxItem>
+                                );
+                            })}
+                    </DropdownMenuContent>
+                </DropdownMenu>
             </div>
-            <DropdownMenu>
-                <DropdownMenuTrigger asChild>
-                    <Button variant="outline" className="ml-auto my-2">
-                        <span className="sr-only">Select</span>Columns
-                        <span className="sr-only">see</span>
-                    </Button>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent align="end">
-                    {table
-                        .getAllColumns()
-                        .filter((column) => column.getCanHide())
-                        .map((column) => {
-                            return (
-                                <DropdownMenuCheckboxItem
-                                    key={column.id}
-                                    className="capitalize"
-                                    checked={column.getIsVisible()}
-                                    onCheckedChange={(value) =>
-                                        column.toggleVisibility(!!value)
-                                    }
-                                >
-                                    {column.id}
-                                </DropdownMenuCheckboxItem>
-                            );
-                        })}
-                </DropdownMenuContent>
-            </DropdownMenu>
             <div className="rounded-md border">
                 <Table>
                     <TableHeader>

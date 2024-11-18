@@ -9,7 +9,7 @@ export default function RootLayout({
     children: React.ReactNode;
 }>) {
     return (
-        <div className={`flex flex-col-reverse min-h-screen lg:flex-row`}>
+        <div className={`flex flex-col-reverse min-h-screen lg:flex-row lg:gap-12`}>
             <header
                 className={clsx(
                     `fixed z-10 left-0 bottom-0 border-solid border-gray-300 pt-2 px-4 backdrop-blur-2xl w-full lg:w-auto

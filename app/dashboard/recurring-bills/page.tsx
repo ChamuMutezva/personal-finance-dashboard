@@ -91,7 +91,7 @@ export default async function Page({
 
             <div className="lg:flex items-start lg:gap-8">
                 <div
-                    className={`flex flex-col gap-4 sm:flex-row lg:flex-col lg:items-start my-8`}
+                    className={`flex flex-col gap-4 sm:flex-row lg:flex-col lg:items-start my-8 lg:my-0`}
                 >
                     <div
                         className={`bg-[hsl(var(--grey-900))] text-[hsl(var(--white))] rounded-xl p-4 flex-1
