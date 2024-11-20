@@ -1,5 +1,4 @@
 "use server";
-import { z } from "zod";
 import { sql } from "@vercel/postgres";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
@@ -13,6 +12,7 @@ import {
     AddMoneyToPotFormSchema,
     CreatePotFormSchema,
     UpdatePotFormSchema,
+    BudgetFormSchema
 } from "./definitions";
 import { signIn } from "@/auth";
 import { AuthError } from "next-auth";
@@ -279,15 +279,6 @@ export async function deletePot(id: string, pot: Pot) {
 }
 
 // *****BUDGET ACTIONS*****
-const FormSchema = z.object({
-    id: z.string(),
-    maximum: z.coerce
-        .number()
-        .gt(0, { message: "Please enter an amount greater than $0." }),
-    category: z.string().min(1, "Category is required"),
-    theme: z.string().min(1, "Category is required"),
-});
-
 export type State = {
     errors?: {
         maximum?: string[];
@@ -297,7 +288,7 @@ export type State = {
     message?: string | null;
 };
 
-const CreateBudget = FormSchema.omit({ id: true });
+const CreateBudget = BudgetFormSchema.omit({ id: true });
 export async function createBudget(prevState: State, formData: FormData) {
     const validatedFields = CreateBudget.safeParse({
         maximum: formData.get("maximum"),
@@ -329,7 +320,7 @@ export async function createBudget(prevState: State, formData: FormData) {
 }
 
 // update budget
-const UpdateBudget = FormSchema.omit({ id: true, category: true });
+const UpdateBudget = BudgetFormSchema.omit({ id: true, category: true });
 export async function updateBudget(id: string, formData: FormData) {
     const { maximum, theme } = UpdateBudget.parse({
         maximum: formData.get("maximum"),

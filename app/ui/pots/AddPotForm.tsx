@@ -46,7 +46,7 @@ function AddPotForm({ pots }: Readonly<{ pots: Pot[] }>) {
         },
     });
 
-    // Get used categories and themes
+    // Get used categories and themes - use a theme and category only once
     // const usedCategories = budgets.map((budget) => budget.category);
     const usedThemes = pots.map((pot) => pot.theme);
 

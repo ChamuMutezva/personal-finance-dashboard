@@ -8,22 +8,22 @@ export type User = {
 };
 
 export type SessionPayload = {
-    userId: string,
-    expires: Date,
-  //  role: "admin" || "user",
-}
+    userId: string;
+    expires: Date;
+    //  role: "admin" || "user",
+};
 
 export type FormState =
-  | {
-      errors?: {
-        name?: string[];
-        email?: string[];
-        password?: string[];
-        general?: string;
-      };
-      message?: string;
-    }
-  | undefined;
+    | {
+          errors?: {
+              name?: string[];
+              email?: string[];
+              password?: string[];
+              general?: string;
+          };
+          message?: string;
+      }
+    | undefined;
 
 export type Balance = {
     current: number;
@@ -47,6 +47,15 @@ export type Budget = {
     maximum: number;
     theme: string;
 };
+
+export const BudgetFormSchema = z.object({
+    id: z.string(),
+    maximum: z.coerce
+        .number()
+        .gt(0, { message: "Please enter an amount greater than $0." }),
+    category: z.string().min(1, "Category is required"),
+    theme: z.string().min(1, "Category is required"),
+});
 
 export type Pot = {
     id: string;
@@ -102,7 +111,6 @@ export const CreatePotFormSchema = z.object({
     total: z.coerce.number(),
     theme: z.string(),
 });
-
 
 // UPDATE A POT
 export const UpdatePotFormSchema = z.object({

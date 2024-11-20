@@ -14,6 +14,7 @@ import {
 } from "@/components/ui/select";
 import { createBudget, State } from "@/lib/action";
 import { categories, colors } from "@/lib/data";
+import { BudgetFormSchema } from "@/lib/definitions";
 
 import {
     Form,
@@ -31,12 +32,12 @@ import { DialogClose, DialogFooter } from "@/components/ui/dialog";
 const formSchema = z.object({
     maximum: z.number().positive(),
     category: z.string().min(1, "Category is required"),
-    theme: z.string().min(1, "Category is required"),
+    theme: z.string().min(1, "Theme is required"),
 });
 
 function AddBudgetForm({ budgets }: Readonly<{ budgets: Budget[] }>) {
     // 1. Define your form.
-    const form = useForm<z.infer<typeof formSchema>>({
+    const form = useForm<z.infer<typeof BudgetFormSchema>>({
         resolver: zodResolver(formSchema),
         defaultValues: {
             maximum: 10,
