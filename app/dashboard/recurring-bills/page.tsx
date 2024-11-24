@@ -1,15 +1,15 @@
-import React from "react";
+import React, { Suspense } from "react";
 import Image from "next/image";
 import { fetchRecurringBills } from "@/lib/data";
 import { Card } from "@/components/ui/card";
 import { DataTable } from "./data-table";
 import { columns } from "./columns";
-import { Suspense } from "react";
 import { SkeletonLoader } from "@/app/ui/transactions/TransactionTableSkeleton";
 import dayjs from "dayjs";
 import isSameOrBefore from "dayjs/plugin/isSameOrBefore";
 import isSameOrAfter from "dayjs/plugin/isSameOrAfter";
 import isBetween from "dayjs/plugin/isBetween";
+import { auth } from "@/auth";
 
 // Extend dayjs with the isSameOrBefore plugin
 dayjs.extend(isSameOrBefore);
@@ -25,6 +25,8 @@ export default async function Page({
         page?: string;
     };
 }>) {
+    const session = await auth();
+    const user = session?.user?.name;
     const query = searchParams?.query ?? "";
     const currentPage = Number(searchParams?.page) || 1;
 
@@ -87,6 +89,7 @@ export default async function Page({
                 >
                     Recurring bills
                 </h1>
+                <p className="text-xs md:text-sm">{user} logged in</p>
             </div>
 
             <div className="lg:flex items-start lg:gap-8">
@@ -113,7 +116,9 @@ export default async function Page({
                         </p>
                     </div>
                     <Card className="p-4 flex-1 w-full">
-                        <h2 className="text-preset-2 font-bold pb-4">Summary</h2>
+                        <h2 className="text-preset-2 font-bold pb-4">
+                            Summary
+                        </h2>
                         <div className="flex flex-col gap-4">
                             <p className="flex justify-between items-center gap-4 border-b pb-2 border-gray-300">
                                 Paid bills{" "}
@@ -130,7 +135,7 @@ export default async function Page({
                                 </span>
                             </p>
                             <p className="flex justify-between items-center text-preset-4 text-[hsl(var(--red))] pb-2 gap-4">
-                                Due soon
+                                Due soon{" "}
                                 <span className="font-bold">
                                     {dueSoonFilter.length} (R
                                     {-dueSoonTotalPayments})

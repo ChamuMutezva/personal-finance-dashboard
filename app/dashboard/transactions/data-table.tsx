@@ -63,7 +63,7 @@ export function DataTable<TData, TValue>({
             <DropdownMenu>
                 <DropdownMenuTrigger asChild>
                     <Button variant="outline" className="ml-auto my-2">
-                        <span className="sr-only">Select</span>Columns
+                        <span className="sr-only">Select</span>Columns{" "}
                         <span className="sr-only">to visually display</span>
                     </Button>
                 </DropdownMenuTrigger>

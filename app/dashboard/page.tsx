@@ -11,6 +11,7 @@ import TransactionTableOverview from "../ui/home/TransactionTableOverview";
 import { DonutOverview } from "../ui/home/DonutOverview";
 import RecurringBills from "../ui/home/RecurringBills";
 import Summary from "../ui/home/Summary";
+import { auth } from "@/auth";
 
 export default async function Page({
     searchParams,
@@ -20,6 +21,8 @@ export default async function Page({
         page?: string;
     };
 }>) {
+    const session = await auth()
+    const user = session?.user?.name
     const balance = await fetchBalance();
     const pots = await fetchPots();
 
@@ -133,6 +136,7 @@ export default async function Page({
                 >
                     Overview
                 </h1>
+                <p className="text-xs md:text-sm">{user} logged in</p>
             </div>
 
             <div className="xl:grid items-start gap-4 xl:grid-cols-12 pb-8">

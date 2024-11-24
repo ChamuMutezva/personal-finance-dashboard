@@ -33,8 +33,11 @@ import MeterPots from "../../ui/pots/MeterPots";
 import EditPotForm from "../../ui/pots/EditPotForm";
 import AddMoneyToPotForm from "../../ui/pots/AddMoneyToPotForm";
 import WithDrawFromPot from "../../ui/pots/WithdrawFromPot";
+import { auth } from "@/auth";
 
 export default async function Page() {
+    const session = await auth();
+    const user = session?.user?.name;
     const pots = await fetchPots();
 
     return (
@@ -45,7 +48,7 @@ export default async function Page() {
                 >
                     Pots
                 </h1>
-              
+                <p className="text-xs md:text-sm">{user} logged in</p>
                 <Dialog>
                     <DialogTrigger asChild>
                         <Button
@@ -68,7 +71,6 @@ export default async function Page() {
                         <AddPotForm pots={pots} />
                     </DialogContent>
                 </Dialog>
-                
             </div>
             <div className={`grid gap-4 sm:grid-cols-2 pb-16 lg:pb-8`}>
                 {pots.map((pot) => (

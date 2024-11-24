@@ -10,9 +10,9 @@ import dayjs from "dayjs";
 import clsx from "clsx";
 import { Button } from "@/components/ui/button";
 import {
-    Dialog,    
+    Dialog,
     DialogContent,
-    DialogDescription,    
+    DialogDescription,
     DialogHeader,
     DialogTitle,
     DialogTrigger,
@@ -23,7 +23,7 @@ import {
     PopoverTrigger,
 } from "@/components/ui/popover";
 import {
-    AlertDialog,    
+    AlertDialog,
     AlertDialogCancel,
     AlertDialogContent,
     AlertDialogDescription,
@@ -37,8 +37,11 @@ import AddBudgetForm from "../../ui/budget/AddBudgetForm";
 import { DeleteBudget } from "../../ui/budget/DeleteBudgetForm";
 import { Separator } from "@/components/ui/separator";
 import EditBudgetForm from "../../ui/budget/EditBudgetForm";
+import { auth } from "@/auth";
 
 export default async function Page() {
+    const session = await auth();
+    const user = session?.user?.name;
     const budgets = await fetchBudgets();
     const category = await fetchByCategory();
     const {
@@ -139,7 +142,7 @@ export default async function Page() {
                 >
                     Budgets
                 </h1>
-
+                <p className="text-xs md:text-sm">{user} logged in</p>
                 {/* Dialog component */}
                 <Dialog>
                     <DialogTrigger asChild>
