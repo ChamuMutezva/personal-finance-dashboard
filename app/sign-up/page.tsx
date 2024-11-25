@@ -5,7 +5,7 @@ export default function SignUp() {
     return (
         <main className="flex flex-col items-center justify-center relative lg:justify-around min-h-screen  lg:flex-row w-full lg:p-4">
             <div
-                className="flex flex-col justify-between items-center lg:items-stretch w-full lg:h-dvh bg-[hsl(var(--grey-900))]
+                className="flex flex-col justify-between items-center lg:items-stretch absolute lg:relative top-0 w-full lg:h-dvh bg-[hsl(var(--grey-900))]
                lg:w-5/12 p-6 rounded-b-xl lg:rounded-2xl object-cover bg-none
                 lg:bg-[url('/assets/images/illustration-authentication.svg')] bg-top bg-auto bg-no-repeat"
             >
