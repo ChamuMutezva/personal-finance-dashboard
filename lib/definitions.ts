@@ -104,9 +104,27 @@ export const AddMoneyToPotFormSchema = z.object({
 });
 
 // CREATE A POT
+export type PotFormState =
+    | {
+          errors?: {
+              name?: string[];
+              target?: string[];
+              total?: string[];
+              theme?: string[];
+              general?: string;
+          };
+          message?: string;
+      }
+    | undefined;
+
 export const CreatePotFormSchema = z.object({
     id: z.string(),
-    name: z.string().max(30, "Name is required"),
+    name: z
+        .string({
+            required_error: "Name is required",
+            invalid_type_error: "Name must be a string",
+        })
+        .max(30, "Name is required"),
     target: z.coerce.number(),
     total: z.coerce.number(),
     theme: z.string(),

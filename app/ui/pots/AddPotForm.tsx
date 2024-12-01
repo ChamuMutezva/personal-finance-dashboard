@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useEffect } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import z from "zod";
@@ -12,7 +12,7 @@ import {
     SelectValue,
 } from "@/components/ui/select";
 import { createPot } from "@/lib/action";
-import {  colors  } from "@/lib/data";
+import { colors } from "@/lib/data";
 
 import {
     Form,
@@ -26,15 +26,32 @@ import {
 import { Input } from "@/components/ui/input";
 import { Pot } from "@/lib/definitions";
 import { DialogClose, DialogFooter } from "@/components/ui/dialog";
+import { useFormState, useFormStatus } from "react-dom";
 
 const formSchema = z.object({
-    target: z.number().positive(),
-    total: z.number().positive(),
-    name: z.string().min(1, "Pot name is required").max(30),
+    target: z.coerce.number().positive("Target must be a positive number"),
+    total: z.coerce.number().positive("Total must be a positive number"),
+    name: z.string().min(1, "Pot name is required").max(30, "Pot name must be 30 characters or less"),
     theme: z.string().min(1, "Theme is required"),
 });
 
+const INITIAL_STATE = {
+    message: "",
+    errors: {},
+};
+
+function SubmitButton() {
+    const { pending } = useFormStatus();
+    return (
+        <Button type="submit" className="w-full" disabled={pending}>
+            {pending ? "Adding..." : "Add Pot"}
+        </Button>
+    );
+}
+
 function AddPotForm({ pots }: Readonly<{ pots: Pot[] }>) {
+    const [state, formAction] = useFormState(createPot, INITIAL_STATE);
+
     // 1. Define your form.
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
@@ -49,15 +66,16 @@ function AddPotForm({ pots }: Readonly<{ pots: Pot[] }>) {
     // Get used categories and themes - use a theme and category only once
     // const usedCategories = budgets.map((budget) => budget.category);
     const usedThemes = pots.map((pot) => pot.theme);
-
+    /*
     const handleCreatePot = async (formData: FormData): Promise<void> => {
         await createPot(formData); // Call your createPot function
         return; // Ensure this returns void
     };
-
+    */
+  
     return (
         <Form {...form}>
-            <form id="add-pot-form" action={handleCreatePot}>
+            <form id="add-pot-form" action={formAction}>
                 <FormField
                     control={form.control}
                     name="name"
@@ -68,7 +86,7 @@ function AddPotForm({ pots }: Readonly<{ pots: Pot[] }>) {
                                 <Input
                                     type="text"
                                     placeholder="Pot name"
-                                    required
+                                    // required
                                     maxLength={30}
                                     {...field}
                                 />
@@ -77,6 +95,14 @@ function AddPotForm({ pots }: Readonly<{ pots: Pot[] }>) {
                                 30 - field.value.length
                             } of 30 characters left`}</FormDescription>
                             <FormMessage />
+                            {state?.errors?.name && (
+                                <p
+                                    id="email-error"
+                                    className="text-sm text-red-500"
+                                >
+                                    {state.errors.name}
+                                </p>
+                            )}
                         </FormItem>
                     )}
                 />
@@ -172,9 +198,11 @@ function AddPotForm({ pots }: Readonly<{ pots: Pot[] }>) {
 
                 <DialogFooter className="sm:justify-start mt-4">
                     <DialogClose asChild>
-                        <Button type="submit" className="w-full">
+                        <SubmitButton />
+                        {/* <Button type="submit" className="w-full">
                             Add Pot
                         </Button>
+                        */}
                     </DialogClose>
                 </DialogFooter>
             </form>

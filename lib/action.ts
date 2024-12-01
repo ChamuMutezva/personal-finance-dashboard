@@ -5,6 +5,7 @@ import { redirect } from "next/navigation";
 import {
     Pot,
     FormState,
+    PotFormState,
     User,
     signupSchema,
     authenticateSchema,
@@ -12,7 +13,7 @@ import {
     AddMoneyToPotFormSchema,
     CreatePotFormSchema,
     UpdatePotFormSchema,
-    BudgetFormSchema
+    BudgetFormSchema,
 } from "./definitions";
 import { signIn } from "@/auth";
 import { AuthError } from "next-auth";
@@ -207,13 +208,54 @@ export async function addMoneyToPot(id: string, pot: Pot, formData: FormData) {
 }
 
 const CreatePot = CreatePotFormSchema.omit({ id: true });
-export async function createPot(formData: FormData) {
+export async function createPot(
+    state: PotFormState,
+    formData: FormData
+): Promise<PotFormState> {
+    const validatedFields = CreatePot.safeParse({
+        target: formData.get("target"),
+        theme: formData.get("theme"),
+        name: formData.get("name"),
+        total: formData.get("total"),
+    });
+
+    console.log(validatedFields);
+    if (!validatedFields.success) {
+        return {
+             ...state,
+            errors: validatedFields.error.flatten().fieldErrors,
+            message: "Missing Fields. Failed to Create new pot.",
+        };
+    }
+    // const errorMessage = { message: "Validation has failed, check your input fields." };
+    const { target, theme, name, total } = validatedFields.data;
+
+    const existingPotName =
+        await sql`SELECT * FROM pots WHERE LOWER(name) = LOWER(${name.trim()})`;
+
+    console.log(existingPotName);
+    if (
+        existingPotName &&
+        existingPotName.rowCount &&
+        existingPotName.rowCount > 0
+    ) {
+        return {
+            ...state,
+            errors: {
+                name: ["Pot name already exists."],
+            },
+            message: "Pot name already exists.",
+        };
+    }
+
+    /*
     const { target, theme, name, total } = CreatePot.parse({
         target: formData.get("target"),
         theme: formData.get("theme"),
         name: formData.get("name"),
         total: formData.get("total"),
     });
+    */
     try {
         await sql`
         INSERT INTO pots (target, theme, name, total)
@@ -224,15 +266,15 @@ export async function createPot(formData: FormData) {
          UPDATE balances
          SET current = current - ${total}
      `;
+
+        revalidatePath("/dashboard/pots");
+        revalidatePath("/dashboard");
+        redirect("/dashboard/pots");
     } catch (error) {
         return {
             message: "Database Error: Failed to create pot",
         };
     }
-
-    revalidatePath("/dashboard/pots");
-    revalidatePath("/dashboard");
-    redirect("/dashboard/pots");
 }
 
 const UpdatePot = UpdatePotFormSchema.omit({
