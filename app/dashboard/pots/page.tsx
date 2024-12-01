@@ -49,28 +49,7 @@ export default async function Page() {
                     Pots
                 </h1>
                 <p className="text-xs md:text-sm">{user} logged in</p>
-                <Dialog>
-                    <DialogTrigger asChild>
-                        <Button
-                            variant="default"
-                            className={`focus:outline-dashed focus:outline-current focus:outline-1 focus:-outline-offset-4
-                                hover:outline-dashed hover:outline-current hover:outline-1 hover:-outline-offset-4`}
-                        >
-                            + Add New Pot <span className="sr-only">item</span>
-                        </Button>
-                    </DialogTrigger>
-                    <DialogContent className="w-11/12 sm:max-w-[35rem] rounded-xl">
-                        <DialogHeader>
-                            <DialogTitle>Add New Pot</DialogTitle>
-                            <DialogDescription>
-                                Create a pot to set savings targets. These can
-                                help you on track as you save for special
-                                purchases
-                            </DialogDescription>
-                        </DialogHeader>
-                        <AddPotForm pots={pots} />
-                    </DialogContent>
-                </Dialog>
+                <AddPotForm pots={pots} />                
             </div>
             <div className={`grid gap-4 sm:grid-cols-2 pb-16 lg:pb-8`}>
                 {pots.map((pot) => (

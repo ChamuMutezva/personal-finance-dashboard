@@ -222,7 +222,7 @@ export async function createPot(
     console.log(validatedFields);
     if (!validatedFields.success) {
         return {
-             ...state,
+            ...state,
             errors: validatedFields.error.flatten().fieldErrors,
             message: "Missing Fields. Failed to Create new pot.",
         };
@@ -248,14 +248,6 @@ export async function createPot(
         };
     }
 
-    /*
-    const { target, theme, name, total } = CreatePot.parse({
-        target: formData.get("target"),
-        theme: formData.get("theme"),
-        name: formData.get("name"),
-        total: formData.get("total"),
-    });
-    */
     try {
         await sql`
         INSERT INTO pots (target, theme, name, total)

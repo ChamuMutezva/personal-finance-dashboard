@@ -124,10 +124,14 @@ export const CreatePotFormSchema = z.object({
             required_error: "Name is required",
             invalid_type_error: "Name must be a string",
         })
+        .min(1, "Enter a valid name")
         .max(30, "Name is required"),
     target: z.coerce.number(),
     total: z.coerce.number(),
-    theme: z.string(),
+    theme: z.string({
+        required_error: "Theme is required",
+        invalid_type_error: "Theme must be a string",
+    }),
 });
 
 // UPDATE A POT
