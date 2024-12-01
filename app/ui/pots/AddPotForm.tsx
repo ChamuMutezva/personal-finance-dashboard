@@ -144,10 +144,18 @@ function AddPotForm({ pots }: Readonly<{ pots: Pot[] }>) {
                                             {...field}
                                         />
                                     </FormControl>
-                                    <FormDescription>
+                                    <FormDescription className="text-right">
                                         Target pot amount.
                                     </FormDescription>
                                     <FormMessage />
+                                    {state?.errors?.target && (
+                                        <p
+                                            id="target-error"
+                                            className="text-sm text-red-500 absolute bottom-0"
+                                        >
+                                            {state.errors.target}
+                                        </p>
+                                    )}
                                 </FormItem>
                             )}
                         />
@@ -155,7 +163,7 @@ function AddPotForm({ pots }: Readonly<{ pots: Pot[] }>) {
                             control={form.control}
                             name="total"
                             render={({ field }) => (
-                                <FormItem>
+                                <FormItem className="relative">
                                     <FormLabel>Total</FormLabel>
                                     <FormControl>
                                         <Input
@@ -165,10 +173,18 @@ function AddPotForm({ pots }: Readonly<{ pots: Pot[] }>) {
                                             {...field}
                                         />
                                     </FormControl>
-                                    <FormDescription>
+                                    <FormDescription className="text-right">
                                         Total pot amount.
                                     </FormDescription>
                                     <FormMessage />
+                                    {state?.errors?.total && (
+                                        <p
+                                            id="total-error"
+                                            className="text-sm text-red-500 absolute bottom-0"
+                                        >
+                                            {state.errors.total}
+                                        </p>
+                                    )}
                                 </FormItem>
                             )}
                         />

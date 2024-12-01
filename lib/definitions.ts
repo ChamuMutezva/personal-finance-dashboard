@@ -126,8 +126,14 @@ export const CreatePotFormSchema = z.object({
         })
         .min(1, "Enter a valid name")
         .max(30, "Name is required"),
-    target: z.coerce.number(),
-    total: z.coerce.number(),
+    target: z.coerce.number({
+        required_error: "Target  is required",
+        invalid_type_error: "Target must be a number",
+    }).positive("Target must Must be greater than 0"),
+    total: z.coerce.number({
+        required_error: "Total  is required",
+        invalid_type_error: "Total must be a number",
+    }).positive("Total must be greater that 0"),
     theme: z.string({
         required_error: "Theme is required",
         invalid_type_error: "Theme must be a string",
