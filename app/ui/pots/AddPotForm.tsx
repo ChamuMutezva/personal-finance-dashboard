@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import z from "zod";
@@ -64,6 +64,8 @@ function SubmitButton() {
 
 function AddPotForm({ pots }: Readonly<{ pots: Pot[] }>) {
     const [state, formAction] = useFormState(createPot, INITIAL_STATE);
+    const [isOpen, setIsOpen] = useState(false);
+    const formRef = useRef<HTMLFormElement>(null);
 
     // 1. Define your form.
     const form = useForm<z.infer<typeof formSchema>>({
@@ -80,8 +82,18 @@ function AddPotForm({ pots }: Readonly<{ pots: Pot[] }>) {
     // const usedCategories = budgets.map((budget) => budget.category);
     const usedThemes = pots.map((pot) => pot.theme);
 
+    useEffect(() => {
+        if (state?.message === "success") {
+            setIsOpen(false);
+            form.reset();
+            if (formRef.current) {
+                formRef.current.reset();
+            }
+        }
+    }, [state, form]);
+
     return (
-        <Dialog>
+        <Dialog open={isOpen} onOpenChange={setIsOpen}>
             <DialogTrigger asChild>
                 <Button
                     variant="default"
@@ -100,7 +112,7 @@ function AddPotForm({ pots }: Readonly<{ pots: Pot[] }>) {
                     </DialogDescription>
                 </DialogHeader>
                 <Form {...form}>
-                    <form id="add-pot-form" action={formAction}>
+                    <form id="add-pot-form" ref={formRef} action={formAction}>
                         <FormField
                             control={form.control}
                             name="name"
@@ -121,7 +133,7 @@ function AddPotForm({ pots }: Readonly<{ pots: Pot[] }>) {
                                     <FormMessage />
                                     {state?.errors?.name && (
                                         <p
-                                            id="email-error"
+                                            id="name-error"
                                             className="text-sm text-red-500 absolute bottom-0"
                                         >
                                             {state.errors.name}
@@ -192,7 +204,7 @@ function AddPotForm({ pots }: Readonly<{ pots: Pot[] }>) {
                             control={form.control}
                             name="theme"
                             render={({ field }) => (
-                                <FormItem>
+                                <FormItem className="relative">
                                     <FormLabel>Color tag</FormLabel>
                                     <Select
                                         onValueChange={(value) => {
@@ -201,9 +213,11 @@ function AddPotForm({ pots }: Readonly<{ pots: Pot[] }>) {
                                         {...field}
                                         value={field.value}
                                     >
-                                        <SelectTrigger className="w-full">
-                                            <SelectValue placeholder="theme" />
-                                        </SelectTrigger>
+                                        <FormControl>
+                                            <SelectTrigger className="w-full">
+                                                <SelectValue placeholder="Select a theme" />
+                                            </SelectTrigger>
+                                        </FormControl>
                                         <SelectContent>
                                             {colors.map((color) => (
                                                 <SelectItem
@@ -237,7 +251,7 @@ function AddPotForm({ pots }: Readonly<{ pots: Pot[] }>) {
                                     {state?.errors?.theme && (
                                         <p
                                             id="theme-error"
-                                            className="text-sm text-red-500 absolute bottom-0"
+                                            className="text-sm text-red-500 absolute -bottom-6"
                                         >
                                             {state.errors.theme}
                                         </p>
@@ -245,10 +259,10 @@ function AddPotForm({ pots }: Readonly<{ pots: Pot[] }>) {
                                 </FormItem>
                             )}
                         />
-                        <DialogFooter className="sm:justify-start mt-4">
-                            <DialogClose asChild>
-                                <SubmitButton />
-                            </DialogClose>
+                        <DialogFooter className="sm:justify-start mt-8">
+                            {/*<DialogClose asChild>*/}
+                            <SubmitButton />
+                            {/*</DialogClose>*/}
                         </DialogFooter>
                     </form>
                 </Form>

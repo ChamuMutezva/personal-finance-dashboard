@@ -261,7 +261,8 @@ export async function createPot(
 
         revalidatePath("/dashboard/pots");
         revalidatePath("/dashboard");
-        redirect("/dashboard/pots");
+       // redirect("/dashboard/pots");
+        return { message: "success" }
     } catch (error) {
         return {
             message: "Database Error: Failed to create pot",

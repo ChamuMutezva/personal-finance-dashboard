@@ -27,7 +27,7 @@ export default function RootLayout({
             </header>
 
             <main className="flex-1 min-h-screen px-4 pt-6 pb-16 md:px-10 lg:p-4">
-                <div className="absolute right-0">
+                <div className="fixed right-0">
                     <ModeToggle />
                 </div>
 
