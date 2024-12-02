@@ -16,7 +16,7 @@ const Meter = ({
 
     return (
         <div className="relative w-full rounded flex flex-col">
-            <div className={`h-6 w-full bg-[hsl(var(--grey-100))] rounded`}>
+            <div className={`h-6 w-full bg-[hsl(var(--grey-100))] dark:bg-gray-700 rounded`}>
                 <div
                     id="category-meter"
                     role="meter"
@@ -28,7 +28,7 @@ const Meter = ({
                     className={`h-6 rounded`}
                     style={{
                         backgroundColor:
-                            percentage > 100 ? `hsl(var(--red))` : color,
+                            percentage > 100 ? `hsl(var(--red)) dark:bg-red-700` : color,
                         width: `${percentage > 100 ? 100 : percentage}%`,
                         transition: "width 0.3s ease-in-out",
                     }}

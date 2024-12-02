@@ -108,6 +108,7 @@ function SideNav() {
                                 bg-inherit text-sm font-medium text-white hover:text-[hsl(var(--green))] hover:bg-sky-100 
                                 hover:border-[hsl(var(--green))]  focus:bg-sky-100 focus:text-[hsl(var(--green))]
                                  focus:border-[hsl(var(--green))] focus:outline-none px-2 py-5 lg:py-7 
+                                 dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700 dark:hover:text-blue-400
                                  border-b-4 lg:border-b-0 lg:border-l-4 border-transparent `,
                                 {
                                     "text-[hsl(var(--green))] text-blue-600":

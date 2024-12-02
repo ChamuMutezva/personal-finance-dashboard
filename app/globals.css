@@ -3,10 +3,40 @@
 @tailwind utilities;
 
 :root {
-    --foreground-rgb: 0, 0, 0;
-    --foreground: 222.2 84% 4.9%;
-    --background-start-rgb: 214, 219, 220;
-    --background-end-rgb: 255, 255, 255;
+    /* Base colors */
+    --hue-primary: 240;
+    --hue-secondary: 220;
+    --hue-accent: 280;
+
+    /* Light mode */
+    --background: var(--hue-primary) 20% 97%;
+    --foreground: var(--hue-primary) 10% 10%;
+    --card: var(--hue-primary) 20% 100%;
+    --card-foreground: var(--hue-primary) 10% 10%;
+    --popover: var(--hue-primary) 20% 100%;
+    --popover-foreground: var(--hue-primary) 10% 10%;
+    --primary: var(--hue-primary) 60% 50%;
+    --primary-foreground: var(--hue-primary) 10% 98%;
+    --secondary: var(--hue-secondary) 96% 90%;
+    --secondary-foreground: var(--hue-secondary) 30% 20%;
+    --muted: var(--hue-primary) 20% 90%;
+    --muted-foreground: var(--hue-primary) 10% 40%;
+    --accent: var(--hue-accent) 40% 50%;
+    --accent-foreground: var(--hue-accent) 10% 98%;
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 98%;
+    --border: var(--hue-primary) 20% 80%;
+    --input: var(--hue-primary) 20% 80%;
+    --ring: var(--hue-primary) 50% 50%;
+
+    /* Chart colors */
+    --chart-1: 12 76% 61%;
+    --chart-2: 173 58% 39%;
+    --chart-3: 197 37% 24%;
+    --chart-4: 43 74% 66%;
+    --chart-5: 27 87% 67%;
+
+    /* Custom colors */
     --beige-500: 23 6% 57%;
     --beige-100: 30 36% 96%;
     --grey-900: 252 7% 13%;
@@ -16,7 +46,7 @@
     --grey-100: 0 0% 95%;
     --green: 177 52% 32%;
     --yellow: 28 73% 81%;
-    --cyan: 190 52% 68%;    
+    --cyan: 190 52% 68%;
     --red: 7 58% 50%;
     --purple-500: 259 30% 56%;
     --purple-300: 288 29% 62%;
@@ -26,109 +56,90 @@
     --magenta: 332 30% 44%;
     --army-green: 83 20% 47%;
     --gold: 47 50% 59%;
-    /*
-    --blue: 7 58% 50%;
-   
-    --purple-700: 259 30% 56%;
-   */
-    --brown: 21 30% 44%; /*7 58% 50%; */   
+    --brown: 21 30% 44%;
     --white: 0 0% 100%;
-    --spacing-500: 40px;
-    --spacing-400: 32px;
-    --spacing-300: 24px;
-    --spacing-250: 20px;
-    --spacing-200: 16px;
-    --spacing-150: 12px;
-    --spacing-100: 8px;
-    --spacing-50: 4px;
-    --text-preset-1: 2rem; /* 32px */
-    --text-preset-2: 1.25rem; /*20px */
-    --text-preset-3: 1rem; /*16px */
-    --text-preset-4: 0.875rem; /*14px */
-    --text-preset-5: 0.75rem; /* 12px */
-    --line-height-1: 1.2;
-    --line-height-2: 1.5;
+
+    /* Other variables */
+    --radius: 0.5rem;
+}
+
+.dark {
+    --background: var(--hue-primary) 20% 10%;
+    --foreground: var(--hue-primary) 10% 95%;
+    --card: var(--hue-primary) 20% 15%;
+    --card-foreground: var(--hue-primary) 10% 95%;
+    --popover: var(--hue-primary) 20% 15%;
+    --popover-foreground: var(--hue-primary) 10% 95%;
+    --primary: var(--hue-primary) 60% 60%;
+    --primary-foreground: var(--hue-primary) 10% 10%;
+    --secondary: var(--hue-secondary) 30% 30%;
+    --secondary-foreground: var(--hue-secondary) 60% 95%;
+    --muted: var(--hue-primary) 20% 30%;
+    --muted-foreground: var(--hue-primary) 10% 70%;
+    --accent: var(--hue-accent) 40% 60%;
+    --accent-foreground: var(--hue-accent) 10% 10%;
+    --destructive: 0 62% 40%;
+    --destructive-foreground: 0 0% 98%;
+    --border: var(--hue-primary) 20% 30%;
+    --input: var(--hue-primary) 20% 30%;
+    --ring: var(--hue-primary) 50% 70%;
+
+    /* Chart colors for dark mode */
+    --chart-1: 220 70% 50%;
+    --chart-2: 160 60% 45%;
+    --chart-3: 30 80% 55%;
+    --chart-4: 280 65% 60%;
+    --chart-5: 340 75% 55%;
 }
 
 @layer base {
-    :root {
-        --background: 0 0% 100%;
-        --foreground: 240 10% 3.9%;
-        --card: 0 0% 100%;
-        --card-foreground: 240 10% 3.9%;
-        --popover: 0 0% 100%;
-        --popover-foreground: 240 10% 3.9%;
-        --primary: 240 5.9% 10%;
-        --primary-foreground: 0 0% 98%;
-        --secondary: 240 4.8% 95.9%;
-        --secondary-foreground: 240 5.9% 10%;
-        --muted: 240 4.8% 95.9%;
-        --muted-foreground: 240 3.8% 46.1%;
-        --accent: 240 4.8% 95.9%;
-        --accent-foreground: 240 5.9% 10%;
-        --destructive: 0 84.2% 60.2%;
-        --destructive-foreground: 0 0% 98%;
-        --border: 240 5.9% 90%;
-        --input: 240 5.9% 90%;
-        --ring: 240 10% 3.9%;
-        --chart-1: 12 76% 61%;
-        --chart-2: 173 58% 39%;
-        --chart-3: 197 37% 24%;
-        --chart-4: 43 74% 66%;
-        --chart-5: 27 87% 67%;
-        --radius: 0.5rem;
+    * {
+        @apply border-border;
     }
-    .dark {
-        --background: 240 10% 3.9%;
-        --foreground: 0 0% 98%;
-        --card: 240 10% 3.9%;
-        --card-foreground: 0 0% 98%;
-        --popover: 240 10% 3.9%;
-        --popover-foreground: 0 0% 98%;
-        --primary: 0 0% 98%;
-        --primary-foreground: 240 5.9% 10%;
-        --secondary: 240 3.7% 15.9%;
-        --secondary-foreground: 0 0% 98%;
-        --muted: 240 3.7% 15.9%;
-        --muted-foreground: 240 5% 64.9%;
-        --accent: 240 3.7% 15.9%;
-        --accent-foreground: 0 0% 98%;
-        --destructive: 0 62.8% 30.6%;
-        --destructive-foreground: 0 0% 98%;
-        --border: 240 3.7% 15.9%;
-        --input: 240 3.7% 15.9%;
-        --ring: 240 4.9% 83.9%;
-        --chart-1: 220 70% 50%;
-        --chart-2: 160 60% 45%;
-        --chart-3: 30 80% 55%;
-        --chart-4: 280 65% 60%;
-        --chart-5: 340 75% 55%;
-    }
-}
-
-@media (prefers-color-scheme: dark) {
-    :root {
-        --foreground-rgb: 255, 255, 255;
-        --background-start-rgb: 0, 0, 0;
-        --background-end-rgb: 0, 0, 0;
+    body {
+        @apply bg-background text-foreground;
     }
 }
 
 @layer utilities {
-  .text-balance {
-      text-wrap: balance;
-  }
+    .text-balance {
+        text-wrap: balance;
+    }
 }
 
 .sidebar {
-  transition: all 300ms ease; /* Adjust the duration and easing as needed */
+    transition: all 300ms ease;
 }
 
-@layer base {
-  * {
-    @apply border-border;
-    }
-  body {
-    @apply bg-background text-foreground;
-    }
+/* Color adjustment function */
+@function color-adjust($color, $lightness-adjustment) {
+    @return hsl(
+        hue($color),
+        saturation($color),
+        lightness($color) + $lightness-adjustment
+    );
+}
+
+/* Apply color adjustments */
+.dark {
+    --beige-500: #{color-adjust(hsl(23, 6%, 57%), 10%)};
+    --beige-100: #{color-adjust(hsl(30, 36%, 96%), -30%)};
+    --grey-900: #{color-adjust(hsl(252, 7%, 13%), 20%)};
+    --navy: #{color-adjust(hsl(248, 8%, 41%), 10%)};
+    --grey-500: #{color-adjust(hsl(0, 0%, 41%), 20%)};
+    --grey-300: #{color-adjust(hsl(0, 0%, 70%), -20%)};
+    --grey-100: #{color-adjust(hsl(0, 0%, 95%), -50%)};
+    --green: #{color-adjust(hsl(177, 52%, 32%), 10%)};
+    --yellow: #{color-adjust(hsl(28, 73%, 81%), -20%)};
+    --cyan: #{color-adjust(hsl(190, 52%, 68%), -10%)};
+    --red: #{color-adjust(hsl(7, 58%, 50%), 10%)};
+    --purple-500: #{color-adjust(hsl(259, 30%, 56%), 10%)};
+    --purple-300: #{color-adjust(hsl(288, 29%, 62%), -10%)};
+    --cream: #{color-adjust(hsl(28, 73%, 81%), -30%)};
+    --blue: #{color-adjust(hsl(205, 48%, 47%), 10%)};
+    --turquoise: #{color-adjust(hsl(180, 16%, 42%), 10%)};
+    --magenta: #{color-adjust(hsl(332, 30%, 44%), 10%)};
+    --army-green: #{color-adjust(hsl(83, 20%, 47%), 10%)};
+    --gold: #{color-adjust(hsl(47, 50%, 59%), -10%)};
+    --brown: #{color-adjust(hsl(21, 30%, 44%), 10%)};
 }

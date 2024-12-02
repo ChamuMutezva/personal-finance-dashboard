@@ -66,7 +66,7 @@ export function DataTable<TData, TValue>({
     });
 
     return (
-        <div className="bg-white p-4 rounded-xl">
+        <div className="bg-white dark:bg-gray-800 p-4 rounded-xl">
             <div className="flex items-center justify-between">
                 <div className="flex items-center justify-between gap-2 py-4">
                     {/* Name Filter using text input */}
@@ -90,7 +90,7 @@ export function DataTable<TData, TValue>({
                                     .getColumn("name")
                                     ?.setFilterValue(event.target.value)
                             }
-                            className="max-w-sm"
+                            className="max-w-sm dark:bg-gray-700 dark:text-white"
                         />
                     </div>
                 </div>
@@ -123,14 +123,14 @@ export function DataTable<TData, TValue>({
                     </DropdownMenuContent>
                 </DropdownMenu>
             </div>
-            <div className="rounded-md border">
+            <div className="rounded-md border dark:border-gray-600">
                 <Table>
                     <TableHeader>
                         {table.getHeaderGroups().map((headerGroup) => (
-                            <TableRow key={headerGroup.id}>
+                            <TableRow key={headerGroup.id} className="dark:bg-gray-700">
                                 {headerGroup.headers.map((header) => {
                                     return (
-                                        <TableHead key={header.id}>
+                                        <TableHead key={header.id} className="dark:text-gray-200">
                                             {header.isPlaceholder
                                                 ? null
                                                 : flexRender(
@@ -152,9 +152,10 @@ export function DataTable<TData, TValue>({
                                     data-state={
                                         row.getIsSelected() && "selected"
                                     }
+                                    className="dark:bg-gray-800 dark:hover:bg-gray-700"
                                 >
                                     {row.getVisibleCells().map((cell) => (
-                                        <TableCell key={cell.id}>
+                                        <TableCell key={cell.id} className="dark:text-gray-300">
                                             {flexRender(
                                                 cell.column.columnDef.cell,
                                                 cell.getContext()
@@ -167,7 +168,7 @@ export function DataTable<TData, TValue>({
                             <TableRow>
                                 <TableCell
                                     colSpan={columns.length}
-                                    className="h-24 text-center"
+                                    className="h-24 text-center dark:text-gray-300"
                                 >
                                     No results.
                                 </TableCell>
@@ -176,7 +177,7 @@ export function DataTable<TData, TValue>({
                     </TableBody>
                 </Table>
             </div>
-            <div className="flex-1 text-sm text-muted-foreground">
+            <div className="flex-1 text-sm text-muted-foreground dark:text-gray-400">
                 {table.getFilteredSelectedRowModel().rows.length} of{" "}
                 {table.getFilteredRowModel().rows.length} row(s) selected.
             </div>

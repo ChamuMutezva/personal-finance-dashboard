@@ -17,7 +17,10 @@ export default async function SignOutForm() {
                     <button
                         type="submit"
                         aria-label="sign out"
-                        className="flex h-[36px]  grow items-center justify-center gap-2 rounded-md bg-gray-50 p-3 text-sm font-medium hover:bg-sky-100 hover:text-blue-600 md:flex-none md:justify-start md:p-2 md:px-3"
+                        className="flex h-[36px]  grow items-center justify-center gap-2 rounded-md
+                         bg-gray-50 p-3 text-sm font-medium hover:bg-sky-100 hover:text-blue-600 
+                          dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700 dark:hover:text-blue-400
+                          md:flex-none md:justify-start md:p-2 md:px-3"
                     >
                         <PowerIcon className="w-4 lg:w-6" />
                         <span className="sr-only">Sign Out</span>
