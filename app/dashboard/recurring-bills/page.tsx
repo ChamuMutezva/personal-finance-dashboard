@@ -1,6 +1,7 @@
 import React, { Suspense } from "react";
 import Image from "next/image";
 import { fetchRecurringBills } from "@/lib/data";
+import { formatPosNegativeCurrency } from "@/lib/utils";
 import { Card } from "@/components/ui/card";
 import { DataTable } from "./data-table";
 import { columns } from "./columns";
@@ -124,21 +125,28 @@ export default async function Page({
                                 Paid bills{" "}
                                 <span className="font-bold">
                                     {filteredPaidTransactions.length}(R
-                                    {-totalPaidBills})
+                                    {formatPosNegativeCurrency(-totalPaidBills)}
+                                    )
                                 </span>
                             </p>
                             <p className="flex justify-between items-center gap-4 border-b pb-2 border-gray-300">
                                 Total upcoming{" "}
                                 <span className="font-bold">
                                     {upcomingPaymentsFilter.length}(R
-                                    {-upcomingTotalPayments})
+                                    {formatPosNegativeCurrency(
+                                        -upcomingTotalPayments
+                                    )}
+                                    )
                                 </span>
                             </p>
                             <p className="flex justify-between items-center text-preset-4 text-[hsl(var(--red))] pb-2 gap-4">
                                 Due soon{" "}
                                 <span className="font-bold">
                                     {dueSoonFilter.length} (R
-                                    {-dueSoonTotalPayments})
+                                    {formatPosNegativeCurrency(
+                                        -dueSoonTotalPayments
+                                    )}
+                                    )
                                 </span>
                             </p>
                         </div>

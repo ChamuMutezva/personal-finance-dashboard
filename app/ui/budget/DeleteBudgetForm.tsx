@@ -24,7 +24,7 @@ export function DeleteBudget({ id }: Readonly<{ id: string }>) {
         >
             <AlertDialogAction
                 type="submit"
-                className="w-full bg-[hsl(var(--red))]"
+                className="w-full bg-[hsl(var(--red))] dark:bg-[var(--primary)]] dark:text-[hsl(var(--white))] border-2"
             >
                 Yes, Confirm Deletion
             </AlertDialogAction>

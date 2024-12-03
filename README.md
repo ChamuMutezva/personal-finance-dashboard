@@ -348,6 +348,7 @@ export async function GET() {
 
 - [Tables in NextJs Using shadcn/ui and TanStack Table](https://www.youtube.com/watch?v=kHfDLN9w1KQ&t=1144s). A tutorial by a YouTuber Hamed Bahran where he used NextJs. The table was created using [Shadcn - Data Table](https://ui.shadcn.com/docs/components/data-table) and the powerful [TanStack Table](https://tanstack.com/table/latest)
 - [Next.js: Authentication (Best Practices for Server Components, Actions, Middleware - by Delba)](https://www.youtube.com/watch?v=N_sUsq_y10U)
+- [Next.Js Shadcn - Dark mode](https://ui.shadcn.com/docs/dark-mode/next)
 - [Codefinity - nextjs authentication](https://codefinity.com/courses/v2/383258e5-c318-41bc-b29c-0495ff30ccbe/70678d9f-6131-4f11-b464-e6c859dbed27/dec25b72-99c2-4ff1-9105-aceffd559d94)
 
 ## Author
