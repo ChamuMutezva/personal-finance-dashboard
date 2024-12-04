@@ -144,28 +144,8 @@ export default async function Page() {
                 </h1>
                 <p className="text-xs md:text-sm">{user} logged in</p>
                 {/* Dialog component */}
-                <Dialog>
-                    <DialogTrigger asChild>
-                        <Button
-                            variant="default"
-                            className={`focus:outline-dashed focus:outline-current focus:outline-1 focus:-outline-offset-4
-                                hover:outline-dashed hover:outline-current hover:outline-1 hover:-outline-offset-4`}
-                        >
-                            + Add New Budget{" "}
-                            <span className="sr-only">item</span>
-                        </Button>
-                    </DialogTrigger>
-                    <DialogContent className="w-11/12 sm:max-w-[35rem] rounded-xl">
-                        <DialogHeader>
-                            <DialogTitle>Add New Budget</DialogTitle>
-                            <DialogDescription>
-                                Choose a category to set a spending budget.
-                                These categories can help you monitor spending.
-                            </DialogDescription>
-                        </DialogHeader>
-                        <AddBudgetForm budgets={budgets} />
-                    </DialogContent>
-                </Dialog>
+                <AddBudgetForm budgets={budgets} />
+                
             </div>
             {data.length === 0 ? (
                 <div>

@@ -6,6 +6,7 @@ import {
     Pot,
     FormState,
     PotFormState,
+    BudgetState,
     User,
     signupSchema,
     authenticateSchema,
@@ -261,8 +262,8 @@ export async function createPot(
 
         revalidatePath("/dashboard/pots");
         revalidatePath("/dashboard");
-       // redirect("/dashboard/pots");
-        return { message: "success" }
+        // redirect("/dashboard/pots");
+        return { message: "success" };
     } catch (error) {
         return {
             message: "Database Error: Failed to create pot",
@@ -314,17 +315,11 @@ export async function deletePot(id: string, pot: Pot) {
 }
 
 // *****BUDGET ACTIONS*****
-export type State = {
-    errors?: {
-        maximum?: string[];
-        category?: string[];
-        theme?: string[];
-    };
-    message?: string | null;
-};
-
 const CreateBudget = BudgetFormSchema.omit({ id: true });
-export async function createBudget(prevState: State, formData: FormData) {
+export async function createBudget(
+    state: BudgetState,
+    formData: FormData
+): Promise<BudgetState> {
     const validatedFields = CreateBudget.safeParse({
         maximum: formData.get("maximum"),
         category: formData.get("category"),
@@ -334,6 +329,7 @@ export async function createBudget(prevState: State, formData: FormData) {
     // If form validation fails, return errors early. Otherwise, continue.
     if (!validatedFields.success) {
         return {
+            ...state,
             errors: validatedFields.error.flatten().fieldErrors,
             message: "Missing Fields. Failed to Create Invoice.",
         };
@@ -344,14 +340,16 @@ export async function createBudget(prevState: State, formData: FormData) {
         await sql`
         INSERT INTO budgets (maximum, category, theme)
         VALUES (${maximum}, ${category}, ${theme})`;
+
+        revalidatePath("/dashboard/budgets");
+        revalidatePath("/dashboard");
+        //  redirect("/dashboard/budgets");
+        return { message: "success" };
     } catch (error) {
         return {
             message: "Database Error: Failed to create budget",
         };
     }
-    revalidatePath("/dashboard/budgets");
-    revalidatePath("/dashboard");
-    redirect("/dashboard/budgets");
 }
 
 // update budget

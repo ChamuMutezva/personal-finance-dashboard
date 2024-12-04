@@ -1,6 +1,6 @@
 "use client";
-import React from "react";
-import { useFormState } from "react-dom";
+import React, { useEffect, useRef, useState } from "react";
+import { useFormState, useFormStatus } from "react-dom";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import z from "zod";
@@ -12,9 +12,9 @@ import {
     SelectTrigger,
     SelectValue,
 } from "@/components/ui/select";
-import { createBudget, State } from "@/lib/action";
+import { createBudget } from "@/lib/action";
 import { categories, colors } from "@/lib/data";
-import { BudgetFormSchema } from "@/lib/definitions";
+import { BudgetFormSchema, BudgetState } from "@/lib/definitions";
 
 import {
     Form,
@@ -27,7 +27,16 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Budget } from "@/lib/definitions";
-import { DialogClose, DialogFooter } from "@/components/ui/dialog";
+import {
+    Dialog,
+    DialogClose,
+    DialogContent,
+    DialogDescription,
+    DialogFooter,
+    DialogHeader,
+    DialogTitle,
+    DialogTrigger,
+} from "@/components/ui/dialog";
 
 const formSchema = z.object({
     maximum: z.number().positive(),
@@ -35,7 +44,18 @@ const formSchema = z.object({
     theme: z.string().min(1, "Theme is required"),
 });
 
+function SubmitButton() {
+    const { pending } = useFormStatus();
+    return (
+        <Button type="submit" className="w-full" disabled={pending}>
+            {pending ? "Adding..." : "Add Pot"}
+        </Button>
+    );
+}
+
 function AddBudgetForm({ budgets }: Readonly<{ budgets: Budget[] }>) {
+    const [isOpen, setIsOpen] = useState(false);
+    const formRef = useRef<HTMLFormElement>(null);
     // 1. Define your form.
     const form = useForm<z.infer<typeof BudgetFormSchema>>({
         resolver: zodResolver(formSchema),
@@ -46,186 +66,228 @@ function AddBudgetForm({ budgets }: Readonly<{ budgets: Budget[] }>) {
         },
     });
 
-    const initialState: State = { message: null, errors: {} };
+    const initialState: BudgetState = { message: null, errors: {} };
     const [state, formAction] = useFormState(createBudget, initialState);
 
     // Get used categories and themes
     const usedCategories = budgets.map((budget) => budget.category);
     const usedThemes = budgets.map((budget) => budget.theme);
 
+    useEffect(() => {
+        if (state?.message === "success") {
+            setIsOpen(false);
+            form.reset();
+            if (formRef.current) {
+                formRef.current.reset();
+            }
+        }
+    }, [state, form]);
+
     return (
-        <Form {...form}>
-            <form
-                id="add-budget-form"
-                action={formAction}
-                className="space-y-8"
-            >
-                {/* Step 2: Connect Select with React Hook Form */}
-                <FormField
-                    control={form.control}
-                    name="category"
-                    render={({ field }) => (
-                        <FormItem>
-                            <FormLabel>Budget Category</FormLabel>
-                            <Select
-                                onValueChange={field.onChange}
-                                {...field}
-                                aria-describedby="category-error"
-                            >
-                                <SelectTrigger className="w-full">
-                                    <SelectValue placeholder="Category" />
-                                </SelectTrigger>
-                                <SelectContent>
-                                    {categories.map((category) => (
-                                        <SelectItem
-                                            key={category.category}
-                                            value={category.category}
-                                            disabled={usedCategories.includes(
-                                                category.category
-                                            )} // disable if already in use
-                                            className={`flex justify-between`}
-                                        >
-                                            {category.category}
-                                            {usedCategories.includes(
-                                                category.category
-                                            ) && (
-                                                <span className="text-[hsl(var(--grey-500))] ml-2 line-through">
-                                                    Already used
-                                                </span>
-                                            )}
-                                        </SelectItem>
-                                    ))}
-                                </SelectContent>
-                            </Select>
-                            <FormMessage />
-                            <div
-                                id="category-error"
-                                aria-live="polite"
-                                aria-atomic="true"
-                            >
-                                {state.errors?.category?.map(
-                                    (error: string) => (
-                                        <p
-                                            className="mt-2 text-sm text-red-500"
-                                            key={error}
-                                        >
-                                            {error}
-                                        </p>
-                                    )
-                                )}
-                            </div>
-                        </FormItem>
-                    )}
-                />
-
-                <FormField
-                    control={form.control}
-                    name="maximum"
-                    render={({ field }) => (
-                        <FormItem>
-                            <FormLabel>Maximum spending</FormLabel>
-                            <FormControl>
-                                <Input
-                                    type="number"
-                                    placeholder="10"
-                                    required
-                                    aria-describedby="maximum-error"
-                                    {...field}
-                                />
-                            </FormControl>
-                            <FormDescription>
-                                Maximum budget amount.
-                            </FormDescription>
-                            <FormMessage />
-                            <div
-                                id="maximum-error"
-                                aria-live="polite"
-                                aria-atomic="true"
-                            >
-                                {state.errors?.maximum?.map((error: string) => (
-                                    <p
-                                        className="mt-2 text-sm text-red-500"
-                                        key={error}
+        <Dialog open={isOpen} onOpenChange={setIsOpen}>
+            <DialogTrigger asChild>
+                <Button
+                    variant="default"
+                    className={`focus:outline-dashed focus:outline-current focus:outline-1 focus:-outline-offset-4
+                                hover:outline-dashed hover:outline-current hover:outline-1 hover:-outline-offset-4`}
+                >
+                    + Add New Budget <span className="sr-only">item</span>
+                </Button>
+            </DialogTrigger>
+            <DialogContent className="w-11/12 sm:max-w-[35rem] rounded-xl">
+                <DialogHeader>
+                    <DialogTitle>Add New Budget</DialogTitle>
+                    <DialogDescription>
+                        Choose a category to set a spending budget. These
+                        categories can help you monitor spending.
+                    </DialogDescription>
+                </DialogHeader>
+                <Form {...form}>
+                    <form
+                        id="add-budget-form"
+                        ref={formRef}
+                        action={formAction}
+                        className="space-y-8"
+                    >
+                        {/* Step 2: Connect Select with React Hook Form */}
+                        <FormField
+                            control={form.control}
+                            name="category"
+                            render={({ field }) => (
+                                <FormItem>
+                                    <FormLabel>Budget Category</FormLabel>
+                                    <Select
+                                        onValueChange={(value) => {
+                                            field.onChange(value); // Update value in React Hook Form
+                                        }}
+                                        {...field}
+                                        value={field.value}
+                                        aria-describedby="category-error"
                                     >
-                                        {error}
-                                    </p>
-                                ))}
-                            </div>
-                        </FormItem>
-                    )}
-                />
-
-                <FormField
-                    control={form.control}
-                    name="theme"
-                    render={({ field }) => (
-                        <FormItem>
-                            <FormLabel>Color tag</FormLabel>
-                            <Select
-                                onValueChange={(value) => {
-                                    field.onChange(value); // Update value in React Hook Form
-                                }}
-                                {...field}
-                                aria-describedby="theme-error"
-                                // value={field.value}
-                            >
-                                <SelectTrigger className="w-full">
-                                    <SelectValue placeholder="theme" />
-                                </SelectTrigger>
-                                <SelectContent>
-                                    {colors.map((color) => (
-                                        <SelectItem
-                                            key={color.hex}
-                                            value={color.hex}
-                                            className={`flex gap-8 items-center justify-start min-h-8`}
-                                            disabled={usedThemes.includes(
-                                                color.hex
-                                            )} // Disable if already in use
-                                        >
-                                            <span
-                                                className={`inline-block relative h-3 w-3 rounded-full mr-4`}
-                                                style={{
-                                                    backgroundColor: color.hex,
-                                                }}
-                                            ></span>
-                                            {color.color}
-                                            {usedThemes.includes(color.hex) && (
-                                                <span className="text-[hsl(var(--grey-500))] ml-2 line-through">
-                                                    already used
-                                                </span>
-                                            )}
-                                        </SelectItem>
-                                    ))}
-                                </SelectContent>
-                            </Select>
-                            <FormMessage />
-                            <div
-                                id="theme-error"
-                                aria-live="polite"
-                                aria-atomic="true"
-                            >
-                                {state.errors?.theme?.map((error: string) => (
-                                    <p
-                                        className="mt-2 text-sm text-red-500"
-                                        key={error}
+                                        <SelectTrigger className="w-full">
+                                            <SelectValue placeholder="Category" />
+                                        </SelectTrigger>
+                                        <SelectContent>
+                                            {categories.map((category) => (
+                                                <SelectItem
+                                                    key={category.category}
+                                                    value={category.category}
+                                                    disabled={usedCategories.includes(
+                                                        category.category
+                                                    )} // disable if already in use
+                                                    className={`flex justify-between`}
+                                                >
+                                                    {category.category}
+                                                    {usedCategories.includes(
+                                                        category.category
+                                                    ) && (
+                                                        <span className="text-[hsl(var(--grey-500))] ml-2 line-through">
+                                                            Already used
+                                                        </span>
+                                                    )}
+                                                </SelectItem>
+                                            ))}
+                                        </SelectContent>
+                                    </Select>
+                                    <FormMessage />
+                                    <div
+                                        id="category-error"
+                                        aria-live="polite"
+                                        aria-atomic="true"
                                     >
-                                        {error}
-                                    </p>
-                                ))}
-                            </div>
-                        </FormItem>
-                    )}
-                />
+                                        {state?.errors?.category?.map(
+                                            (error: string) => (
+                                                <p
+                                                    className="mt-2 text-sm text-red-500"
+                                                    key={error}
+                                                >
+                                                    {state?.errors?.category}
+                                                </p>
+                                            )
+                                        )}
+                                    </div>
+                                </FormItem>
+                            )}
+                        />
 
-                <DialogFooter className="sm:justify-start">
-                    <DialogClose asChild>
-                        <Button type="submit" className="w-full">
-                            Add Budget
-                        </Button>
-                    </DialogClose>
-                </DialogFooter>
-            </form>
-        </Form>
+                        <FormField
+                            control={form.control}
+                            name="maximum"
+                            render={({ field }) => (
+                                <FormItem>
+                                    <FormLabel>Maximum spending</FormLabel>
+                                    <FormControl>
+                                        <Input
+                                            type="number"
+                                            placeholder="10"
+                                            required
+                                            aria-describedby="maximum-error"
+                                            {...field}
+                                        />
+                                    </FormControl>
+                                    <FormDescription>
+                                        Maximum budget amount.
+                                    </FormDescription>
+                                    <FormMessage />
+                                    <div
+                                        id="maximum-error"
+                                        aria-live="polite"
+                                        aria-atomic="true"
+                                    >
+                                        {state?.errors?.maximum?.map(
+                                            (error: string) => (
+                                                <p
+                                                    className="mt-2 text-sm text-red-500"
+                                                    key={error}
+                                                >
+                                                    {state.errors?.maximum}
+                                                </p>
+                                            )
+                                        )}
+                                    </div>
+                                </FormItem>
+                            )}
+                        />
+
+                        <FormField
+                            control={form.control}
+                            name="theme"
+                            render={({ field }) => (
+                                <FormItem>
+                                    <FormLabel>Color tag</FormLabel>
+                                    <Select
+                                        onValueChange={(value) => {
+                                            field.onChange(value); // Update value in React Hook Form
+                                        }}
+                                        {...field}
+                                        aria-describedby="theme-error"
+                                        value={field.value}
+                                    >
+                                        <SelectTrigger className="w-full">
+                                            <SelectValue placeholder="theme" />
+                                        </SelectTrigger>
+                                        <SelectContent>
+                                            {colors.map((color) => (
+                                                <SelectItem
+                                                    key={color.hex}
+                                                    value={color.hex}
+                                                    className={`flex gap-8 items-center justify-start min-h-8`}
+                                                    disabled={usedThemes.includes(
+                                                        color.hex
+                                                    )} // Disable if already in use
+                                                >
+                                                    <span
+                                                        className={`inline-block relative h-3 w-3 rounded-full mr-4`}
+                                                        style={{
+                                                            backgroundColor:
+                                                                color.hex,
+                                                        }}
+                                                    ></span>
+                                                    {color.color}
+                                                    {usedThemes.includes(
+                                                        color.hex
+                                                    ) && (
+                                                        <span className="text-[hsl(var(--grey-500))] ml-2 line-through">
+                                                            already used
+                                                        </span>
+                                                    )}
+                                                </SelectItem>
+                                            ))}
+                                        </SelectContent>
+                                    </Select>
+                                    <FormMessage />
+                                    <div
+                                        id="theme-error"
+                                        aria-live="polite"
+                                        aria-atomic="true"
+                                    >
+                                        {state?.errors?.theme?.map(
+                                            (error: string) => (
+                                                <p
+                                                    className="mt-2 text-sm text-red-500"
+                                                    key={error}
+                                                >
+                                                    {state.errors?.theme}
+                                                </p>
+                                            )
+                                        )}
+                                    </div>
+                                </FormItem>
+                            )}
+                        />
+
+                        <DialogFooter className="sm:justify-start">
+                            <SubmitButton />
+                            {/* <DialogClose asChild> 
+                            <Button type="submit" className="w-full">
+                                Add Budget
+                            </Button>
+                            </DialogClose> */}
+                        </DialogFooter>
+                    </form>
+                </Form>
+            </DialogContent>
+        </Dialog>
     );
 }
 

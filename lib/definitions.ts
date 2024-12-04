@@ -48,13 +48,35 @@ export type Budget = {
     theme: string;
 };
 
+export type BudgetState = {
+    errors?: {
+        maximum?: string[];
+        category?: string[];
+        theme?: string[];
+    };
+    message?: string | null;
+};
+
 export const BudgetFormSchema = z.object({
     id: z.string(),
     maximum: z.coerce
-        .number()
-        .gt(0, { message: "Please enter an amount greater than $0." }),
-    category: z.string().min(1, "Category is required"),
-    theme: z.string().min(1, "Category is required"),
+        .number({
+            required_error: "Maximum is required",
+            invalid_type_error: "Maximum must be a string",
+        })
+        .positive("Target must Must be greater than 0"),
+    category: z
+        .string({
+            required_error: "Category is required",
+            invalid_type_error: "Category must be a string",
+        })
+        .min(1, "Category is required"),
+    theme: z
+        .string({
+            required_error: "Theme is required",
+            invalid_type_error: "Theme must be a string",
+        })
+        .min(1, "Category is required"),
 });
 
 export type Pot = {
@@ -126,14 +148,18 @@ export const CreatePotFormSchema = z.object({
         })
         .min(1, "Enter a valid name")
         .max(30, "Name is required"),
-    target: z.coerce.number({
-        required_error: "Target  is required",
-        invalid_type_error: "Target must be a number",
-    }).positive("Target must Must be greater than 0"),
-    total: z.coerce.number({
-        required_error: "Total  is required",
-        invalid_type_error: "Total must be a number",
-    }).positive("Total must be greater that 0"),
+    target: z.coerce
+        .number({
+            required_error: "Target  is required",
+            invalid_type_error: "Target must be a number",
+        })
+        .positive("Target must Must be greater than 0"),
+    total: z.coerce
+        .number({
+            required_error: "Total  is required",
+            invalid_type_error: "Total must be a number",
+        })
+        .positive("Total must be greater that 0"),
     theme: z.string({
         required_error: "Theme is required",
         invalid_type_error: "Theme must be a string",
@@ -144,7 +170,12 @@ export const CreatePotFormSchema = z.object({
 export const UpdatePotFormSchema = z.object({
     id: z.string(),
     name: z.string().max(30, "Name is required"),
-    target: z.coerce.number(),
+    target: z.coerce
+        .number({
+            required_error: "Target  is required",
+            invalid_type_error: "Target must be a number",
+        })
+        .positive("Total must be greater that 0"),
     total: z.coerce.number(),
     theme: z.string(),
 });
