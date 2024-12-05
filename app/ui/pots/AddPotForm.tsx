@@ -100,10 +100,9 @@ function AddPotForm({ pots }: Readonly<{ pots: Pot[] }>) {
                     className={`focus:outline-dashed focus:outline-current focus:outline-1 focus:-outline-offset-4                                
                                 hover:outline-dashed hover:outline-current hover:outline-1 hover:-outline-offset-4
                                 bg-[hsl(var(--grey-900))] text-[hsl(var(--white))]
-        dark:bg-[hsl(var(--grey-100))] dark:text-[hsl(var(--grey-900))]
-        hover:bg-[hsl(var(--grey-700))] hover:text-[hsl(var(--white))]
-        dark:hover:bg-[hsl(var(--grey-300))] dark:hover:text-[hsl(var(--grey-900))]
-                                
+                                dark:bg-[hsl(var(--grey-100))] dark:text-[hsl(var(--grey-900))]
+                                 hover:bg-[hsl(var(--grey-700))] hover:text-[hsl(var(--grey-900))]
+                                 dark:hover:bg-[hsl(var(--grey-300))] dark:hover:text-[hsl(var(--grey-900))]                                
                                 `}
                 >
                     + Add New Pot <span className="sr-only">item</span>

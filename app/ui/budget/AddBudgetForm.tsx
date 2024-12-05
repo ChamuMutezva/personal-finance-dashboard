@@ -88,8 +88,12 @@ function AddBudgetForm({ budgets }: Readonly<{ budgets: Budget[] }>) {
             <DialogTrigger asChild>
                 <Button
                     variant="default"
-                    className={`focus:outline-dashed focus:outline-current focus:outline-1 focus:-outline-offset-4
-                                hover:outline-dashed hover:outline-current hover:outline-1 hover:-outline-offset-4`}
+                    className={`focus:outline-dashed focus:outline-current focus:outline-1 focus:-outline-offset-4                                
+                                hover:outline-dashed hover:outline-current hover:outline-1 hover:-outline-offset-4
+                                bg-[hsl(var(--grey-900))] text-[hsl(var(--white))]
+                                dark:bg-[hsl(var(--grey-100))] dark:text-[hsl(var(--grey-900))]
+                                 hover:bg-[hsl(var(--grey-700))] hover:text-[hsl(var(--grey-900))]
+                                 dark:hover:bg-[hsl(var(--grey-300))] dark:hover:text-[hsl(var(--grey-900))] `}
                 >
                     + Add New Budget <span className="sr-only">item</span>
                 </Button>
@@ -118,14 +122,14 @@ function AddBudgetForm({ budgets }: Readonly<{ budgets: Budget[] }>) {
                                     <FormLabel>Budget Category</FormLabel>
                                     <Select
                                         onValueChange={(value) => {
-                                            field.onChange(value); // Update value in React Hook Form
+                                            field.onChange(value);
                                         }}
                                         {...field}
                                         value={field.value}
                                         aria-describedby="category-error"
                                     >
                                         <SelectTrigger className="w-full">
-                                            <SelectValue placeholder="Category" />
+                                            <SelectValue placeholder="Select a category" />
                                         </SelectTrigger>
                                         <SelectContent>
                                             {categories.map((category) => (
@@ -224,7 +228,7 @@ function AddBudgetForm({ budgets }: Readonly<{ budgets: Budget[] }>) {
                                         value={field.value}
                                     >
                                         <SelectTrigger className="w-full">
-                                            <SelectValue placeholder="theme" />
+                                            <SelectValue placeholder="Select a theme" />
                                         </SelectTrigger>
                                         <SelectContent>
                                             {colors.map((color) => (
