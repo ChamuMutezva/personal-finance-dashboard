@@ -14,7 +14,7 @@ import {
 } from "@/components/ui/select";
 import { createBudget } from "@/lib/action";
 import { categories, colors } from "@/lib/data";
-import { BudgetFormSchema, BudgetState } from "@/lib/definitions";
+import { BudgetFormSchema, BudgetState, Budget } from "@/lib/definitions";
 
 import {
     Form,
@@ -26,10 +26,8 @@ import {
     FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { Budget } from "@/lib/definitions";
 import {
-    Dialog,
-    DialogClose,
+    Dialog,    
     DialogContent,
     DialogDescription,
     DialogFooter,
@@ -121,11 +119,9 @@ function AddBudgetForm({ budgets }: Readonly<{ budgets: Budget[] }>) {
                                 <FormItem>
                                     <FormLabel>Budget Category</FormLabel>
                                     <Select
-                                        onValueChange={(value) => {
-                                            field.onChange(value);
-                                        }}
                                         {...field}
-                                        value={field.value}
+                                        onValueChange={field.onChange}
+                                        value={field.value || undefined}
                                         aria-describedby="category-error"
                                     >
                                         <SelectTrigger className="w-full">
@@ -220,12 +216,10 @@ function AddBudgetForm({ budgets }: Readonly<{ budgets: Budget[] }>) {
                                 <FormItem>
                                     <FormLabel>Color tag</FormLabel>
                                     <Select
-                                        onValueChange={(value) => {
-                                            field.onChange(value); // Update value in React Hook Form
-                                        }}
                                         {...field}
+                                        onValueChange={field.onChange}
+                                        value={field.value || undefined}
                                         aria-describedby="theme-error"
-                                        value={field.value}
                                     >
                                         <SelectTrigger className="w-full">
                                             <SelectValue placeholder="Select a theme" />
@@ -281,12 +275,7 @@ function AddBudgetForm({ budgets }: Readonly<{ budgets: Budget[] }>) {
                         />
 
                         <DialogFooter className="sm:justify-start">
-                            <SubmitButton />
-                            {/* <DialogClose asChild> 
-                            <Button type="submit" className="w-full">
-                                Add Budget
-                            </Button>
-                            </DialogClose> */}
+                            <SubmitButton />                           
                         </DialogFooter>
                     </form>
                 </Form>

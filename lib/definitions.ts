@@ -76,7 +76,7 @@ export const BudgetFormSchema = z.object({
             required_error: "Theme is required",
             invalid_type_error: "Theme must be a string",
         })
-        .min(1, "Category is required"),
+        .min(1, "Select a theme"),
 });
 
 export type Pot = {
