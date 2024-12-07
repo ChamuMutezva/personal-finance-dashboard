@@ -4,7 +4,7 @@ import { Pot } from "@/lib/definitions";
 import { deletePot } from "@/lib/action";
 import { AlertDialogAction } from "@/components/ui/alert-dialog";
 
-export function DeletePot({ pot }: { pot: Pot }) {
+export function DeletePot({ pot }: Readonly<{ pot: Pot }>) {
    // const deletePotWithId = deletePot.bind(null, pot.id, pot);
     const deletePotWithId = async (formData: FormData): Promise<void> => {
         // Call your delete function and handle its response
@@ -24,7 +24,7 @@ export function DeletePot({ pot }: { pot: Pot }) {
         >
             <AlertDialogAction
                 type="submit"
-                className="w-full bg-[hsl(var(--red))]"
+                className="w-full bg-[hsl(var(--red))] dark:bg-[var(--primary)]] dark:text-[hsl(var(--white))] border-2"
             >
                 Yes, Confirm Deletion
             </AlertDialogAction>

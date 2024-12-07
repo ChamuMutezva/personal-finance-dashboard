@@ -160,10 +160,12 @@ export const CreatePotFormSchema = z.object({
             invalid_type_error: "Total must be a number",
         })
         .positive("Total must be greater that 0"),
-    theme: z.string({
-        required_error: "Theme is required",
-        invalid_type_error: "Theme must be a string",
-    }),
+    theme: z
+        .string({
+            required_error: "Theme is required",
+            invalid_type_error: "Theme must be a string",
+        })
+        .min(1, "Select a theme"),
 });
 
 // UPDATE A POT

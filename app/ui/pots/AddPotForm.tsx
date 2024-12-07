@@ -25,7 +25,7 @@ import {
     FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { Pot } from "@/lib/definitions";
+import { Pot, CreatePotFormSchema } from "@/lib/definitions";
 import {
     Dialog,
     DialogClose,
@@ -68,7 +68,7 @@ function AddPotForm({ pots }: Readonly<{ pots: Pot[] }>) {
     const formRef = useRef<HTMLFormElement>(null);
 
     // 1. Define your form.
-    const form = useForm<z.infer<typeof formSchema>>({
+    const form = useForm<z.infer<typeof CreatePotFormSchema>>({
         resolver: zodResolver(formSchema),
         defaultValues: {
             target: 1000,
@@ -209,20 +209,17 @@ function AddPotForm({ pots }: Readonly<{ pots: Pot[] }>) {
                             control={form.control}
                             name="theme"
                             render={({ field }) => (
-                                <FormItem className="relative">
+                                <FormItem>
                                     <FormLabel>Color tag</FormLabel>
                                     <Select
-                                        onValueChange={(value) => {
-                                            field.onChange(value); // Update value in React Hook Form
-                                        }}
                                         {...field}
-                                        value={field.value}
+                                        onValueChange={field.onChange}
+                                        value={field.value || undefined}
+                                        aria-describedby="theme-error"
                                     >
-                                        <FormControl>
-                                            <SelectTrigger className="w-full">
-                                                <SelectValue placeholder="Select a theme" />
-                                            </SelectTrigger>
-                                        </FormControl>
+                                        <SelectTrigger className="w-full">
+                                            <SelectValue placeholder="Select a theme" />
+                                        </SelectTrigger>
                                         <SelectContent>
                                             {colors.map((color) => (
                                                 <SelectItem
@@ -253,14 +250,22 @@ function AddPotForm({ pots }: Readonly<{ pots: Pot[] }>) {
                                         </SelectContent>
                                     </Select>
                                     <FormMessage />
-                                    {state?.errors?.theme && (
-                                        <p
-                                            id="theme-error"
-                                            className="text-sm text-red-500 absolute -bottom-6"
-                                        >
-                                            {state.errors.theme}
-                                        </p>
-                                    )}
+                                    <div
+                                        id="theme-error"
+                                        aria-live="polite"
+                                        aria-atomic="true"
+                                    >
+                                        {state?.errors?.theme?.map(
+                                            (error: string) => (
+                                                <p
+                                                    className="mt-2 text-sm text-red-500"
+                                                    key={error}
+                                                >
+                                                    {state.errors?.theme}
+                                                </p>
+                                            )
+                                        )}
+                                    </div>
                                 </FormItem>
                             )}
                         />

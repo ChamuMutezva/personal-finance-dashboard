@@ -118,7 +118,7 @@ export default async function Page() {
                                     {/*DELETE DIALOG*/}
                                     <AlertDialog>
                                         <AlertDialogTrigger
-                                            className="text-preset-4 m-0 p-0 bg-inherit text-[hsl(var(--red))]
+                                            className="m-0 p-0 bg-inherit text-[hsl(var(--red))]
                                                     focus:outline-dashed focus:outline-current focus:outline-1 focus:-outline-offset-4
                                                           hover:outline-dashed hover:outline-current hover:outline-1 hover:-outline-offset-4"
                                         >

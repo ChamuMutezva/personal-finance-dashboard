@@ -46,7 +46,7 @@ function SubmitButton() {
     const { pending } = useFormStatus();
     return (
         <Button type="submit" className="w-full" disabled={pending}>
-            {pending ? "Adding..." : "Add Pot"}
+            {pending ? "Adding..." : "Add Budget"}
         </Button>
     );
 }
