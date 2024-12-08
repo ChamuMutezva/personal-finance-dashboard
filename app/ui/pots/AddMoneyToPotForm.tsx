@@ -130,7 +130,7 @@ function AddMoneyToPotForm({ pot }: Readonly<{ pot: Pot }>) {
 
                 <DialogFooter className="sm:justify-start mt-4">
                     <DialogClose asChild>
-                        <Button type="submit" className="w-full">
+                        <Button type="submit" className="w-full bg-[hsl(var(--grey-900))] border border-solid text-[hsl(var(--white))]">
                             Confirm Addition
                         </Button>
                     </DialogClose>

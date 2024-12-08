@@ -40,7 +40,7 @@ export default function EditBudgetForm({
     // const updateBudgetWithID = updateBudget.bind(null, id);
     const updateBudgetWithID = async (formData: FormData): Promise<void> => {
         await updateBudget(id, formData); // Call your update function
-       // return; // Ensure this returns void
+        // return; // Ensure this returns void
     };
 
     const preBudget = budgets.find((budget) => budget.id === id);
@@ -165,14 +165,13 @@ export default function EditBudgetForm({
                         </FormItem>
                     )}
                 />
-                {/*
-                <Button type="submit" className="w-full">
-                    Submit
-                </Button>
-                */}
+              
                 <DialogFooter className="sm:justify-start">
                     <DialogClose asChild>
-                        <Button type="submit" className="w-full">
+                        <Button
+                            type="submit"
+                            className="w-full bg-[hsl(var(--grey-900))] border border-solid text-[hsl(var(--white))]"
+                        >
                             Save Changes
                         </Button>
                     </DialogClose>

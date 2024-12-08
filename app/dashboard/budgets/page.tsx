@@ -241,7 +241,7 @@ export default async function Page() {
                                                     edit or delete
                                                 </span>
                                             </PopoverTrigger>
-                                            <PopoverContent className="flex relative flex-col gap-2 w-[134px] h-[91px] mr-8">
+                                            <PopoverContent className="flex relative flex-col gap-2 w-[150px]  mr-12">
                                                 <Dialog>
                                                     <DialogTrigger asChild>
                                                         <Button

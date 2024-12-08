@@ -162,7 +162,10 @@ export default function EditBudgetForm({
 
                 <DialogFooter className="sm:justify-start">
                     <DialogClose asChild>
-                        <Button type="submit" className="w-full">
+                        <Button
+                            type="submit"
+                            className="w-full bg-[hsl(var(--grey-900))] border border-solid text-[hsl(var(--white))]"
+                        >
                             Save Changes
                         </Button>
                     </DialogClose>

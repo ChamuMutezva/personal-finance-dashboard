@@ -27,7 +27,7 @@ const formSchema = z.object({
 });
 
 function WithDrawFromPot({ pot }: Readonly<{ pot: Pot }>) {
-   // const updatePotWithID = withdrawMoneyFromPot.bind(null, pot.id, pot);
+    // const updatePotWithID = withdrawMoneyFromPot.bind(null, pot.id, pot);
 
     const updatePotWithID = async (formData: FormData): Promise<void> => {
         await withdrawMoneyFromPot(pot.id, pot, formData); // Pass pot.id and formData
@@ -48,7 +48,7 @@ function WithDrawFromPot({ pot }: Readonly<{ pot: Pot }>) {
     const [withdrawAmount, setWithdrawAmount] = useState(0);
 
     const meterPercentage = ((pot.total - withdrawAmount) / pot.target) * 100;
-    
+
     return (
         <Form {...form}>
             <form id="add-pot-form" action={updatePotWithID}>
@@ -133,7 +133,10 @@ function WithDrawFromPot({ pot }: Readonly<{ pot: Pot }>) {
 
                 <DialogFooter className="sm:justify-start mt-4">
                     <DialogClose asChild>
-                        <Button type="submit" className="w-full">
+                        <Button
+                            type="submit"
+                            className="w-full bg-[hsl(var(--grey-900))] border border-solid text-[hsl(var(--white))]"
+                        >
                             Confirm Withdrawal
                         </Button>
                     </DialogClose>

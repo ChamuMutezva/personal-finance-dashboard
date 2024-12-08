@@ -56,7 +56,7 @@ const INITIAL_STATE = {
 function SubmitButton() {
     const { pending } = useFormStatus();
     return (
-        <Button type="submit" className="w-full" disabled={pending}>
+        <Button type="submit" className="w-full bg-[hsl(var(--grey-900))] border border-solid text-[hsl(var(--white))]" disabled={pending}>
             {pending ? "Adding..." : "Add Pot"}
         </Button>
     );

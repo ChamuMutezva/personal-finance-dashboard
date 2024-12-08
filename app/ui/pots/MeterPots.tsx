@@ -16,7 +16,7 @@ const MeterPots = ({
 
     return (
         <div className="relative w-full rounded flex flex-col">
-            <div className={`h-2 w-full bg-[hsl(var(--grey-100))] rounded`}>
+            <div className={`h-2 w-full bg-[hsl(var(--grey-100))] dark:bg-[hsl(var(--white))] rounded`}>
                 <div
                     id="category-meter"
                     role="meter"
