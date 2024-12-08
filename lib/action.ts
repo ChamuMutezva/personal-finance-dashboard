@@ -353,18 +353,17 @@ export async function createBudget(
 }
 
 // update budget
-const UpdateBudget = BudgetFormSchema.omit({ id: true, category: true });
+const UpdateBudget = BudgetFormSchema.omit({ id: true, category: true, theme: true });
 export async function updateBudget(id: string, formData: FormData) {
-    const { maximum, theme } = UpdateBudget.parse({
+    const { maximum } = UpdateBudget.parse({
         maximum: formData.get("maximum"),
-        // category: formData.get("category"),
-        theme: formData.get("theme"),
+        
     });
 
     try {
         await sql`
         UPDATE budgets
-        SET maximum = ${maximum} , theme = ${theme}
+        SET maximum = ${maximum} 
         WHERE id = ${id}`;
     } catch (error) {
         return {

@@ -129,7 +129,7 @@ export default function EditBudgetForm({
                                     field.onChange(value); // Update value in React Hook Form
                                 }}
                                 {...field}
-                                // disabled
+                                disabled
                                 value={field.value}
                             >
                                 <SelectTrigger className="w-full">
