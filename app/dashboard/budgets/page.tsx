@@ -238,7 +238,7 @@ export default async function Page() {
                                                     height={4}
                                                 />
                                                 <span className="sr-only">
-                                                    edit or delete
+                                                    edit or delete budget
                                                 </span>
                                             </PopoverTrigger>
                                             <PopoverContent className="flex relative flex-col gap-2 w-[150px]  mr-12">

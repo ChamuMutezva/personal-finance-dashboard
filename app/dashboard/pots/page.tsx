@@ -49,7 +49,7 @@ export default async function Page() {
                     Pots
                 </h1>
                 <p className="text-xs md:text-sm">{user} logged in</p>
-                <AddPotForm pots={pots} />                
+                <AddPotForm pots={pots} />
             </div>
             <div className={`grid gap-4 sm:grid-cols-2 pb-16 lg:pb-8`}>
                 {pots.map((pot) => (
@@ -82,6 +82,9 @@ export default async function Page() {
                                         width={14}
                                         height={4}
                                     />
+                                    <span className="sr-only">
+                                        Open to edit or delete pot
+                                    </span>
                                 </PopoverTrigger>
                                 <PopoverContent className="flex relative flex-col gap-2 w-[134px] h-[91px] mr-8">
                                     <Dialog>
