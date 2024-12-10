@@ -87,7 +87,7 @@ export async function authenticate(
         return {
             ...state,
             errors: validatedFields.error.flatten().fieldErrors,
-            message: "Missing Fields. Failed to Create new user.",
+            message: "Missing Fields. Failed to login.",
         };
     }
     const errorMessage = { message: "Invalid login credentials." };

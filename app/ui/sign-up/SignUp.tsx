@@ -13,7 +13,6 @@ const INITIAL_STATE = {
 
 export default function SignUpForm() {
     const [state, action] = useFormState(createUser, INITIAL_STATE);
-    
 
     return (
         <form action={action} className="max-w-[35rem] w-full">
@@ -69,7 +68,7 @@ export default function SignUpForm() {
                                 id="email"
                                 type="email"
                                 name="email"
-                                placeholder="Enter your email address"                              
+                                placeholder="Enter your email address"
                                 aria-required="true"
                                 aria-describedby={
                                     state?.errors?.email
@@ -104,7 +103,7 @@ export default function SignUpForm() {
                                 id="password"
                                 type="password"
                                 name="password"
-                                placeholder="Enter password"                                
+                                placeholder="Enter password"
                                 aria-required="true"
                                 minLength={6}
                                 aria-describedby={
@@ -163,16 +162,12 @@ function SignUpButton() {
 
     return (
         <Button
-            className="mt-4 py-7 w-full flex justify-center items-center"
+            className="mt-4 py-7 w-full flex justify-center items-center bg-[hsl(var(--grey-900))]"
             onClick={handleClick}
             aria-disabled={pending}
         >
-            {pending ? (
-                <span>Submitting...</span>
-            ) : (
-                <span> Sign up</span>
-            )}
-            <ArrowRightIcon className="h-5 w-5 text-gray-50" />
+            {pending ? <span>Submitting...</span> : <span> Sign up</span>}
+            <ArrowRightIcon className="h-5 w-5 text-gray-50 dark:text-[hsl(var(--grey-900))]" />
         </Button>
     );
 }

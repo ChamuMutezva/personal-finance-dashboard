@@ -16,7 +16,7 @@ export default function LoginForm() {
     return (
         <form action={formAction} className="max-w-[35rem] w-full">
             <div className="rounded-lg bg-gray-50 p-4">
-                <h2 className={` mb-3 text-preset-1 font-bold`}>
+                <h2 className={`mb-3 text-preset-1 font-bold dark:text-black`}>
                     Please log in to continue.
                 </h2>
 
@@ -104,7 +104,7 @@ export default function LoginForm() {
                         <>
                             <ExclamationCircleIcon className="h-5 w-5 text-red-500" />
                             <p id={"errors"} className="text-sm text-red-500">
-                                {state.errors.general}
+                                {state.errors.general || state.message} 
                             </p>
                         </>
                     )}
@@ -134,7 +134,7 @@ function LoginButton() {
 
     return (
         <Button
-            className="mt-4 py-7 w-full flex justify-center items-center"
+            className="mt-4 py-7 w-full flex justify-center items-center bg-[hsl(var(--grey-900))]"
             onClick={handleClick}
             aria-disabled={pending}
         >
@@ -143,7 +143,7 @@ function LoginButton() {
             ) : (
                 <span> Log in</span>
             )}
-            <ArrowRightIcon className="h-5 w-5 text-gray-50" />
+            <ArrowRightIcon className="h-5 w-5 text-gray-50 dark:text-[hsl(var(--grey-900))]" />
         </Button>
     );
 }
