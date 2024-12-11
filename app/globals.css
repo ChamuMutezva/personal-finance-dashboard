@@ -61,6 +61,17 @@
 
     /* Other variables */
     --radius: 0.5rem;
+
+    /* Line height */
+    --text-preset-1: 2rem; /* 32px */
+    --text-preset-2: 1.25rem; /*20px */
+    --text-preset-3: 1rem; /*16px */
+    --text-preset-4: 0.875rem; /*14px */
+    --text-preset-5: 0.75rem; /* 12px */
+
+    /*Line height */
+    --line-height-1: 1.2;
+    --line-height-2: 1.5;
 }
 
 .dark {

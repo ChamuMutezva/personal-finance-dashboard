@@ -33,7 +33,7 @@ export default function Login() {
                     </p>
                 </div>
             </div>
-            <div className="flex justify-center lg:w-7/12  max-w-[30rem] w-full lg:max-w-full  p-4">
+            <div className="flex justify-center lg:w-7/12  max-w-[30rem] w-full lg:max-w-full my-12 lg:my-4 px-4">
                 <LoginForm />
             </div>
         </main>

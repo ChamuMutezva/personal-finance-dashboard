@@ -21,7 +21,6 @@ export default function LoginForm() {
                 </h2>
 
                 <div className="w-full">
-                    {/* EMAIL */}
                     <div>
                         <label
                             className="mb-3 mt-5 block text-xs font-medium text-gray-900"
@@ -31,7 +30,7 @@ export default function LoginForm() {
                         </label>
                         <div className="relative">
                             <input
-                                className="peer block w-full rounded-md border border-gray-200 py-[12px] pl-10 text-sm outline-2 placeholder:text-gray-500"
+                                className="peer block w-full rounded-md border border-gray-200 py-[9px] pl-10 text-sm outline-2 placeholder:text-gray-500"
                                 id="email"
                                 type="email"
                                 name="email"
@@ -44,16 +43,16 @@ export default function LoginForm() {
                                 }
                                 aria-invalid={!!state?.errors?.email}
                             />
-                            {state?.errors?.email && (
-                                <p
-                                    id="email-error"
-                                    className="text-sm text-red-500"
-                                >
-                                    {state.errors.email}
-                                </p>
-                            )}
                             <AtSymbolIcon className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500 peer-focus:text-gray-900" />
                         </div>
+                        {state?.errors?.email && (
+                            <p
+                                id="email-error"
+                                className="text-sm text-red-500"
+                            >
+                                {state.errors.email}
+                            </p>
+                        )}
                     </div>
 
                     {/* PASSWORD */}
@@ -80,17 +79,17 @@ export default function LoginForm() {
                                 }
                                 aria-invalid={!!state?.errors?.password}
                             />
-                            {state?.errors?.password && (
-                                <p
-                                    id="password-error"
-                                    className="text-sm text-red-500"
-                                >
-                                    {state.errors.password}
-                                </p>
-                            )}
 
                             <KeyIcon className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500 peer-focus:text-gray-900" />
                         </div>
+                        {state?.errors?.password && (
+                            <p
+                                id="password-error"
+                                className="text-sm text-red-500"
+                            >
+                                {state.errors.password}
+                            </p>
+                        )}
                     </div>
                 </div>
                 <LoginButton />
@@ -104,7 +103,7 @@ export default function LoginForm() {
                         <>
                             <ExclamationCircleIcon className="h-5 w-5 text-red-500" />
                             <p id={"errors"} className="text-sm text-red-500">
-                                {state.errors.general || state.message} 
+                                {state.errors.general || state.message}
                             </p>
                         </>
                     )}
@@ -138,11 +137,7 @@ function LoginButton() {
             onClick={handleClick}
             aria-disabled={pending}
         >
-            {pending ? (
-                <span>Submitting...</span>
-            ) : (
-                <span> Log in</span>
-            )}
+            {pending ? <span>Submitting...</span> : <span> Log in</span>}
             <ArrowRightIcon className="h-5 w-5 text-gray-50 dark:text-[hsl(var(--grey-900))]" />
         </Button>
     );
