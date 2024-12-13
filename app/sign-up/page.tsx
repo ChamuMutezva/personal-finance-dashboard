@@ -32,7 +32,7 @@ export default function SignUp() {
                     </p>
                 </div>
             </div>
-            <div className="flex justify-center lg:w-7/12  max-w-[30rem] w-full lg:max-w-full  p-4">
+            <div className="flex justify-center lg:w-7/12  max-w-[30rem] w-full lg:max-w-full  p-4 my-12">
                 <SignUpForm />
             </div>
         </main>

@@ -93,6 +93,7 @@ export function Donut({ budgets, totals }: Readonly<DonutProps>) {
                             innerRadius={100}
                             outerRadius={120}
                             strokeWidth={5}
+                            opacity={0.7}
                         >
                             <Label
                                 content={({ viewBox }) => {

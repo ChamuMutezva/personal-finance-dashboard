@@ -17,13 +17,15 @@ export default function SignUpForm() {
     return (
         <form action={action} className="max-w-[35rem] w-full">
             <div className="rounded-lg bg-gray-50 p-4">
-                <h2 className={`mb-3 text-preset-1 leading-tight font-bold`}>
+                <h2
+                    className={`mb-3 text-preset-1 leading-tight font-bold dark:text-black`}
+                >
                     Sign up
                 </h2>
                 <div className="w-full">
                     <div>
                         <label
-                            className="mb-3 mt-5 block text-xs font-medium text-gray-900"
+                            className="mb-3 mt-5 block  font-medium text-preset-5 text-[hsl(var(--grey-500))] dark:text-black"
                             htmlFor="name"
                         >
                             Name
@@ -59,7 +61,7 @@ export default function SignUpForm() {
 
                     <div>
                         <label
-                            className="mb-3 mt-5 block text-xs font-medium text-gray-900"
+                            className="mb-3 mt-5 block text-xs font-medium text-preset-5 text-[hsl(var(--grey-500))] dark:text-black"
                             htmlFor="email"
                         >
                             Email
@@ -94,7 +96,7 @@ export default function SignUpForm() {
                     </div>
                     <div className="mt-4">
                         <label
-                            className="mb-3 mt-5 block text-xs font-medium text-gray-900"
+                            className="mb-3 mt-5 block text-xs font-medium text-preset-5 text-[hsl(var(--grey-500))] dark:text-black"
                             htmlFor="password"
                         >
                             Password
@@ -168,7 +170,11 @@ function SignUpButton() {
             onClick={handleClick}
             aria-disabled={pending}
         >
-            {pending ? <span>Submitting...</span> : <span> Sign up</span>}
+            {pending ? (
+                <span>Submitting...</span>
+            ) : (
+                <span> Create account</span>
+            )}
             <ArrowRightIcon className="h-5 w-5 text-gray-50 dark:text-[hsl(var(--grey-900))]" />
         </Button>
     );

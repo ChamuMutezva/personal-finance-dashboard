@@ -107,8 +107,17 @@ export function DonutOverview({ budgets, totals }: Readonly<DonutProps>) {
                             data={chartData}
                             dataKey="maximum"
                             nameKey="category"
+                            outerRadius={70}
+                            innerRadius={60}
+                        ></Pie>
+                        <Pie
+                            data={chartData}
+                            dataKey="maximum"
+                            nameKey="category"
+                            outerRadius={90}
                             innerRadius={70}
                             strokeWidth={5}
+                            opacity={0.7}
                         >
                             <Label
                                 content={({ viewBox }) => {
