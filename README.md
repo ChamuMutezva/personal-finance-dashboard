@@ -86,7 +86,7 @@ to preview press ctrl + shift + v
 
 ### Screenshot
 
-![screenshot](./screenshot.jpg)
+![Desktop screenshot](public/assets/images/Personal-finance-dashboard.png)
 
 ### Links
 
@@ -343,6 +343,8 @@ export async function GET() {
 ```
 
 - The Transaction page has data displayed in tabular for, this was achieved through the use of Shadcn and the Tanstack Table. The combination of the 2 offers some out of the box pagination , sorting and many more
+
+### Continued development
 
 ### Useful resources
 
