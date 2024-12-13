@@ -44,28 +44,20 @@ function SideNav() {
     const [minimize, setMinimize] = useState(false);
     return (
         <div
-            className={clsx( `sidebar flex-1`,{
+            className={clsx(`sidebar flex-1`, {
                 "lg:w-[18.75rem]": !minimize,
                 "lg:w-[5rem]": minimize,
             })}
         >
-            <div
-                className={clsx(`hidden lg:block w-full`, {
-                    "m-auto lg:pr-1": minimize,
-                    "mx-0 py-8 lg:pr-6": !minimize,
-                })}
-            >
+            {/* home link */}
+            <div className={clsx(`hidden lg:block w-full py-8 mx-0`)}>
                 <Link
                     href={"/"}
                     aria-label="home page"
                     className={clsx(
-                        `w-full hover:outline-dashed hover:outline-1 hover:outline-[hsl(var(--white))] hover:outline-offset-[0.35em] 
+                        ` hover:outline-dashed hover:outline-1 hover:outline-[hsl(var(--white))] hover:outline-offset-[0.35em] 
                      focus:outline-dashed focus:outline-1 focus:outline-[hsl(var(--white))] focus:outline-offset-[0.35em] p-1
-                     flex  items-center transition-all duration-300`,
-                        {
-                            "justify-center": minimize,
-                            "justify-start lg:pl-6": !minimize,
-                        }
+                     flex  items-center transition-all duration-300 justify-start lg:pl-6`
                     )}
                 >
                     {minimize ? (
@@ -87,13 +79,10 @@ function SideNav() {
                     )}
                 </Link>
             </div>
+            {/* navigation links */}
             <div
                 className={clsx(
-                    `flex justify-center w-full lg:flex-col items-center lg:justify-start gap-1 lg:min-h-[23.5rem]`,
-                    {
-                        "lg:pr-6": !minimize,
-                        "lg:pr-1": minimize,
-                    }
+                    `flex justify-center w-full lg:flex-col items-center lg:justify-start gap-1 lg:min-h-[23.5rem] lg:pr-6`
                 )}
             >
                 {links.map((link) => {
@@ -129,6 +118,8 @@ function SideNav() {
                     );
                 })}
             </div>
+
+            {/* Minimise button */}
             <div
                 className={clsx(`hidden lg:block mt-auto w-full`, {
                     "lg:pr-6": !minimize,
@@ -140,11 +131,7 @@ function SideNav() {
                     className={clsx(
                         `flex  items-center gap-1 p-1
                      hover:outline-dashed hover:outline-1 hover:outline-[hsl(var(--white))] hover:outline-offset-[0.35em] 
-                     focus:outline-dashed focus:outline-1 focus:outline-[hsl(var(--white))] focus:outline-offset-[0.35em] w-full`,
-                        {
-                            "justify-start lg:pl-6": !minimize,
-                            "justify-center lg:pr-1": minimize,
-                        }
+                     focus:outline-dashed focus:outline-1 focus:outline-[hsl(var(--white))] focus:outline-offset-[0.35em] w-full lg:pl-6 `
                     )}
                 >
                     <Image

@@ -155,7 +155,6 @@ export default async function Page() {
                     className={`flex flex-col gap-4 lg:flex-row lg:items-start`}
                 >
                     {/* Left side component */}
-
                     <Donut
                         budgets={budgets}
                         totals={[

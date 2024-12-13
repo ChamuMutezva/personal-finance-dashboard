@@ -207,7 +207,7 @@ export default async function Page() {
                                     <Button
                                         variant="secondary"
                                         className={`focus:outline-dashed focus:outline-current focus:outline-1 focus:-outline-offset-4
-                                hover:outline-dashed hover:outline-current hover:outline-1 hover:-outline-offset-4 font-bold`}
+                                        hover:outline-dashed hover:outline-current hover:outline-1 hover:-outline-offset-4 font-bold`}
                                     >
                                         Withdraw Money{" "}
                                         <span className="sr-only">
