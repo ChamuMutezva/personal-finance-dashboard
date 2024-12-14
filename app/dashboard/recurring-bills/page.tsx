@@ -91,6 +91,7 @@ export default async function Page({
                     Recurring bills
                 </h1>
                 <p className="text-xs md:text-sm">{user} logged in</p>
+                <div></div>
             </div>
 
             <div className="lg:flex items-start lg:gap-8">

@@ -16,8 +16,8 @@ export default async function Page({
         page?: string;
     };
 }>) {
-    const session = await auth()
-    const user = session?.user?.name
+    const session = await auth();
+    const user = session?.user?.name;
     const query = searchParams?.query || "";
     const currentPage = Number(searchParams?.page) || 1;
     const totalPages = await fetchTransactionsPages(query);
@@ -32,6 +32,7 @@ export default async function Page({
                     Transactions
                 </h1>
                 <p className="text-xs md:text-sm">{user} logged in</p>
+                <div></div>
             </div>
             <div className={"w-full lg:mb-0"}>
                 <div className="flex justify-between gap-2">
