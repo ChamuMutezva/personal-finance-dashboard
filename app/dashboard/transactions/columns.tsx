@@ -162,9 +162,17 @@ export const columns: ColumnDef<Transaction>[] = [
         id: "actions",
         cell: ({ row }) => {
             const transaction = row.original;
-            const [isDialogOpen, setIsDialogOpen] = useState(false);
-            const handleSave = () => {
-                setIsDialogOpen(false);
+            const [isTransactionDialogOpen, setIsTransactionDialogOpen] =
+                useState(false);
+            const [
+                isCustomerDetailsDialogOpen,
+                setIsCustomerDetailsDialogOpen,
+            ] = useState(false);
+            const handleTransactionSave = () => {
+                setIsTransactionDialogOpen(false);
+            };
+            const handleCustomerDetailsSave = () => {
+                setIsCustomerDetailsDialogOpen(false);
             };
 
             return (
@@ -188,16 +196,26 @@ export const columns: ColumnDef<Transaction>[] = [
                                 Copy Transaction ID
                             </DropdownMenuItem>
                             <DropdownMenuSeparator />
-                            <DropdownMenuItem>View customer</DropdownMenuItem>
                             <DropdownMenuItem
-                                onClick={() => setIsDialogOpen(true)}
+                                onClick={() =>
+                                    setIsCustomerDetailsDialogOpen(true)
+                                }
+                            >
+                                View customer
+                            </DropdownMenuItem>
+                            <DropdownMenuItem
+                                onClick={() => setIsTransactionDialogOpen(true)}
                             >
                                 View Transaction details
                             </DropdownMenuItem>
                         </DropdownMenuContent>
                     </DropdownMenu>
 
-                    <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+                    {/* View Transaction details */}
+                    <Dialog
+                        open={isTransactionDialogOpen}
+                        onOpenChange={setIsTransactionDialogOpen}
+                    >
                         <DialogContent>
                             <DialogHeader>
                                 <DialogTitle>Transaction Details</DialogTitle>
@@ -232,7 +250,47 @@ export const columns: ColumnDef<Transaction>[] = [
                                 </p>
                             </div>
                             <DialogFooter>
-                                <Button type="submit" onClick={handleSave}>
+                                <Button
+                                    type="submit"
+                                    onClick={handleTransactionSave}
+                                >
+                                    Save changes
+                                </Button>
+                            </DialogFooter>
+                        </DialogContent>
+                    </Dialog>
+                    {/* End View Transaction details */}
+
+                    {/* View Customer details */}
+                    <Dialog
+                        open={isCustomerDetailsDialogOpen}
+                        onOpenChange={setIsCustomerDetailsDialogOpen}
+                    >
+                        <DialogContent>
+                            <DialogHeader>
+                                <DialogTitle>Customer Details</DialogTitle>
+                                <DialogDescription>
+                                    Here are the details of the selected
+                                    Customer.
+                                </DialogDescription>
+                            </DialogHeader>
+                            <div className="mt-4">
+                                <p>
+                                    <strong>Name:</strong> {transaction.name}
+                                </p>
+
+                                <Image
+                                    src={transaction.avatar}
+                                    alt=""
+                                    width={30}
+                                    height={30}
+                                />
+                            </div>
+                            <DialogFooter>
+                                <Button
+                                    type="submit"
+                                    onClick={handleCustomerDetailsSave}
+                                >
                                     Save changes
                                 </Button>
                             </DialogFooter>
