@@ -137,7 +137,8 @@ function LoginButton() {
 
     return (
         <Button
-            className="mt-4 py-7 w-full flex justify-center items-center bg-[hsl(var(--grey-900))]"
+            className="mt-4 py-7 w-full flex justify-center items-center bg-[hsl(var(--grey-900))]
+            border border-black"
             onClick={handleClick}
             aria-disabled={pending}
         >

@@ -108,6 +108,9 @@ to preview press ctrl + shift + v
 - Mobile-first workflow
 - [React](https://reactjs.org/) - JS library
 - [Next.js](https://nextjs.org/) - React framework
+- [NextAuth.js](https://nextjs.org/learn/dashboard-app/adding-authentication) - authentication
+- [Auth.js](https://authjs.dev/getting-started/authentication/oauth) - authentication
+- [Jose](https://github.com/panva/jose) - session management
 - [Styled Components](https://styled-components.com/) - For styles
 
 ### What I learned

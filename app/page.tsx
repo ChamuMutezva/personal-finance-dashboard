@@ -25,7 +25,8 @@ export default function Home() {
                     </p>
                     <Link
                         href={"/login"}
-                        className="inline-block text-center transition duration-300 ease-in-out px-5 py-2 rounded-md bg-[hsl(var(--cyan))]"
+                        className="inline-block text-center transition duration-300 ease-in-out px-5 py-2 
+                        rounded-md bg-[hsl(var(--cyan))] border border-white"
                     >
                         Log in
                     </Link>

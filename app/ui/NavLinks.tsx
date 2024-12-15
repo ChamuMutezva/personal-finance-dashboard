@@ -83,7 +83,7 @@ function SideNav() {
             {/* navigation links */}
             <div
                 className={clsx(
-                    `flex justify-center w-full lg:flex-col items-center lg:justify-start gap-1 lg:min-h-[23.5rem] lg:pr-6`
+                    `flex justify-center w-full lg:flex-col items-center lg:justify-start gap-1 lg:gap-2 lg:min-h-[23.5rem] lg:pr-6`
                 )}
             >
                 {links.map((link) => {
@@ -94,8 +94,8 @@ function SideNav() {
                             href={link.href}
                             aria-label={link.name}
                             className={clsx(
-                                `flex w-full h-[32px] items-center justify-center gap-4 rounded-t-lg lg:rounded-l-none lg:rounded-r-xl
-                                bg-inherit text-sm font-medium text-white hover:text-[hsl(var(--green))] hover:bg-sky-100 
+                                `flex w-full h-[32px] items-center justify-center gap-2 rounded-t-lg lg:rounded-l-none lg:rounded-r-xl
+                                bg-inherit text-xs font-normal lg:text-base lg:font-bold text-white hover:text-[hsl(var(--green))] hover:bg-sky-100 
                                 hover:border-[hsl(var(--green))]  focus:bg-sky-100 focus:text-[hsl(var(--green))]
                                  focus:border-[hsl(var(--green))] focus:outline-none px-2 py-5 lg:py-7 
                                  dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700 dark:hover:text-blue-400
@@ -118,42 +118,42 @@ function SideNav() {
                         </Link>
                     );
                 })}
-            </div>
 
-            {/* Minimise button */}
-            <div
-                className={clsx(`hidden lg:block mt-auto w-full`, {
-                    "lg:pr-6": !minimize,
-                })}
-            >
-                <button
-                    type="button"
-                    onClick={() => setMinimize(!minimize)}
-                    className={clsx(
-                        `flex  items-center gap-1 p-1
+                {/* Minimise button */}
+                <div
+                    className={clsx(`hidden lg:block mt-auto w-full`, {
+                        "lg:pr-6": !minimize,
+                    })}
+                >
+                    <button
+                        type="button"
+                        onClick={() => setMinimize(!minimize)}
+                        className={clsx(
+                            `flex  items-center gap-1 p-1
                      hover:outline-dashed hover:outline-1 hover:outline-[hsl(var(--white))] hover:outline-offset-[0.35em] 
                      focus:outline-dashed focus:outline-1 focus:outline-[hsl(var(--white))] focus:outline-offset-[0.35em] w-full lg:pl-6 `
-                    )}
-                >
-                    <Image
-                        src={"/assets/images/icon-minimize-menu.svg"}
-                        alt=""
-                        width={20}
-                        height={20}
-                        priority
-                        className={clsx({
-                            "rotate-0": !minimize, // Rotate 180 degrees when minimize is false
-                            "rotate-180": minimize, // Rotate back to 0 degrees when minimize is true
-                        })}
-                    />
-                    <span
-                        className={clsx(`text-[hsl(var(--white))]`, {
-                            "lg:sr-only": minimize,
-                        })}
+                        )}
                     >
-                        Minimise menu
-                    </span>
-                </button>
+                        <Image
+                            src={"/assets/images/icon-minimize-menu.svg"}
+                            alt=""
+                            width={20}
+                            height={20}
+                            priority
+                            className={clsx({
+                                "rotate-0": !minimize, // Rotate 180 degrees when minimize is false
+                                "rotate-180": minimize, // Rotate back to 0 degrees when minimize is true
+                            })}
+                        />
+                        <span
+                            className={clsx(`text-[hsl(var(--white))]`, {
+                                "lg:sr-only": minimize,
+                            })}
+                        >
+                            Minimise menu
+                        </span>
+                    </button>
+                </div>
             </div>
         </div>
     );

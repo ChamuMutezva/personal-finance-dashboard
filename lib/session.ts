@@ -35,9 +35,16 @@ export async function decrypt(session: string | undefined = "") {
 
 // helper function for creating a new session
 export async function createSession(userId: string) {
-    const expires = new Date(Date.now() + cookie.duration);
+    const expires = new Date(Date.now() + 60 * 60 * 1000);
     const session = await encrypt({ userId, expires });
-    cookies().set(cookie.name, session), { ...cookie.options, expires };
+
+    cookies().set("session", session, {
+        httpOnly: true,
+        secure: true,
+        expires: expires,
+        sameSite: "lax",
+        path: "/",
+    });
     redirect("/dashboard");
 }
 

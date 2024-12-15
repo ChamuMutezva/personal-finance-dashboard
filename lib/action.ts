@@ -112,6 +112,7 @@ export async function authenticate(
         // 4. If login successful, create a session for the user and redirect
         const userId = user.id.toString();
         await createSession(userId);
+        redirect("/dashboard");
     } catch (error) {
         if (error instanceof AuthError) {
             switch (error.type) {
@@ -353,11 +354,14 @@ export async function createBudget(
 }
 
 // update budget
-const UpdateBudget = BudgetFormSchema.omit({ id: true, category: true, theme: true });
+const UpdateBudget = BudgetFormSchema.omit({
+    id: true,
+    category: true,
+    theme: true,
+});
 export async function updateBudget(id: string, formData: FormData) {
     const { maximum } = UpdateBudget.parse({
         maximum: formData.get("maximum"),
-        
     });
 
     try {
