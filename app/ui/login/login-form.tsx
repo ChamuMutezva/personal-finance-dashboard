@@ -16,7 +16,9 @@ export default function LoginForm() {
     return (
         <form action={formAction} className="max-w-[35rem] w-full">
             <div className="rounded-lg bg-gray-50 p-4">
-                <h2 className={`mb-3 text-preset-1 leading-tight font-bold dark:text-black`}>
+                <h2
+                    className={`mb-3 text-preset-1 leading-tight font-bold dark:text-black`}
+                >
                     Please log in to continue.
                 </h2>
 
@@ -34,6 +36,7 @@ export default function LoginForm() {
                                 id="email"
                                 type="email"
                                 name="email"
+                                data-testid="user-email"
                                 placeholder="Enter your email address"
                                 aria-required="true"
                                 aria-describedby={
@@ -69,6 +72,7 @@ export default function LoginForm() {
                                 id="password"
                                 type="password"
                                 name="password"
+                                data-testid="password"
                                 placeholder="Enter password"
                                 aria-required="true"
                                 minLength={6}

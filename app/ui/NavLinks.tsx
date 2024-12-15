@@ -42,6 +42,7 @@ const links = [
 function SideNav() {
     const pathname = usePathname();
     const [minimize, setMinimize] = useState(false);
+
     return (
         <div
             className={clsx(`sidebar flex-1`, {
@@ -100,7 +101,7 @@ function SideNav() {
                                  dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700 dark:hover:text-blue-400
                                  border-b-4 lg:border-b-0 lg:border-l-4 border-transparent `,
                                 {
-                                    "text-[hsl(var(--green))] text-blue-600":
+                                    "text-[hsl(var(--green))] bg-blue-600":
                                         pathname === link.href,
                                     "md:justify-start lg:pl-6": !minimize,
                                 }

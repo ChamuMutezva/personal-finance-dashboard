@@ -1,9 +1,19 @@
 "use client";
 
+import { useState } from "react";
 import { ColumnDef } from "@tanstack/react-table";
 import { MoreHorizontal, ArrowUpDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
+import {
+    Dialog,
+    DialogContent,
+    DialogDescription,
+    DialogHeader,
+    DialogTitle,
+    DialogTrigger,
+    DialogFooter,
+} from "@/components/ui/dialog";
 import {
     DropdownMenu,
     DropdownMenuContent,
@@ -13,6 +23,7 @@ import {
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Transaction } from "@/lib/definitions";
+import { formatPosNegativeCurrency } from "@/lib/utils";
 import Image from "next/image";
 import dayjs from "dayjs";
 
@@ -151,31 +162,83 @@ export const columns: ColumnDef<Transaction>[] = [
         id: "actions",
         cell: ({ row }) => {
             const transaction = row.original;
+            const [isDialogOpen, setIsDialogOpen] = useState(false);
+            const handleSave = () => {
+                setIsDialogOpen(false);
+            };
 
             return (
-                <DropdownMenu>
-                    <DropdownMenuTrigger asChild>
-                        <Button variant="ghost" className="h-8 w-8 p-0">
-                            <span className="sr-only">Open menu</span>
-                            <MoreHorizontal className="h-4 w-4" />
-                        </Button>
-                    </DropdownMenuTrigger>
-                    <DropdownMenuContent align="end">
-                        <DropdownMenuLabel>Actions</DropdownMenuLabel>
-                        <DropdownMenuItem
-                            onClick={() =>
-                                navigator.clipboard.writeText(transaction.id)
-                            }
-                        >
-                            Copy Transaction ID
-                        </DropdownMenuItem>
-                        <DropdownMenuSeparator />
-                        <DropdownMenuItem>View customer</DropdownMenuItem>
-                        <DropdownMenuItem>
-                            View Transaction details
-                        </DropdownMenuItem>
-                    </DropdownMenuContent>
-                </DropdownMenu>
+                <>
+                    <DropdownMenu>
+                        <DropdownMenuTrigger asChild>
+                            <Button variant="ghost" className="h-8 w-8 p-0">
+                                <span className="sr-only">Open menu</span>
+                                <MoreHorizontal className="h-4 w-4" />
+                            </Button>
+                        </DropdownMenuTrigger>
+                        <DropdownMenuContent align="end">
+                            <DropdownMenuLabel>Actions</DropdownMenuLabel>
+                            <DropdownMenuItem
+                                onClick={() =>
+                                    navigator.clipboard.writeText(
+                                        transaction.id
+                                    )
+                                }
+                            >
+                                Copy Transaction ID
+                            </DropdownMenuItem>
+                            <DropdownMenuSeparator />
+                            <DropdownMenuItem>View customer</DropdownMenuItem>
+                            <DropdownMenuItem
+                                onClick={() => setIsDialogOpen(true)}
+                            >
+                                View Transaction details
+                            </DropdownMenuItem>
+                        </DropdownMenuContent>
+                    </DropdownMenu>
+
+                    <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+                        <DialogContent>
+                            <DialogHeader>
+                                <DialogTitle>Transaction Details</DialogTitle>
+                                <DialogDescription>
+                                    Here are the details of the selected
+                                    transaction.
+                                </DialogDescription>
+                            </DialogHeader>
+                            <div className="mt-4">
+                                <p>
+                                    <strong>Transaction ID:</strong>{" "}
+                                    {transaction.id}
+                                </p>
+                                <p>
+                                    <strong>Name:</strong> {transaction.name}
+                                </p>
+                                <p>
+                                    <strong>Category:</strong>{" "}
+                                    {transaction.category}
+                                </p>
+                                <p>
+                                    <strong>Amount:</strong>{" "}
+                                    {formatPosNegativeCurrency(
+                                        transaction.amount
+                                    )}
+                                </p>
+                                <p>
+                                    <strong>Recurring:</strong>{" "}
+                                    {transaction.recurring
+                                        ? "Monthly"
+                                        : "Once off"}
+                                </p>
+                            </div>
+                            <DialogFooter>
+                                <Button type="submit" onClick={handleSave}>
+                                    Save changes
+                                </Button>
+                            </DialogFooter>
+                        </DialogContent>
+                    </Dialog>
+                </>
             );
         },
     },
