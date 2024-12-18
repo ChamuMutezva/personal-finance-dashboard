@@ -203,6 +203,7 @@ export const columns: ColumnDef<Transaction>[] = [
                             >
                                 View customer
                             </DropdownMenuItem>
+                            <DropdownMenuSeparator />
                             <DropdownMenuItem
                                 onClick={() => setIsTransactionDialogOpen(true)}
                             >

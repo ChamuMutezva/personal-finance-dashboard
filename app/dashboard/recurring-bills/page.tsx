@@ -98,7 +98,7 @@ export default async function Page({
                 <div
                     className={`flex flex-col gap-4 sm:flex-row lg:flex-col lg:items-start my-8 lg:my-0`}
                 >
-                    <div
+                    <Card
                         className={`bg-[hsl(var(--grey-900))] text-[hsl(var(--white))] rounded-xl p-4 flex-1
                                  flex items-center gap-4 lg:min-w-[21rem] lg:flex-col lg:items-start`}
                     >
@@ -116,7 +116,7 @@ export default async function Page({
                                 R{-totalBills}
                             </span>
                         </p>
-                    </div>
+                    </Card>
                     <Card className="p-4 flex-1 w-full">
                         <h2 className="text-preset-2 font-bold pb-4">
                             Summary
