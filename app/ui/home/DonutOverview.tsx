@@ -107,15 +107,15 @@ export function DonutOverview({ budgets, totals }: Readonly<DonutProps>) {
                             data={chartData}
                             dataKey="maximum"
                             nameKey="category"
-                            outerRadius={70}
-                            innerRadius={60}
+                            outerRadius={80}
+                            innerRadius={70}
                         ></Pie>
                         <Pie
                             data={chartData}
                             dataKey="maximum"
                             nameKey="category"
-                            outerRadius={90}
-                            innerRadius={70}
+                            outerRadius={100}
+                            innerRadius={80}
                             strokeWidth={5}
                             opacity={0.7}
                         >
