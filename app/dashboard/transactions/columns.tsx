@@ -59,17 +59,35 @@ export const columns: ColumnDef<Transaction>[] = [
                         width={32}
                         height={32}
                         alt=""
-                        className="rounded-[50%]"
+                        className="rounded-[50%] hidden sm:block"
                         unoptimized
                     />
-                    <span>{transaction.name}</span>
+                    <span className="text-preset-5">{transaction.name}</span>
                 </div>
             );
         },
     },
     {
         accessorKey: "category",
-        header: "Category",
+        header: ({ column }) => {
+            return (
+                <Button
+                    variant="ghost"
+                    onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+                >
+                    Category
+                    <ArrowUpDown className="ml-2 h-4 w-4" />
+                </Button>
+            );
+        },
+        cell: ({ row }) => {
+            const category = row.getValue("category") as string;
+            return (
+                <div className="text-preset-5 text-[hsl(var(--grey-500))] text-left">
+                    {category}
+                </div>
+            );
+        },
     },
     {
         accessorKey: "date",
@@ -94,7 +112,12 @@ export const columns: ColumnDef<Transaction>[] = [
                     className="text-preset-5 text-[hsl(var(--grey-500))] text-left"
                     dateTime={dayjs(date).format("D MMM YYYY")}
                 >
-                    {dayjs(date).format("D MMM YYYY")}
+                    <span className="sm:hidden">
+                        {dayjs(date).format("DD/MM/YYYY")}
+                    </span>
+                    <span className="hidden sm:inline">
+                        {dayjs(date).format("D MMM YYYY")}
+                    </span>
                 </time>
             );
         },
@@ -127,7 +150,7 @@ export const columns: ColumnDef<Transaction>[] = [
 
             return (
                 <div
-                    className="text-center lg:text-right font-medium"
+                    className="text-center text-preset-5 lg:text-right font-medium"
                     style={{
                         color:
                             amount > 0

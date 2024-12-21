@@ -77,7 +77,7 @@ export function ActionCell({
                 open={isTransactionDialogOpen}
                 onOpenChange={setIsTransactionDialogOpen}
             >
-                <DialogContent>
+                <DialogContent className="w-11/12 rounded-sm">
                     <DialogHeader>
                         <DialogTitle>Transaction Details</DialogTitle>
                         <DialogDescription>
@@ -116,7 +116,7 @@ export function ActionCell({
                 open={isCustomerDetailsDialogOpen}
                 onOpenChange={setIsCustomerDetailsDialogOpen}
             >
-                <DialogContent>
+                <DialogContent className="w-11/12 rounded-sm">
                     <DialogHeader>
                         <DialogTitle>Customer Details</DialogTitle>
                         <DialogDescription>
