@@ -92,6 +92,7 @@ to preview press ctrl + shift + v
 
 - Solution URL: [Add solution URL here](https://your-solution-url.com)
 - Live Site URL: [Personal Finance Dashboard](https://personal-finance-dashboard-two.vercel.app/)
+- GitIngest[GitHub repository as text](https://gitingest.com/ChamuMutezva/personal-finance-dashboard)
 
 ## My process
 

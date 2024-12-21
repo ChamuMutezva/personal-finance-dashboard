@@ -4,7 +4,7 @@ import { ColumnDef } from "@tanstack/react-table";
 import { ArrowUpDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
-import { ActionCell } from "./ActionCell";
+import { ActionCell } from "../../ui/transactions/ActionCell";
 import { Transaction } from "@/lib/definitions";
 import Image from "next/image";
 import dayjs from "dayjs";
