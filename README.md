@@ -97,6 +97,7 @@ to preview press ctrl + shift + v
 
 ### Directory Structure
 
+```js
 Directory structure:
 └── ChamuMutezva-personal-finance-dashboard/
     ├── middleware.ts
@@ -221,6 +222,7 @@ Directory structure:
         │   └── route.ts
         └── sign-up/
             └── page.tsx
+```
 
 ## Mermaid Shortcut
 
