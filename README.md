@@ -10,13 +10,13 @@ This is a solution to the [Personal finance app challenge on Frontend Mentor](ht
   - [Screenshot](#screenshot)
   - [Links](#links)
 - [My process](#my-process)
+  - [Directory structure](#directory-structure)
   - [mermaid shortcut](#mermaid-shortcut)
   - [Built with](#built-with)
   - [What I learned](#what-i-learned)
   - [Continued development](#continued-development)
   - [Useful resources](#useful-resources)
 - [Author](#author)
-- [Acknowledgments](#acknowledgments)
 
 ## Overview
 
@@ -90,11 +90,137 @@ to preview press ctrl + shift + v
 
 ### Links
 
-- Solution URL: [Add solution URL here](https://your-solution-url.com)
 - Live Site URL: [Personal Finance Dashboard](https://personal-finance-dashboard-two.vercel.app/)
-- GitIngest[GitHub repository as text](https://gitingest.com/ChamuMutezva/personal-finance-dashboard)
+- GitIngest: [GitHub repository as text](https://gitingest.com/ChamuMutezva/personal-finance-dashboard)
 
 ## My process
+
+### Directory Structure
+
+Directory structure:
+└── ChamuMutezva-personal-finance-dashboard/
+    ├── middleware.ts
+    ├── next.config.mjs
+    ├── .eslintrc.json
+    ├── components/
+    │   ├── ui/
+    │   │   ├── input.tsx
+    │   │   ├── table.tsx
+    │   │   ├── label.tsx
+    │   │   ├── dropdown-menu.tsx
+    │   │   ├── form.tsx
+    │   │   ├── popover.tsx
+    │   │   ├── chart.tsx
+    │   │   ├── alert-dialog.tsx
+    │   │   ├── skeleton.tsx
+    │   │   ├── select.tsx
+    │   │   ├── button.tsx
+    │   │   ├── checkbox.tsx
+    │   │   ├── separator.tsx
+    │   │   ├── dialog.tsx
+    │   │   └── card.tsx
+    │   └── theme-provider.tsx
+    ├── .hintrc
+    ├── public/
+    │   └── assets/
+    │       ├── fonts/
+    │       │   ├── PublicSans-VariableFont_wght.ttf
+    │       │   ├── PublicSans-Italic-VariableFont_wght.ttf
+    │       │   ├── README.txt
+    │       │   ├── OFL.txt
+    │       │   └── static/
+    │       │       ├── PublicSans-Regular.ttf
+    │       │       └── PublicSans-Bold.ttf
+    │       └── images/
+    │           └── avatars/
+    ├── README-instructions.md
+    ├── lib/
+    │   ├── placeholder-data.ts
+    │   ├── definitions.ts
+    │   ├── utils.ts
+    │   ├── action.ts
+    │   ├── data.ts
+    │   └── session.ts
+    ├── auth.ts
+    ├── package.json
+    ├── postcss.config.mjs
+    ├── components.json
+    ├── tailwind.config.ts
+    ├── tsconfig.json
+    ├── README.md
+    ├── auth.config.ts
+    └── app/
+        ├── page.tsx
+        ├── globals.css
+        ├── fonts/
+        │   └── fonts.tsx
+        ├── favicon.ico
+        ├── dashboard/
+        │   ├── error.tsx
+        │   ├── transactions/
+        │   │   ├── columns.tsx
+        │   │   ├── page.tsx
+        │   │   └── data-table.tsx
+        │   ├── page.tsx
+        │   ├── loading.tsx
+        │   ├── pots/
+        │   │   └── page.tsx
+        │   ├── layout.tsx
+        │   ├── budgets/
+        │   │   ├── error.tsx
+        │   │   └── page.tsx
+        │   └── recurring-bills/
+        │       ├── columns.tsx
+        │       ├── page.tsx
+        │       └── data-table.tsx
+        ├── login/
+        │   └── page.tsx
+        ├── ui/
+        │   ├── recurring/
+        │   │   └── RecurringBillsTable.tsx
+        │   ├── NavLinks.tsx
+        │   ├── transactions/
+        │   │   ├── CategoryFilter.tsx
+        │   │   ├── SortSelect.tsx
+        │   │   ├── TransactionTableSkeleton.tsx
+        │   │   ├── search.tsx
+        │   │   ├── Pagination.tsx
+        │   │   ├── ActionCell.tsx
+        │   │   ├── TransactionTable.tsx
+        │   │   └── SortBy.tsx
+        │   ├── ModeToggle.tsx
+        │   ├── pots/
+        │   │   ├── MeterPots.tsx
+        │   │   ├── WithdrawFromPot.tsx
+        │   │   ├── DeletePotForm.tsx
+        │   │   ├── AddPotForm.tsx
+        │   │   ├── EditPotForm.tsx
+        │   │   └── AddMoneyToPotForm.tsx
+        │   ├── login/
+        │   │   └── login-form.tsx
+        │   ├── budget/
+        │   │   ├── EditBudgetForm.tsx
+        │   │   ├── DeleteBudgetForm.tsx
+        │   │   ├── Donut.tsx
+        │   │   ├── EditForm.tsx
+        │   │   ├── Meter.tsx
+        │   │   └── AddBudgetForm.tsx
+        │   ├── SignOutForm.tsx
+        │   ├── sign-up/
+        │   │   └── SignUp.tsx
+        │   └── home/
+        │       ├── RecurringBills.tsx
+        │       ├── DonutOverview.tsx
+        │       ├── Summary.tsx
+        │       ├── TransactionTableOverview.tsx
+        │       └── Pots.tsx
+        ├── hooks/
+        │   └── use-media-query.ts
+        ├── layout.tsx
+        ├── seed/
+        │   └── route.ts
+        └── sign-up/
+            └── page.tsx
 
 ## Mermaid Shortcut
 
@@ -359,10 +485,5 @@ export async function GET() {
 
 ## Author
 
-- Website - [Add your name here](https://www.your-site.com)
-- Frontend Mentor - [@yourusername](https://www.frontendmentor.io/profile/yourusername)
-- Twitter - [@yourusername](https://www.twitter.com/yourusername)
-
-## Acknowledgments
-
-This is where you can give a hat tip to anyone who helped you out on this project. Perhaps you worked in a team or got some inspiration from someone else's solution. This is the perfect place to give them some credit.
+- Frontend Mentor - [@chamuMutezva](https://www.frontendmentor.io/profile/ChamuMutezva)
+- Twitter - [@ChamuMutezva](https://twitter.com/ChamuMutezva)

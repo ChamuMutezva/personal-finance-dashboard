@@ -40,6 +40,7 @@ export const columns: ColumnDef<Transaction>[] = [
             return (
                 <Button
                     variant="ghost"
+                    className="md:text-preset-4 font-bold"
                     onClick={() =>
                         column.toggleSorting(column.getIsSorted() === "asc")
                     }
@@ -62,7 +63,7 @@ export const columns: ColumnDef<Transaction>[] = [
                         className="rounded-[50%] hidden sm:block"
                         unoptimized
                     />
-                    <span className="text-preset-5">{transaction.name}</span>
+                    <span className="text-preset-5 md:text-preset-4">{transaction.name}</span>
                 </div>
             );
         },
@@ -73,6 +74,7 @@ export const columns: ColumnDef<Transaction>[] = [
             return (
                 <Button
                     variant="ghost"
+                    className="md:text-preset-4 font-bold"
                     onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
                 >
                     Category
@@ -83,7 +85,7 @@ export const columns: ColumnDef<Transaction>[] = [
         cell: ({ row }) => {
             const category = row.getValue("category") as string;
             return (
-                <div className="text-preset-5 text-[hsl(var(--grey-500))] text-left">
+                <div className="text-preset-5 md:text-preset-4 text-[hsl(var(--grey-500))] text-left">
                     {category}
                 </div>
             );
@@ -95,6 +97,7 @@ export const columns: ColumnDef<Transaction>[] = [
             return (
                 <Button
                     variant="ghost"
+                    className="md:text-preset-4 font-bold"
                     onClick={() =>
                         column.toggleSorting(column.getIsSorted() === "asc")
                     }
@@ -109,7 +112,7 @@ export const columns: ColumnDef<Transaction>[] = [
 
             return (
                 <time
-                    className="text-preset-5 text-[hsl(var(--grey-500))] text-left"
+                    className="text-preset-5 md:text-preset-4 text-[hsl(var(--grey-500))] text-left"
                     dateTime={dayjs(date).format("D MMM YYYY")}
                 >
                     <span className="sm:hidden">
@@ -130,7 +133,7 @@ export const columns: ColumnDef<Transaction>[] = [
                 <div className="flex items-center justify-end">
                     <Button
                         variant="ghost"
-                        className="text-center"
+                        className="text-center md:text-preset-4 font-bold"
                         onClick={() =>
                             column.toggleSorting(column.getIsSorted() === "asc")
                         }
@@ -150,7 +153,7 @@ export const columns: ColumnDef<Transaction>[] = [
 
             return (
                 <div
-                    className="text-center text-preset-5 lg:text-right font-medium"
+                    className="text-center text-preset-5 md:text-preset-4 lg:text-right font-medium"
                     style={{
                         color:
                             amount > 0
