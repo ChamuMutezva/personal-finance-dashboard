@@ -57,6 +57,11 @@ export type BudgetState = {
     message?: string | null;
 };
 
+
+export const ForgotPasswordSchema = z.object({
+    email: z.string().email({ message: "Please enter a valid email address" }),
+});
+
 export const BudgetFormSchema = z.object({
     id: z.string(),
     maximum: z.coerce

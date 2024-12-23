@@ -39,6 +39,7 @@ Users should be able to:
 - See hover and focus states for all interactive elements on the page
 - **Bonus**: Save details to a database (build the project as a full-stack app)
 - **Bonus**: Create an account and log in (add user authentication to the full-stack app)
+- Dark mode
 
 ### Roadmap strategy
 
@@ -477,6 +478,8 @@ export async function GET() {
 - The Transaction page has data displayed in tabular for, this was achieved through the use of Shadcn and the Tanstack Table. The combination of the 2 offers some out of the box pagination , sorting and many more
 
 ### Continued development
+
+- implement `forgot password` logic. When a user can nolonger remember the login credentials, user should be able to recover the use of the account.
 
 ### Useful resources
 

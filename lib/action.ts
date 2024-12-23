@@ -15,6 +15,7 @@ import {
     CreatePotFormSchema,
     UpdatePotFormSchema,
     BudgetFormSchema,
+    ForgotPasswordSchema,
 } from "./definitions";
 import { signIn } from "@/auth";
 import { AuthError } from "next-auth";
@@ -139,6 +140,65 @@ export async function authenticate(
 export async function logout() {
     deleteSession();
 }
+
+// Forgot password
+export async function requestPasswordReset(prevState: any, formData: FormData) {
+    const validatedFields = ForgotPasswordSchema.safeParse({
+        email: formData.get("email"),
+    });
+
+    if (!validatedFields.success) {
+        return {
+            errors: validatedFields.error.flatten().fieldErrors,
+            message: "Invalid email. Failed to request password reset.",
+        };
+    }
+
+    const { email } = validatedFields.data;
+
+    try {
+        // Check if the user exists
+        const user = await sql`SELECT * FROM users WHERE email=${email}`;
+        if (user.rows.length === 0) {
+            return {
+                errors: {
+                    email: ["No account found with this email address."],
+                },
+            };
+        }
+
+        // Generate a password reset token
+        const resetToken = crypto.randomUUID();
+        const resetTokenExpiry = new Date(Date.now() + 3600000); // Token expires in 1 hour
+
+        // Save the reset token and expiry in the database
+        await sql`
+            UPDATE users
+            SET reset_token = ${resetToken}, reset_token_expiry = ${resetTokenExpiry.toISOString()}
+            WHERE email = ${email}
+        `;
+
+        // Send password reset email (implement this function)
+        await sendPasswordResetEmail(email, resetToken);
+
+        return {
+            message: "Password reset link sent to your email.",
+        };
+    } catch (error) {
+        return {
+            errors: {
+                general: ["An error occurred. Please try again."],
+            },
+        };
+    }
+}
+
+async function sendPasswordResetEmail(email: string, resetToken: string) {
+    // Implement email sending logic here
+    // You can use a service like SendGrid, AWS SES, or any other email service
+    console.log(`Sending password reset email to ${email} with token ${resetToken}`);
+}
+// End of forgot password
 
 // POT ACTIONS
 const WithdrawMoney = WithdrawMoneyFromPotFormSchema.omit({

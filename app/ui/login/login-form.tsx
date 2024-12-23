@@ -60,12 +60,20 @@ export default function LoginForm() {
 
                     {/* PASSWORD */}
                     <div className="mt-4">
-                        <label
-                            className="mb-3 mt-5 block text-xs font-medium text-gray-900"
-                            htmlFor="password"
-                        >
-                            Password
-                        </label>
+                        <div className="flex justify-between items-center">
+                            <label
+                                className="mb-3 mt-5 block text-xs font-medium text-gray-900"
+                                htmlFor="password"
+                            >
+                                Password
+                            </label>
+                            <Link
+                                href="/forgot-password"
+                                className="text-xs font-medium text-[hsl(var(--grey-900))] hover:underline"
+                            >
+                                Forgot password?
+                            </Link>
+                        </div>
                         <div className="relative">
                             <input
                                 className="peer block w-full rounded-md border border-gray-200 py-[12px] pl-10 text-sm outline-2 placeholder:text-gray-500"
