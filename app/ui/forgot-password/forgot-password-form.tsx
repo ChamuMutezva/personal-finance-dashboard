@@ -1,6 +1,7 @@
 "use client";
 import {
     AtSymbolIcon,
+    ExclamationCircleIcon
 } from "@heroicons/react/24/outline";
 import { ArrowRightIcon } from "@heroicons/react/20/solid";
 import { Button } from "@/components/ui/button";
@@ -42,7 +43,7 @@ export default function ForgotPasswordForm() {
                                 aria-required="true"
                                 aria-describedby={
                                     state?.errors?.email
-                                        ? "email-error"
+                                        ? "email-error errors"
                                         : undefined
                                 }
                                 aria-invalid={!!state?.errors?.email}
@@ -51,7 +52,7 @@ export default function ForgotPasswordForm() {
                         </div>
                         {state?.errors?.email && (
                             <p
-                                id="email-error"
+                                id="errors"
                                 className="text-sm text-red-500"
                             >
                                 {state.errors.email}
@@ -66,11 +67,6 @@ export default function ForgotPasswordForm() {
                     aria-live="polite"
                     aria-atomic="true"
                 >
-                    {state?.message && (
-                        <p className="text-sm text-green-500">
-                            {state.message}
-                        </p>
-                    )}
 
                     {state?.errors?.email && (
                         <p id="email-error" className="text-sm text-red-500">
