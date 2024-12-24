@@ -90,7 +90,7 @@ export default async function Page({
                 >
                     Recurring bills
                 </h1>
-                <p className="text-xs md:text-sm">{user} logged in</p>
+                <p className="text-xs md:text-sm text-[hsl(var(--grey-900))]">{user} logged in</p>
                 <div></div>
             </div>
 

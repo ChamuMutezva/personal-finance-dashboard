@@ -142,7 +142,7 @@ export default async function Page() {
                 >
                     Budgets
                 </h1>
-                <p className="text-xs md:text-sm">{user} logged in</p>
+                <p className="text-xs md:text-sm text-[hsl(var(--grey-900))]">{user} logged in</p>
                 {/* Dialog component */}
                 <AddBudgetForm budgets={budgets} />
             </div>

@@ -54,7 +54,7 @@ export const columns: ColumnDef<Transaction>[] = [
             const transaction = row.original;
 
             return (
-                <div className="flex flex-col justify-start gap-2 items-start sm:flex-row md:items-center font-medium">
+                <div className="flex flex-col justify-start gap-2 items-start sm:flex-row sm:items-center font-medium">
                     <Image
                         src={transaction.avatar}
                         width={32}

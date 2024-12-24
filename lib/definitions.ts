@@ -13,6 +13,16 @@ export type SessionPayload = {
     //  role: "admin" || "user",
 };
 
+export type ResetEmailFormState =
+    | {
+          errors?: {
+              email?: string[];
+              general?: string;
+          };
+          message?: string;
+      }
+    | undefined;
+
 export type FormState =
     | {
           errors?: {
@@ -56,7 +66,6 @@ export type BudgetState = {
     };
     message?: string | null;
 };
-
 
 export const ForgotPasswordSchema = z.object({
     email: z.string().email({ message: "Please enter a valid email address" }),

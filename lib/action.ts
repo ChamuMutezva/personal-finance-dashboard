@@ -6,6 +6,7 @@ import { Resend } from "resend";
 import {
     Pot,
     FormState,
+    ResetEmailFormState,
     PotFormState,
     BudgetState,
     User,
@@ -143,13 +144,14 @@ export async function logout() {
 }
 
 // Forgot password
-export async function requestPasswordReset(prevState: any, formData: FormData) {
+export async function requestPasswordReset(state: ResetEmailFormState, formData: FormData): Promise<ResetEmailFormState>  {
     const validatedFields = ForgotPasswordSchema.safeParse({
         email: formData.get("email"),
     });
 
     if (!validatedFields.success) {
         return {
+            ...state,
             errors: validatedFields.error.flatten().fieldErrors,
             message: "Invalid email. Failed to request password reset.",
         };
@@ -187,8 +189,9 @@ export async function requestPasswordReset(prevState: any, formData: FormData) {
         };
     } catch (error) {
         return {
+            ...state,
             errors: {
-                general: ["An error occurred. Please try again."],
+                general: "A domain setup error occurred. Please try again.",
             },
         };
     }
@@ -207,7 +210,7 @@ async function sendPasswordResetEmail(email: string, resetToken: string) {
 
         const { data, error } = await resend.emails.send({
             from: "onboarding@resend.dev", // Replace with your verified sender
-            to: "ckmutezva@gmail.com",
+            to: email,
             subject: "Reset Your Password",
             html: `
                 <h1>Reset Your Password</h1>
