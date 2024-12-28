@@ -78,7 +78,7 @@ export default function ForgotPasswordForm() {
             <div className="mt-4 text-center">
                 <Link
                     href="/login"
-                    className="text-sm font-bold text-preset-4 text-[hsl(var(--grey-900))]"
+                    className="text-sm font-bold text-preset-4 text-[hsl(var(--grey-900))] border p-2 rounded-md shadow"
                 >
                     Back to Login
                 </Link>

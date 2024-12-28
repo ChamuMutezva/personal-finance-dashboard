@@ -8,11 +8,11 @@ function RecurringBills({
     totalPaidBillsFilterOverview,
     totalUpcomingBillsFilterOverview,
     totalBillsOverview,
-}: {
+}: Readonly<{
     totalPaidBillsFilterOverview: number;
     totalUpcomingBillsFilterOverview: number;
     totalBillsOverview: number;
-}) {
+}>) {
     return (
         <Card aria-label="recurring bills" className="p-4 xl:col-span-6 xl:col-start-8 xl:row-start-7 mb-4 xl:mb-0">
             <div className="flex items-center justify-between pb-4">
@@ -39,7 +39,7 @@ function RecurringBills({
             </div>
             <div className="flex flex-col gap-2">
                 {/*Paid bills*/}
-                <div className="p-5 border-l-4 border-[hsl(var(--green))] rounded-lg bg-[hsl(var(--beige-100))]">
+                <div className="p-5 border-l-4 border-[hsl(var(--green))] rounded-lg bg-[hsl(var(--beige-100))] dark:bg-[hsl(var(--beige-800))]">
                     <p className="flex justify-between text-preset-4 items-center">
                         Paid bills{" "}
                         <span className="font-bold">

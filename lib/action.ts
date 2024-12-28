@@ -19,10 +19,12 @@ import {
     BudgetFormSchema,
     ForgotPasswordSchema,
 } from "./definitions";
-import { signIn } from "@/auth";
+import { signIn, signOut } from "@/auth";
 import { AuthError } from "next-auth";
 import bcrypt from "bcrypt";
 import { createSession, deleteSession } from "./session";
+
+const resend = new Resend(process.env.RESEND_API_KEY);
 
 // SIGN UP SECTION
 const CreateUser = signupSchema.omit({ id: true });
@@ -140,11 +142,15 @@ export async function authenticate(
 }
 
 export async function logout() {
-    deleteSession();
+    await signOut({ redirectTo: "/login" });
+    await deleteSession();
 }
 
 // Forgot password
-export async function requestPasswordReset(state: ResetEmailFormState, formData: FormData): Promise<ResetEmailFormState>  {
+export async function requestPasswordReset(
+    state: ResetEmailFormState,
+    formData: FormData
+): Promise<ResetEmailFormState> {
     const validatedFields = ForgotPasswordSchema.safeParse({
         email: formData.get("email"),
     });
@@ -203,13 +209,13 @@ async function sendPasswordResetEmail(email: string, resetToken: string) {
     console.log(
         `Sending password reset email to ${email} with token ${resetToken}`
     );
-    const resend = new Resend(process.env.RESEND_API_KEY);
+
     try {
         const appUrl = process.env.APP_URL || "http://localhost:3000"; // Fallback for local development
         const resetUrl = `${appUrl}/reset-password?token=${resetToken}`;
 
         const { data, error } = await resend.emails.send({
-            from: "onboarding@resend.dev", // Replace with your verified sender
+            from: "Chamu <preprince.co.za>", // Replace with your verified sender delivered@resend.dev
             to: email,
             subject: "Reset Your Password",
             html: `
@@ -227,6 +233,7 @@ async function sendPasswordResetEmail(email: string, resetToken: string) {
         }
 
         console.log("Reset email sent:", data);
+        return { data };
     } catch (error) {
         console.error("Error in sendPasswordResetEmail:", error);
         throw new Error("Failed to send password reset email");

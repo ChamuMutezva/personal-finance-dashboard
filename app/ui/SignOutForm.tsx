@@ -1,7 +1,8 @@
 "use server";
 
 import { PowerIcon } from "@heroicons/react/24/outline";
-import { signOut } from "@/auth";
+//import { signOut } from "@/auth";
+import { logout } from "@/lib/action";
 
 export default async function SignOutForm() {
     return (
@@ -11,7 +12,7 @@ export default async function SignOutForm() {
                 <form
                     action={async () => {
                         "use server";
-                        await signOut();
+                        await logout();
                     }}
                 >
                     <button
