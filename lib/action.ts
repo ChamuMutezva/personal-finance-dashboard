@@ -117,8 +117,8 @@ export async function authenticate(
         // 4. If login successful, create a session for the user and redirect
         const userId = user.id.toString();
         await createSession(userId);
-       // redirect("/dashboard");
-       return { success: true };
+        redirect("/dashboard");
+      // return { success: true };
     } catch (error) {
         if (error instanceof AuthError) {
             switch (error.type) {

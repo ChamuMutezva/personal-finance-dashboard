@@ -9,21 +9,10 @@ import { Button } from "@/components/ui/button";
 import { useFormState, useFormStatus } from "react-dom";
 import { authenticate } from "@/lib/action";
 import Link from "next/link";
-import { useRouter, useSearchParams } from "next/navigation";
-import { useEffect } from "react";
 
-export default function LoginForm() {
-    const router = useRouter();
-    const searchParams = useSearchParams();
+export default function LoginForm() {    
     const [state, formAction] = useFormState(authenticate, undefined);
 
-    useEffect(() => {
-        if (!state?.success) {
-            const callbackUrl = searchParams.get("callbackUrl") || "/dashboard";
-            router.push(callbackUrl);
-            /* router.refresh(); */
-        }
-    }, [state, searchParams, router]);
     return (
         <form action={formAction} className="max-w-[35rem] w-full">
             <div className="rounded-lg bg-gray-50 px-4 py-8">
