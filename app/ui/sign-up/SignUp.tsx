@@ -25,7 +25,7 @@ export default function SignUpForm() {
                 <div className="w-full">
                     <div>
                         <label
-                            className="mb-3 mt-5 block  font-medium text-preset-5 text-[hsl(var(--grey-500))] dark:text-black"
+                            className="mb-3 mt-5 block font-bold text-preset-5 text-[hsl(var(--grey-500))] dark:text-black"
                             htmlFor="name"
                         >
                             Name
@@ -61,7 +61,7 @@ export default function SignUpForm() {
 
                     <div>
                         <label
-                            className="mb-3 mt-5 block text-xs font-medium text-preset-5 text-[hsl(var(--grey-500))] dark:text-black"
+                            className="mb-3 mt-5 block text-xs font-bold text-preset-5 text-[hsl(var(--grey-500))] dark:text-black"
                             htmlFor="email"
                         >
                             Email
@@ -96,7 +96,7 @@ export default function SignUpForm() {
                     </div>
                     <div className="mt-4">
                         <label
-                            className="mb-3 mt-5 block text-xs font-medium text-preset-5 text-[hsl(var(--grey-500))] dark:text-black"
+                            className="mb-3 mt-5 block text-xs font-bold text-preset-5 text-[hsl(var(--grey-500))] dark:text-black"
                             htmlFor="password"
                         >
                             Password

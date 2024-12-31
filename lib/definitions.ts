@@ -32,6 +32,7 @@ export type FormState =
               general?: string;
           };
           message?: string;
+          success?: boolean;
       }
     | undefined;
 

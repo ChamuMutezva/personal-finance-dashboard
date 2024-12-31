@@ -9,23 +9,35 @@ import { Button } from "@/components/ui/button";
 import { useFormState, useFormStatus } from "react-dom";
 import { authenticate } from "@/lib/action";
 import Link from "next/link";
+import { useRouter, useSearchParams } from "next/navigation";
+import { useEffect } from "react";
 
 export default function LoginForm() {
+    const router = useRouter();
+    const searchParams = useSearchParams();
     const [state, formAction] = useFormState(authenticate, undefined);
 
+    useEffect(() => {
+        if (!state?.success) {
+            const callbackUrl = searchParams.get("callbackUrl") || "/dashboard";
+            router.push(callbackUrl);
+            /* router.refresh(); */
+        }
+    }, [state, searchParams, router]);
     return (
         <form action={formAction} className="max-w-[35rem] w-full">
-            <div className="rounded-lg bg-gray-50 p-4">
+            <div className="rounded-lg bg-gray-50 px-4 py-8">
                 <h2
                     className={`mb-3 text-preset-1 leading-tight font-bold dark:text-black`}
                 >
-                    Please log in to continue.
+                    Login
                 </h2>
 
                 <div className="w-full">
+                    {/* EMAIL */}
                     <div>
                         <label
-                            className="mb-3 mt-5 block text-xs font-medium text-gray-900"
+                            className="mb-3 mt-5 block text-xs text-[hsl(var(--grey-500))] font-bold"
                             htmlFor="email"
                         >
                             Email
@@ -62,14 +74,14 @@ export default function LoginForm() {
                     <div className="mt-4">
                         <div className="flex justify-between items-center">
                             <label
-                                className="mb-3 mt-5 block text-xs font-medium text-gray-900"
+                                className="block mb-3 mt-5 text-xs text-[hsl(var(--grey-500))] font-bold"
                                 htmlFor="password"
                             >
                                 Password
                             </label>
                             <Link
                                 href="/forgot-password"
-                                className="text-xs font-medium text-[hsl(var(--grey-900))] hover:underline"
+                                className="text-xs mb-3 mt-5 text-[hsl(var(--grey-500))] font-bold hover:underline"
                             >
                                 Forgot password?
                             </Link>
@@ -121,11 +133,11 @@ export default function LoginForm() {
                     )}
                 </div>
             </div>
-            <p className="text-center my-2">
+            <p className="text-center my-2 text-preset-4 text-[hsl(var(--grey-500))]">
                 Need to create an account?{" "}
                 <Link
                     href={"/sign-up"}
-                    className="font-bold text-preset-4 text-[hsl(var(--grey-900))]"
+                    className="font-bold text-[hsl(var(--grey-900))]"
                 >
                     Sign up
                 </Link>
@@ -146,7 +158,7 @@ function LoginButton() {
     return (
         <Button
             className="mt-4 py-7 w-full flex justify-center items-center bg-[hsl(var(--grey-900))]
-            border border-black"
+            border border-black text-sm font-bold"
             onClick={handleClick}
             aria-disabled={pending}
         >
