@@ -13,7 +13,7 @@ export default function ForgotPasswordForm() {
     const [state, formAction] = useFormState(requestPasswordReset, undefined);
 
     return (
-        <form action={formAction} className="max-w-[35rem] w-full">
+        <form action={formAction} className="max-w-[35rem] w-full p-4">
             <div className="rounded-lg bg-gray-50 p-4">
                 <h2
                     className={`mb-3 text-preset-1 leading-tight font-bold dark:text-black`}

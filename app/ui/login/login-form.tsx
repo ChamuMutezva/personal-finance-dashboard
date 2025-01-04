@@ -70,7 +70,7 @@ export default function LoginForm() {
                             </label>
                             <Link
                                 href="/forgot-password"
-                                className="text-xs mb-3 mt-5 text-[hsl(var(--grey-500))] font-bold hover:underline"
+                                className="text-xs mb-3 mt-5 text-[hsl(var(--red))] font-bold hover:underline"
                             >
                                 Forgot password?
                             </Link>

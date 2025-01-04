@@ -100,25 +100,29 @@ export async function authenticate(
     try {
         const user = (await signIn("credentials", formData)) as User;
 
-        // If user is not found, return early
+        // 1. If user is not found, return early
         if (!user) {
             return errorMessage;
         }
-        // 3. Compare the user's password with the hashed password in the database
+        // 2. Compare the user's password with the hashed password in the database
         const passwordMatch = await bcrypt.compare(
             validatedFields.data.password,
             user.password
         );
 
-        // If the password does not match, return early
+        //3. If the password does not match, return early
         if (!passwordMatch) {
             return errorMessage;
         }
         // 4. If login successful, create a session for the user and redirect
         const userId = user.id.toString();
-        await createSession(userId);
-        redirect("/dashboard");
-      // return { success: true };
+        
+        if (userId) {
+            await createSession(userId);
+        }
+       
+        // redirect("/dashboard");
+         return { ...state, success: true };
     } catch (error) {
         if (error instanceof AuthError) {
             switch (error.type) {
