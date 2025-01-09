@@ -32,12 +32,15 @@ export async function createUser(
     state: FormState,
     formData: FormData
 ): Promise<FormState> {
+
+    //1.  valiidate form fields
     const validatedFields = CreateUser.safeParse({
         name: formData.get("name"),
         email: formData.get("email"),
         password: formData.get("password"),
     });
 
+    //2. If form validation fails, return errors early. Otherwise, continue.
     if (!validatedFields.success) {
         return {
             ...state,
@@ -46,10 +49,9 @@ export async function createUser(
         };
     }
 
+    //3. Check if the email already exists in the database
     const { name, email, password } = validatedFields.data;
-
     const existingUser = await sql`SELECT * FROM users WHERE email=${email}`;
-
     if (existingUser && existingUser.rowCount && existingUser.rowCount > 0) {
         return {
             ...state,
@@ -60,8 +62,8 @@ export async function createUser(
         };
     }
 
+    //4. Hash the password and create a new user in the database
     const hashedPassword = await bcrypt.hash(password, 10);
-
     const data =
         await sql`INSERT INTO users (name, email, password) VALUES (${name}, ${email}, ${hashedPassword}) RETURNING *;`;
     const user = data.rows[0];
@@ -71,7 +73,7 @@ export async function createUser(
             message: "An error occurred while creating your account.",
         };
     }
-    // 4. Create a session for the user
+    // 5. Create a session for the user
     const userId = user.id.toString();
     await createSession(userId);
     // redirect("/login");
@@ -83,11 +85,14 @@ export async function authenticate(
     state: FormState,
     formData: FormData
 ): Promise<FormState> {
+
+    //1. Validate form fields
     const validatedFields = LoginUser.safeParse({
         email: formData.get("email"),
         password: formData.get("password"),
     });
 
+    //2. If form validation fails, return errors early. Otherwise, continue.
     if (!validatedFields.success) {
         return {
             ...state,
@@ -100,21 +105,21 @@ export async function authenticate(
     try {
         const user = (await signIn("credentials", formData)) as User;
 
-        // 1. If user is not found, return early
+        //3. If user is not found, return early
         if (!user) {
             return errorMessage;
         }
-        // 2. Compare the user's password with the hashed password in the database
+        //4. Compare the user's password with the hashed password in the database
         const passwordMatch = await bcrypt.compare(
             validatedFields.data.password,
             user.password
         );
 
-        //3. If the password does not match, return early
+        //5. If the password does not match, return early
         if (!passwordMatch) {
             return errorMessage;
         }
-        // 4. If login successful, create a session for the user and redirect
+        // 6. If login successful, create a session for the user and redirect
         const userId = user.id.toString();
         
         if (userId) {
@@ -156,10 +161,13 @@ export async function requestPasswordReset(
     state: ResetEmailFormState,
     formData: FormData
 ): Promise<ResetEmailFormState> {
+
+    //1. Validate form fields
     const validatedFields = ForgotPasswordSchema.safeParse({
         email: formData.get("email"),
     });
 
+    //2. If form validation fails, return errors early. Otherwise, continue.
     if (!validatedFields.success) {
         return {
             ...state,
@@ -171,7 +179,7 @@ export async function requestPasswordReset(
     const { email } = validatedFields.data;
 
     try {
-        // Check if the user exists
+        //3. Check if the email exists in the database
         const user = await sql`SELECT * FROM users WHERE email=${email}`;
         if (user.rows.length === 0) {
             return {
@@ -181,18 +189,18 @@ export async function requestPasswordReset(
             };
         }
 
-        // Generate a password reset token
+        //4. Generate a password reset token
         const resetToken = crypto.randomUUID();
         const resetTokenExpiry = new Date(Date.now() + 3600000); // Token expires in 1 hour
 
-        // Save the reset token and expiry in the database
+        //5. Save the reset token and expiry in the database
         await sql`
             UPDATE users
             SET reset_token = ${resetToken}, reset_token_expiry = ${resetTokenExpiry.toISOString()}
             WHERE email = ${email}
         `;
 
-        // Send password reset email (implement this function)
+        //6. Send password reset email (implement this function)
         await sendPasswordResetEmail(email, resetToken);
 
         return {

@@ -45,7 +45,7 @@ export async function createSession(userId: string) {
         sameSite: "lax",
         path: "/",
     });
-   // redirect("/dashboard");
+    redirect("/dashboard");
 }
 
 // updateSession. Checks user if session is valid
