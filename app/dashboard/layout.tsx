@@ -1,4 +1,3 @@
-import { ModeToggle } from "../ui/ModeToggle";
 import SideNav from "../ui/NavLinks";
 import SignOutForm from "../ui/SignOutForm";
 
@@ -27,10 +26,6 @@ export default function RootLayout({
             </header>
 
             <main className="flex-1 min-h-screen px-4 pt-6 pb-16 md:px-10 lg:p-4">
-                <div className="fixed right-0 top-6">
-                    <ModeToggle />
-                </div>
-
                 {children}
             </main>
         </div>

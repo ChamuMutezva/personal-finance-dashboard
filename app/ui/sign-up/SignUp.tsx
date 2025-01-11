@@ -16,16 +16,16 @@ export default function SignUpForm() {
 
     return (
         <form action={action} className="max-w-[35rem] w-full">
-            <div className="rounded-lg bg-gray-50 p-4">
+            <div className="rounded-lg p-4">
                 <h2
-                    className={`mb-3 text-preset-1 leading-tight font-bold dark:text-black`}
+                    className={`mb-3 text-preset-1 leading-tight font-bold`}
                 >
                     Sign up
                 </h2>
                 <div className="w-full">
                     <div>
                         <label
-                            className="mb-3 mt-5 block font-bold text-preset-5 text-[hsl(var(--grey-500))] dark:text-black"
+                            className="mb-3 mt-5 block font-bold text-preset-5 text-[hsl(var(--grey-500))]"
                             htmlFor="name"
                         >
                             Name
@@ -61,7 +61,7 @@ export default function SignUpForm() {
 
                     <div>
                         <label
-                            className="mb-3 mt-5 block text-xs font-bold text-preset-5 text-[hsl(var(--grey-500))] dark:text-black"
+                            className="mb-3 mt-5 block text-xs font-bold text-preset-5 text-[hsl(var(--grey-500))]"
                             htmlFor="email"
                         >
                             Email
@@ -96,7 +96,7 @@ export default function SignUpForm() {
                     </div>
                     <div className="mt-4">
                         <label
-                            className="mb-3 mt-5 block text-xs font-bold text-preset-5 text-[hsl(var(--grey-500))] dark:text-black"
+                            className="mb-3 mt-5 block text-xs font-bold text-preset-5 text-[hsl(var(--grey-500))]"
                             htmlFor="password"
                         >
                             Password
@@ -163,10 +163,11 @@ function SignUpButton() {
             event.preventDefault();
         }
     };
-
+    
     return (
         <Button
-            className="mt-4 py-7 w-full flex justify-center items-center bg-[hsl(var(--grey-900))]"
+            className="mt-4 py-7 w-full flex justify-center items-center dark:bg-[hsl(var(--grey-800))]
+             border border-black text-sm font-bold dark:text-[hsl(var(--white))]"
             onClick={handleClick}
             aria-disabled={pending}
         >

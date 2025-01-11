@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { publicSans } from "./fonts/fonts";
 import { ThemeProvider } from "@/components/theme-provider";
 import "./globals.css";
+import { ModeToggle } from "./ui/ModeToggle";
 
 export const metadata: Metadata = {
     title: "Personal finance dashboard",
@@ -25,6 +26,9 @@ export default function RootLayout({
                     disableTransitionOnChange
                 >
                     {children}
+                    <div className="fixed right-0 top-6 mr-4">
+                        <ModeToggle />
+                    </div>
                 </ThemeProvider>
             </body>
         </html>

@@ -9,16 +9,23 @@ import { Button } from "@/components/ui/button";
 import { useFormState, useFormStatus } from "react-dom";
 import { authenticate } from "@/lib/action";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 
-export default function LoginForm() {    
+export default function LoginForm() {
     const [state, formAction] = useFormState(authenticate, undefined);
+    const router = useRouter();
+    useEffect(() => {
+        // Check for an issuer on our user object. If it exists, route them to the dashboard.
+        // state?.success && router.push('/dashboard');
+        // Prefetch the dashboard page
+        router.prefetch("/dashboard");
+    }, [router]);
 
     return (
         <form action={formAction} className="max-w-[35rem] w-full">
-            <div className="rounded-lg bg-gray-50 px-4 py-8">
-                <h2
-                    className={`mb-3 text-preset-1 leading-tight font-bold dark:text-black`}
-                >
+            <div className="rounded-lg px-4 py-8">
+                <h2 className={`mb-3 text-preset-1 leading-tight font-bold`}>
                     Login
                 </h2>
 
@@ -146,13 +153,13 @@ function LoginButton() {
 
     return (
         <Button
-            className="mt-4 py-7 w-full flex justify-center items-center bg-[hsl(var(--grey-900))]
-            border border-black text-sm font-bold"
+            className="mt-4 py-7 w-full flex justify-center items-center dark:bg-[hsl(var(--grey-800))]
+            border border-black text-sm font-bold dark:text-[hsl(var(--white))]"
             onClick={handleClick}
             aria-disabled={pending}
         >
             {pending ? <span>Submitting...</span> : <span> Log in</span>}
-            <ArrowRightIcon className="h-5 w-5 text-gray-50 dark:text-[hsl(var(--grey-900))]" />
+            <ArrowRightIcon className="h-5 w-5 text-gray-50 dark:text-[hsl(var(--white))]" />
         </Button>
     );
 }

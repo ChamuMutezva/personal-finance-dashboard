@@ -21,7 +21,7 @@ export default function Login() {
 
                 <div
                     className="sr-only lg:not-sr-only lg:relative lg:p-6 max-w-md bg-[hsl(var(--green))]
-                rounded-md shadow-lg"
+                rounded-md shadow-lg dark:bg-black"
                 >
                     <h1 className="text-preset-1 font-bold text-[hsl(var(--white))] leading-none mb-5">
                         Keep track of your money and save for the future
