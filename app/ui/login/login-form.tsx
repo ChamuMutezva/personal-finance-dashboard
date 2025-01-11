@@ -54,7 +54,10 @@ export default function LoginForm() {
                                 }
                                 aria-invalid={!!state?.errors?.email}
                             />
-                            <AtSymbolIcon className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500 peer-focus:text-gray-900" />
+                            <AtSymbolIcon
+                                className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] 
+                            -translate-y-1/2 text-gray-500 dark:text-white peer-focus:text-gray-900"
+                            />
                         </div>
                         {state?.errors?.email && (
                             <p
@@ -100,7 +103,10 @@ export default function LoginForm() {
                                 aria-invalid={!!state?.errors?.password}
                             />
 
-                            <KeyIcon className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500 peer-focus:text-gray-900" />
+                            <KeyIcon
+                                className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2
+                             text-gray-500 dark:text-white peer-focus:text-gray-900"
+                            />
                         </div>
                         {state?.errors?.password && (
                             <p
@@ -153,8 +159,8 @@ function LoginButton() {
 
     return (
         <Button
-            className="mt-4 py-7 w-full flex justify-center items-center dark:bg-[hsl(var(--grey-800))]
-            border border-black text-sm font-bold dark:text-[hsl(var(--white))]"
+            className="mt-4 py-7 w-full flex justify-center items-center bg-[hsl(var(--grey-900))] dark:bg-[hsl(var(--grey-800))]
+            border border-black dark:border-white text-sm font-bold dark:text-[hsl(var(--white))]"
             onClick={handleClick}
             aria-disabled={pending}
         >
