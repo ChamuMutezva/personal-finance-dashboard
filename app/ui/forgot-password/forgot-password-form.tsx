@@ -14,13 +14,13 @@ export default function ForgotPasswordForm() {
 
     return (
         <form action={formAction} className="max-w-[35rem] w-full p-4">
-            <div className="rounded-lg bg-gray-50 p-4">
+            <div className="rounded-lg bg-gray-50 dark:bg-gray-900 p-4">
                 <h2
-                    className={`mb-3 text-preset-1 leading-tight font-bold dark:text-black`}
+                    className={`mb-3 text-preset-1 leading-tight font-bold`}
                 >
                     Forgot Password
                 </h2>
-                <p className="mb-4 text-sm text-gray-600">
+                <p className="mb-4 text-sm text-gray-600 dark:text-white">
                     Enter your email address and we'll send you a link to reset
                     your password.
                 </p>
@@ -28,7 +28,7 @@ export default function ForgotPasswordForm() {
                 <div className="w-full">
                     <div>
                         <label
-                            className="mb-3 mt-5 block text-xs font-medium text-gray-900"
+                            className="mb-3 mt-5 block text-xs font-medium text-gray-900 dark:text-white"
                             htmlFor="email"
                         >
                             Email
@@ -48,7 +48,8 @@ export default function ForgotPasswordForm() {
                                 }
                                 aria-invalid={!!state?.errors?.email}
                             />
-                            <AtSymbolIcon className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500 peer-focus:text-gray-900" />
+                            <AtSymbolIcon className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px]
+                             -translate-y-1/2 text-gray-500 dark:text-white peer-focus:text-gray-900" />
                         </div>
                         {state?.errors?.email && (
                             <p
@@ -92,7 +93,8 @@ function ResetButton() {
 
     return (
         <Button
-            className="mt-4 py-7 w-full flex justify-center items-center bg-[hsl(var(--grey-900))] border border-black"
+            className="mt-4 py-7 w-full flex justify-center items-center bg-[hsl(var(--grey-900))]
+             border border-black dark:text-white"
             aria-disabled={pending}
         >
             {pending ? <span>Submitting...</span> : <span>Reset Password</span>}
