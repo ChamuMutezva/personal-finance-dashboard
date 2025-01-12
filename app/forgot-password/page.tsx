@@ -1,4 +1,9 @@
 import ForgotPasswordForm from "@/app/ui/forgot-password/forgot-password-form";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+    title: "Forgot password",
+};
 
 export default function ForgotPasswordPage() {
     return (
@@ -7,4 +12,3 @@ export default function ForgotPasswordPage() {
         </main>
     );
 }
-

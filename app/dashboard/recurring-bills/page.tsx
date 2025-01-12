@@ -11,12 +11,17 @@ import isSameOrBefore from "dayjs/plugin/isSameOrBefore";
 import isSameOrAfter from "dayjs/plugin/isSameOrAfter";
 import isBetween from "dayjs/plugin/isBetween";
 import { auth } from "@/auth";
+import { Metadata } from "next";
 
 // Extend dayjs with the isSameOrBefore plugin
 dayjs.extend(isSameOrBefore);
 // Extend dayjs with the isBetween plugin
 dayjs.extend(isBetween);
 dayjs.extend(isSameOrAfter);
+
+export const metadata: Metadata = {
+    title: "Recurring bills",
+};
 
 export default async function Page({
     searchParams,
@@ -90,7 +95,9 @@ export default async function Page({
                 >
                     Recurring bills
                 </h1>
-                <p className="text-xs md:text-sm text-[hsl(var(--grey-900))]">{user} logged in</p>
+                <p className="text-xs md:text-sm text-[hsl(var(--grey-900))]">
+                    {user} logged in
+                </p>
                 <div></div>
             </div>
 

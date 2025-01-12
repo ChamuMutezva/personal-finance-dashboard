@@ -34,7 +34,11 @@ import EditPotForm from "../../ui/pots/EditPotForm";
 import AddMoneyToPotForm from "../../ui/pots/AddMoneyToPotForm";
 import WithDrawFromPot from "../../ui/pots/WithdrawFromPot";
 import { auth } from "@/auth";
+import { Metadata } from "next";
 
+export const metadata: Metadata = {
+    title: "Pots",
+};
 export default async function Page() {
     const session = await auth();
     const user = session?.user?.name;
@@ -48,7 +52,9 @@ export default async function Page() {
                 >
                     Pots
                 </h1>
-                <p className="text-xs md:text-sm text-[hsl(var(--grey-900))]">{user} logged in</p>
+                <p className="text-xs md:text-sm text-[hsl(var(--grey-900))]">
+                    {user} logged in
+                </p>
                 <AddPotForm pots={pots} />
             </div>
             <div className={`grid gap-4 sm:grid-cols-2 pb-16 lg:pb-8`}>

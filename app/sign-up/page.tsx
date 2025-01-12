@@ -1,5 +1,10 @@
 import SignUpForm from "../ui/sign-up/SignUp";
 import Image from "next/image";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+    title: "Sign up",
+};
 
 export default function SignUp() {
     return (

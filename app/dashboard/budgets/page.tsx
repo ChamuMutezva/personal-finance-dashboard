@@ -38,7 +38,11 @@ import { DeleteBudget } from "../../ui/budget/DeleteBudgetForm";
 import { Separator } from "@/components/ui/separator";
 import EditBudgetForm from "../../ui/budget/EditBudgetForm";
 import { auth } from "@/auth";
+import { Metadata } from "next";
 
+export const metadata: Metadata = {
+    title: "Budgets",
+};
 export default async function Page() {
     const session = await auth();
     const user = session?.user?.name;
@@ -142,7 +146,9 @@ export default async function Page() {
                 >
                     Budgets
                 </h1>
-                <p className="text-xs md:text-sm text-[hsl(var(--grey-900))]">{user} logged in</p>
+                <p className="text-xs md:text-sm text-[hsl(var(--grey-900))]">
+                    {user} logged in
+                </p>
                 {/* Dialog component */}
                 <AddBudgetForm budgets={budgets} />
             </div>

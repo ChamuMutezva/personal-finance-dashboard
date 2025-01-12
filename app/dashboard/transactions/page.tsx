@@ -7,6 +7,11 @@ import CategoryFilter from "../../ui/transactions/CategoryFilter";
 import { DataTable } from "./data-table";
 import { columns } from "./columns";
 import { auth } from "@/auth";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+    title: "Transactions",
+};
 
 export default async function Page({
     searchParams,
@@ -31,7 +36,9 @@ export default async function Page({
                 >
                     Transactions
                 </h1>
-                <p className="text-xs md:text-sm text-[hsl(var(--grey-900))]">{user} logged in</p>
+                <p className="text-xs md:text-sm text-[hsl(var(--grey-900))]">
+                    {user} logged in
+                </p>
                 <div></div>
             </div>
             <div className={"w-full lg:mb-0"}>
