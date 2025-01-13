@@ -4,7 +4,7 @@ import Image from "next/image";
 
 export default function Home() {
     return (
-        <main className="flex flex-col gap-4 items-center relative justify-center h-screen w-full bg-[hsl(var(--grey-900))] p-2">
+        <main className="flex flex-col gap-4 items-center relative justify-center h-screen w-full p-2">
             <div className="container max-w-screen-sm flex flex-col gap-4">
                 <Card className="bg-[hsl(var(--green))] flex items-end p-6 w-full sm:min-h-40">
                     <Image
