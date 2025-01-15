@@ -231,17 +231,21 @@ Directory structure:
 
 ### Built with
 
+ The challenge was created using NextJs - the reason being that I could use the router system and utilise the backend capabilities.
+
+- Dark mode and light mode bonus feature implemented
 - Semantic HTML5 markup
 - CSS custom properties
 - Flexbox
 - CSS Grid
 - Mobile-first workflow
 - [React](https://reactjs.org/) - JS library
-- [Next.js](https://nextjs.org/) - React framework
+- [Next.js](https://nextjs.org/) - React framework. The NextJs routing system makes it easy to create routes with minimal additionals if any. Used Server actions and Server components to improve security of data. the database is saved in vercel and i used postgres and vercel SDK to access the data.
 - [NextAuth.js](https://nextjs.org/learn/dashboard-app/adding-authentication) - authentication
 - [Auth.js](https://authjs.dev/getting-started/authentication/oauth) - authentication
 - [Jose](https://github.com/panva/jose) - session management
-- [Styled Components](https://styled-components.com/) - For styles
+- [TailwindCSS](https://tailwindcss.com/) - Most of the styling was done using Tailwind css
+- [Shadcn component Library](https://ui.shadcn.com/) - tables created using [Shadcn Table Component](https://ui.shadcn.com/docs/components/table) and [Tanstack Tables](https://tanstack.com/table/latest/docs/introduction). Tanstack table makes it easy to create tables with sorting, filtering and pagination.
 
 ### What I learned
 
