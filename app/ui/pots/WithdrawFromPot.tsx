@@ -27,11 +27,9 @@ const formSchema = z.object({
 });
 
 function WithDrawFromPot({ pot }: Readonly<{ pot: Pot }>) {
-    // const updatePotWithID = withdrawMoneyFromPot.bind(null, pot.id, pot);
-
+  
     const updatePotWithID = async (formData: FormData): Promise<void> => {
-        await withdrawMoneyFromPot(pot.id, pot, formData); // Pass pot.id and formData
-        return; // Ensure this returns void
+        await withdrawMoneyFromPot(pot.id, pot, formData); // Pass pot.id and formData // Ensure this returns void
     };
 
     // 1. Define your form.

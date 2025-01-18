@@ -5,7 +5,6 @@ import { deletePot } from "@/lib/action";
 import { AlertDialogAction } from "@/components/ui/alert-dialog";
 
 export function DeletePot({ pot }: Readonly<{ pot: Pot }>) {
-   // const deletePotWithId = deletePot.bind(null, pot.id, pot);
     const deletePotWithId = async (formData: FormData): Promise<void> => {
         // Call your delete function and handle its response
         const result = await deletePot(pot.id, pot); // Call your delete function

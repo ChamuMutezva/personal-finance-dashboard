@@ -1,6 +1,4 @@
 import { sql } from "@vercel/postgres";
-// import { formatCurrency } from "./utils";
-//User
 import { Balance, Pot, Budget, Transaction } from "./definitions";
 
 export const colors = [
@@ -101,8 +99,7 @@ export async function fetchByCategoryExtendedExp(query: string) {
     }
 }
 export async function fetchByCategory() {
-    try {
-        // const generalCategoryPromise  = await sql<Transaction>`SELECT * FROM transactions WHERE category = 'General'`
+    try {        
         const diningCategoryPromise =
             await sql<Transaction>`SELECT * FROM transactions WHERE category = 'Dining Out'`;
         const personalCategoryPromise =

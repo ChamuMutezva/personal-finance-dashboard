@@ -1,8 +1,5 @@
 "use client";
-import {
-    AtSymbolIcon,
-    ExclamationCircleIcon
-} from "@heroicons/react/24/outline";
+import { AtSymbolIcon } from "@heroicons/react/24/outline";
 import { ArrowRightIcon } from "@heroicons/react/20/solid";
 import { Button } from "@/components/ui/button";
 import { useFormState, useFormStatus } from "react-dom";
@@ -15,9 +12,7 @@ export default function ForgotPasswordForm() {
     return (
         <form action={formAction} className="max-w-[35rem] w-full p-4">
             <div className="rounded-lg bg-gray-50 dark:bg-gray-900 p-4">
-                <h2
-                    className={`mb-3 text-preset-1 leading-tight font-bold`}
-                >
+                <h2 className={`mb-3 text-preset-1 leading-tight font-bold`}>
                     Forgot Password
                 </h2>
                 <p className="mb-4 text-sm text-gray-600 dark:text-white">
@@ -48,14 +43,13 @@ export default function ForgotPasswordForm() {
                                 }
                                 aria-invalid={!!state?.errors?.email}
                             />
-                            <AtSymbolIcon className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px]
-                             -translate-y-1/2 text-gray-500 dark:text-white peer-focus:text-gray-900" />
+                            <AtSymbolIcon
+                                className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px]
+                             -translate-y-1/2 text-gray-500 dark:text-white peer-focus:text-gray-900"
+                            />
                         </div>
                         {state?.errors?.email && (
-                            <p
-                                id="errors"
-                                className="text-sm text-red-500"
-                            >
+                            <p id="errors" className="text-sm text-red-500">
                                 {state.errors.email}
                             </p>
                         )}
@@ -68,7 +62,6 @@ export default function ForgotPasswordForm() {
                     aria-live="polite"
                     aria-atomic="true"
                 >
-
                     {state?.errors?.general && (
                         <p id="email-error" className="text-sm text-red-500">
                             {state.errors.general}

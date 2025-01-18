@@ -37,14 +37,12 @@ export default function EditBudgetForm({
     id,
     budgets,
 }: Readonly<{ id: string; budgets: Budget[] }>) {
-    // const updateBudgetWithID = updateBudget.bind(null, id);
     const updateBudgetWithID = async (formData: FormData): Promise<void> => {
         await updateBudget(id, formData); // Call your update function
-        // return; // Ensure this returns void
     };
 
     const preBudget = budgets.find((budget) => budget.id === id);
-    // const id = params.id;
+
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
         defaultValues: {
@@ -165,7 +163,7 @@ export default function EditBudgetForm({
                         </FormItem>
                     )}
                 />
-              
+
                 <DialogFooter className="sm:justify-start">
                     <DialogClose asChild>
                         <Button

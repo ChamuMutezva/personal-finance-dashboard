@@ -27,11 +27,8 @@ const formSchema = z.object({
 });
 
 function AddMoneyToPotForm({ pot }: Readonly<{ pot: Pot }>) {
-    // const updatePotWithID = addMoneyToPot.bind(null, pot.id, pot);
-
     const updatePotWithID = async (formData: FormData): Promise<void> => {
         await addMoneyToPot(pot.id, pot, formData); // Pass pot.id and formData
-        return; // Ensure this returns void
     };
     // 1. Define your form.
     const form = useForm<z.infer<typeof formSchema>>({
@@ -130,7 +127,10 @@ function AddMoneyToPotForm({ pot }: Readonly<{ pot: Pot }>) {
 
                 <DialogFooter className="sm:justify-start mt-4">
                     <DialogClose asChild>
-                        <Button type="submit" className="w-full bg-[hsl(var(--grey-900))] border border-solid text-[hsl(var(--white))]">
+                        <Button
+                            type="submit"
+                            className="w-full bg-[hsl(var(--grey-900))] border border-solid text-[hsl(var(--white))]"
+                        >
                             Confirm Addition
                         </Button>
                     </DialogClose>

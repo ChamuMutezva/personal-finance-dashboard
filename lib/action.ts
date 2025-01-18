@@ -125,8 +125,7 @@ export async function authenticate(
         if (userId) {
             await createSession(userId);
         }
-       
-        // redirect("/dashboard");
+               
          return { ...state, success: true };
     } catch (error) {
         if (error instanceof AuthError) {
@@ -376,8 +375,7 @@ export async function createPot(
      `;
 
         revalidatePath("/dashboard/pots");
-        revalidatePath("/dashboard");
-        // redirect("/dashboard/pots");
+        revalidatePath("/dashboard");        
         return { message: "success" };
     } catch (error) {
         return {
@@ -457,8 +455,7 @@ export async function createBudget(
         VALUES (${maximum}, ${category}, ${theme})`;
 
         revalidatePath("/dashboard/budgets");
-        revalidatePath("/dashboard");
-        //  redirect("/dashboard/budgets");
+        revalidatePath("/dashboard");        
         return { message: "success" };
     } catch (error) {
         return {

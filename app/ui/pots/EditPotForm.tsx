@@ -39,10 +39,8 @@ export default function EditBudgetForm({
     id,
     pots,
 }: Readonly<{ id: string; pots: Pot[] }>) {
-    // const updatePotWithID = updatePot.bind(null, id);
     const updatePotWithID = async (formData: FormData): Promise<void> => {
         await updatePot(id, formData); // Pass pot.id and formData
-        return; // Ensure this returns void
     };
     const prePot = pots.find((pot) => pot.id === id);
 

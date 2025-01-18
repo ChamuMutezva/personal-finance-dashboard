@@ -1,7 +1,6 @@
 "use client";
 
 import { useSearchParams, useRouter, usePathname } from "next/navigation";
-import { useState } from "react";
 
 export default function SortBy() {
     const searchParams = useSearchParams();
@@ -24,8 +23,6 @@ export default function SortBy() {
         "Highest",
         "Lowest",
     ];
-
-    //const [sortBy, setSortBy] = useState(sortList[0]);
 
     return (
         <div className="flex items-center">

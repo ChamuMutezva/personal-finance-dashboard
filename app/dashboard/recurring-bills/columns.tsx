@@ -36,12 +36,7 @@ function ShowPaymentStatus(
     const isCurrentDay = dateToCompare.date() < today.date();
     const comingSoon =
         dateToCompare.date() > today.date() &&
-        dateToCompare.date() < today.date() + 5;
-    // console.log(`isCurrent ${isCurrentDay}`);
-    // Compare the dates
-    // const isFutureDate = dateToCompare.isAfter(today);
-
-    // Conditional rendering based on comparison
+        dateToCompare.date() < today.date() + 5;   
 
     return isCurrentDay ? (
         <Image

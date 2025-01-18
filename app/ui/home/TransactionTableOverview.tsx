@@ -19,11 +19,10 @@ import {
 export default async function TransactionTableOverview({
     query,
     currentPage,
-}: {
+}: Readonly<{
     query: string;
     currentPage: number;
-}) {
-    // const transactions = await fetchTransactions();
+}>) {
     const transactions = (
         await fetchFilteredTransactions(query, currentPage)
     ).slice(0, 5);

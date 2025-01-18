@@ -27,8 +27,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Pot, CreatePotFormSchema } from "@/lib/definitions";
 import {
-    Dialog,
-    DialogClose,
+    Dialog,    
     DialogContent,
     DialogDescription,
     DialogFooter,
