@@ -23,7 +23,7 @@ export default async function Page({
 }>) {
     const session = await auth();
     const user = session?.user?.name;
-    const query = searchParams?.query || "";
+    const query = searchParams?.query ?? "";
     const currentPage = Number(searchParams?.page) || 1;
     const totalPages = await fetchTransactionsPages(query);
     const data = await fetchFilteredTransactions(query, currentPage);
