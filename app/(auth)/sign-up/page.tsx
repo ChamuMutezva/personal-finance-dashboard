@@ -1,4 +1,4 @@
-import SignUpForm from "../ui/sign-up/SignUp";
+import SignUpForm from "../../ui/sign-up/SignUp";
 import Image from "next/image";
 import { Metadata } from "next";
 
