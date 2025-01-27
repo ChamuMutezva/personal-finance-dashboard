@@ -23,6 +23,7 @@ import { signIn, signOut } from "@/auth";
 import { AuthError } from "next-auth";
 import bcrypt from "bcrypt";
 import { createSession, deleteSession } from "./session";
+import { updateSchema } from "./db";
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
@@ -32,7 +33,6 @@ export async function createUser(
     state: FormState,
     formData: FormData
 ): Promise<FormState> {
-
     //1.  valiidate form fields
     const validatedFields = CreateUser.safeParse({
         name: formData.get("name"),
@@ -85,7 +85,6 @@ export async function authenticate(
     state: FormState,
     formData: FormData
 ): Promise<FormState> {
-
     //1. Validate form fields
     const validatedFields = LoginUser.safeParse({
         email: formData.get("email"),
@@ -121,12 +120,12 @@ export async function authenticate(
         }
         // 6. If login successful, create a session for the user and redirect
         const userId = user.id.toString();
-        
+
         if (userId) {
             await createSession(userId);
         }
-               
-         return { ...state, success: true };
+
+        return { ...state, success: true };
     } catch (error) {
         if (error instanceof AuthError) {
             switch (error.type) {
@@ -160,8 +159,11 @@ export async function requestPasswordReset(
     state: ResetEmailFormState,
     formData: FormData
 ): Promise<ResetEmailFormState> {
-
     //1. Validate form fields
+
+    // Ensure the schema is up to date
+    await updateSchema()
+
     const validatedFields = ForgotPasswordSchema.safeParse({
         email: formData.get("email"),
     });
@@ -193,12 +195,21 @@ export async function requestPasswordReset(
         const resetTokenExpiry = new Date(Date.now() + 3600000); // Token expires in 1 hour
 
         //5. Save the reset token and expiry in the database
-        await sql`
+        console.log("Attempting SQL update");
+        try {
+            await sql`
             UPDATE users
             SET reset_token = ${resetToken}, reset_token_expiry = ${resetTokenExpiry.toISOString()}
             WHERE email = ${email}
         `;
-
+            console.log("SQL update successful");
+        } catch (sqlError) {
+            console.error("SQL Error:", sqlError);
+            throw new Error("Database update failed");
+        }
+        // const data =
+        // await sql`UPDATE users SET reset_token = ${resetToken}, reset_token_expiry = ${resetTokenExpiry.toISOString()} WHERE email = ${email}`;
+        console.log(resetToken, resetTokenExpiry);
         //6. Send password reset email (implement this function)
         await sendPasswordResetEmail(email, resetToken);
 
@@ -227,7 +238,7 @@ async function sendPasswordResetEmail(email: string, resetToken: string) {
         const resetUrl = `${appUrl}/reset-password?token=${resetToken}`;
 
         const { data, error } = await resend.emails.send({
-            from: "Chamu <preprince.co.za>", // Replace with your verified sender delivered@resend.dev
+            from: "Chamu <admin@preprince.co.za>", // Replace with your verified sender delivered@resend.dev
             to: email,
             subject: "Reset Your Password",
             html: `
@@ -375,7 +386,7 @@ export async function createPot(
      `;
 
         revalidatePath("/dashboard/pots");
-        revalidatePath("/dashboard");        
+        revalidatePath("/dashboard");
         return { message: "success" };
     } catch (error) {
         return {
@@ -455,7 +466,7 @@ export async function createBudget(
         VALUES (${maximum}, ${category}, ${theme})`;
 
         revalidatePath("/dashboard/budgets");
-        revalidatePath("/dashboard");        
+        revalidatePath("/dashboard");
         return { message: "success" };
     } catch (error) {
         return {
