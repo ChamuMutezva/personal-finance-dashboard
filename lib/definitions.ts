@@ -13,15 +13,27 @@ export type SessionPayload = {
     //  role: "admin" || "user",
 };
 
-export type ResetEmailFormState =
+export type RequestEmailFormState =
     | {
           errors?: {
               email?: string[];
               general?: string;
           };
           message?: string;
+          success?: boolean;
       }
     | undefined;
+
+export type ResetPasswordFormState = {
+    errors?: {
+        token?: string[];
+        password?: string[];
+        confirmPassword?: string[];
+        general?: string;
+    };
+    message?: string;
+    success?: boolean;
+};
 
 export type FormState =
     | {
@@ -71,6 +83,20 @@ export type BudgetState = {
 export const ForgotPasswordSchema = z.object({
     email: z.string().email({ message: "Please enter a valid email address" }),
 });
+
+// Define the schema for password reset
+export const ResetPasswordSchema = z
+    .object({
+        token: z.string().uuid(),
+        password: z
+            .string()
+            .min(6, "Password must be at least 6 characters long"),
+        confirmPassword: z.string(),
+    })
+    .refine((data) => data.password === data.confirmPassword, {
+        message: "Passwords don't match",
+        path: ["confirmPassword"],
+    });
 
 export const BudgetFormSchema = z.object({
     id: z.string(),

@@ -6,7 +6,9 @@ import { Resend } from "resend";
 import {
     Pot,
     FormState,
-    ResetEmailFormState,
+    RequestEmailFormState,
+    ResetPasswordFormState,
+    ResetPasswordSchema,
     PotFormState,
     BudgetState,
     User,
@@ -154,15 +156,15 @@ export async function logout() {
     await deleteSession();
 }
 
-// Forgot password
+// Forgot password - called by the forgot-password form
 export async function requestPasswordReset(
-    state: ResetEmailFormState,
+    state: RequestEmailFormState,
     formData: FormData
-): Promise<ResetEmailFormState> {
+): Promise<RequestEmailFormState> {
     //1. Validate form fields
 
     // Ensure the schema is up to date
-    await updateSchema()
+    await updateSchema();
 
     const validatedFields = ForgotPasswordSchema.safeParse({
         email: formData.get("email"),
@@ -174,6 +176,7 @@ export async function requestPasswordReset(
             ...state,
             errors: validatedFields.error.flatten().fieldErrors,
             message: "Invalid email. Failed to request password reset.",
+            success: false,
         };
     }
 
@@ -187,6 +190,7 @@ export async function requestPasswordReset(
                 errors: {
                     email: ["No account found with this email address."],
                 },
+                success: false,
             };
         }
 
@@ -215,6 +219,7 @@ export async function requestPasswordReset(
 
         return {
             message: "Password reset link sent to your email.",
+            success: true,
         };
     } catch (error) {
         return {
@@ -222,6 +227,7 @@ export async function requestPasswordReset(
             errors: {
                 general: "A domain setup error occurred. Please try again.",
             },
+            success: false,
         };
     }
 }
@@ -265,41 +271,71 @@ async function sendPasswordResetEmail(email: string, resetToken: string) {
 // End of forgot password
 
 // Reset password
+export async function resetPassword(
+    state: ResetPasswordFormState | undefined,
+    formData: FormData
+): Promise<ResetPasswordFormState> {
+    // 1. Validate form fields
+    const validatedFields = ResetPasswordSchema.safeParse({
+        token: formData.get("token"),
+        password: formData.get("password"),
+        confirmPassword: formData.get("confirmPassword"),
+    });
 
+    // 2. If form validation fails, return errors early. Otherwise, continue.
+    if (!validatedFields.success) {
+        return {
+            ...state,
+            errors: validatedFields.error.flatten().fieldErrors,
+            message: "Invalid input. Failed to reset password.",
+            success: false,
+        };
+    }
 
-export async function resetPassword(token: string, newPassword: string) {
+    const { token, password } = validatedFields.data;
+
     try {
-      // Find user with the given reset token and check if it's still valid
-      const result = await sql`
+        // 3. Check if the token is valid and not expired
+        const result = await sql`
         SELECT * FROM users
         WHERE reset_token = ${token}
         AND reset_token_expiry > NOW()
-      `
-  
-      if (result.rows.length === 0) {
-        return { success: false, error: "Invalid or expired reset token" }
-      }
-  
-      const user = result.rows[0]
-  
-      // Hash the new password
-      const hashedPassword = await bcrypt.hash(newPassword, 10)
-  
-      // Update the user's password and clear the reset token
-      await sql`
+      `;
+
+        if (result.rows.length === 0) {
+            return {
+                errors: {
+                    general: "Invalid or expired reset token",
+                },
+                success: false,
+            };
+        }
+
+        const user = result.rows[0];
+
+        // 4. Hash the new password
+        const hashedPassword = await bcrypt.hash(password, 10);
+
+        // 5. Update the user's password and clear the reset token
+        await sql`
         UPDATE users
         SET password = ${hashedPassword}, reset_token = NULL, reset_token_expiry = NULL
         WHERE id = ${user.id}
-      `
-  
-      return { success: true }
+      `;
+
+        // 6. If password reset is successful, return success state
+        return { success: true, message: "Password reset successfully" };
     } catch (error) {
-      console.error("Error resetting password:", error)
-      return { success: false, error: "Failed to reset password" }
+        console.error("Error resetting password:", error);
+        return {
+            errors: {
+                general: "Failed to reset password. Please try again.",
+            },
+            success: false,
+        };
     }
-  }
-  
-// End of reset password      
+}
+// End of reset password
 
 // POT ACTIONS
 const WithdrawMoney = WithdrawMoneyFromPotFormSchema.omit({

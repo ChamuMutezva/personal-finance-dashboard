@@ -1,4 +1,4 @@
-import { ResetPasswordForm } from "../../ui/reset-password/ResetPasswordForm"
+import ResetPasswordForm from "../../ui/reset-password/ResetPasswordForm"
 
 export default function ResetPasswordPage({
   searchParams,
@@ -8,10 +8,9 @@ export default function ResetPasswordPage({
   const { token } = searchParams
 
   return (
-    <div className="container mx-auto px-4 py-8">
-      <h1 className="text-2xl font-bold mb-4">Reset Your Password</h1>
+    <main className="flex flex-col items-center justify-center relative lg:justify-around  min-h-screen  lg:flex-row w-full lg:p-4">    
       <ResetPasswordForm token={token} />
-    </div>
+    </main>
   )
 }
 
