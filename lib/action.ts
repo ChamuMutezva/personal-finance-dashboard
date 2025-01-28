@@ -264,6 +264,43 @@ async function sendPasswordResetEmail(email: string, resetToken: string) {
 }
 // End of forgot password
 
+// Reset password
+
+
+export async function resetPassword(token: string, newPassword: string) {
+    try {
+      // Find user with the given reset token and check if it's still valid
+      const result = await sql`
+        SELECT * FROM users
+        WHERE reset_token = ${token}
+        AND reset_token_expiry > NOW()
+      `
+  
+      if (result.rows.length === 0) {
+        return { success: false, error: "Invalid or expired reset token" }
+      }
+  
+      const user = result.rows[0]
+  
+      // Hash the new password
+      const hashedPassword = await bcrypt.hash(newPassword, 10)
+  
+      // Update the user's password and clear the reset token
+      await sql`
+        UPDATE users
+        SET password = ${hashedPassword}, reset_token = NULL, reset_token_expiry = NULL
+        WHERE id = ${user.id}
+      `
+  
+      return { success: true }
+    } catch (error) {
+      console.error("Error resetting password:", error)
+      return { success: false, error: "Failed to reset password" }
+    }
+  }
+  
+// End of reset password      
+
 // POT ACTIONS
 const WithdrawMoney = WithdrawMoneyFromPotFormSchema.omit({
     id: true,
