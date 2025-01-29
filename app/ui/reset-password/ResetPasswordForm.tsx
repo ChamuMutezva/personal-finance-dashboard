@@ -15,7 +15,7 @@ const initialState: ResetPasswordFormState = {
     success: false,
   }
 
-export default function ResetPasswordForm({ token }: { token: string }) {
+export default function ResetPasswordForm({ token }: Readonly<{ token: string }>) {
   const [state, formAction] = useFormState(resetPassword, initialState)
   const router = useRouter()
 
@@ -24,7 +24,7 @@ export default function ResetPasswordForm({ token }: { token: string }) {
       router.push("/login?reset=success")
     }
   }, [state.success, router])
-  
+
   return (
     <form action={formAction} className="max-w-[35rem] w-full">
       <div className="rounded-lg px-4 py-8">

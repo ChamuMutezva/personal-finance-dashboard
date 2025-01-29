@@ -4,10 +4,48 @@ import { ArrowRightIcon } from "@heroicons/react/20/solid";
 import { Button } from "@/components/ui/button";
 import { useFormState, useFormStatus } from "react-dom";
 import { requestPasswordReset } from "@/lib/action";
+import { RequestEmailFormState } from "@/lib/definitions";
 import Link from "next/link";
+// import { useRouter } from "next/navigation";
+import { useEffect } from "react";
+
+
+const initialState: RequestEmailFormState = {
+    errors: {},
+    message: "",
+    success: false,
+  }
 
 export default function ForgotPasswordForm() {
-    const [state, formAction] = useFormState(requestPasswordReset, undefined);
+    const [state, formAction] = useFormState(requestPasswordReset, initialState);
+   // const router = useRouter();
+
+    useEffect(() => {
+        if (state?.success) {
+          // Option 1: Redirect to another page
+          // router.push('/password-reset-requested')
+          // Option 2: Show success message on the same page (implemented below)
+        }
+      }, [state?.success])
+
+      if (state?.success) {
+        return (
+          <div className="max-w-[35rem] w-full p-4">
+            <div className="rounded-lg bg-green-50 dark:bg-green-900 p-4">
+              <h2 className="mb-3 text-preset-1 leading-tight font-bold text-green-800 dark:text-green-200">
+                Password Reset Email Sent
+              </h2>
+              <p className="mb-4 text-sm text-green-700 dark:text-green-300">{state.message}</p>             
+              <Link
+                href="/login"
+                className="font-bold text-preset-4 text-[hsl(var(--grey-900)) mt-4 px-4 py-2 rounded-md  transition-colors"
+              >
+                Return to Login
+              </Link>
+            </div>
+          </div>
+        )
+      }
 
     return (
         <form action={formAction} className="max-w-[35rem] w-full p-4">
