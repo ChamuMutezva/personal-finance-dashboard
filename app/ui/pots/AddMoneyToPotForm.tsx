@@ -4,7 +4,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import z from "zod";
 import { Button } from "@/components/ui/button";
-import { addMoneyToPot } from "@/lib/action";
+import { addMoneyToPot } from "@/lib/actionsPots";
 
 import {
     Form,

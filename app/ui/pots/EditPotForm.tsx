@@ -11,7 +11,7 @@ import {
     SelectTrigger,
     SelectValue,
 } from "@/components/ui/select";
-import { updatePot } from "@/lib/action";
+import { updatePot } from "@/lib/actionsPots";
 import { colors } from "@/lib/data";
 
 import {

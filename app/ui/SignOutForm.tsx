@@ -2,7 +2,7 @@
 
 import { PowerIcon } from "@heroicons/react/24/outline";
 //import { signOut } from "@/auth";
-import { logout } from "@/lib/action";
+import { logout } from "@/lib/actionsAuth";
 
 export default async function SignOutForm() {
     return (

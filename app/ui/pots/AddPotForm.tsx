@@ -12,7 +12,7 @@ import {
     SelectTrigger,
     SelectValue,
 } from "@/components/ui/select";
-import { createPot } from "@/lib/action";
+import { createPot } from "@/lib/actionsPots";
 import { colors } from "@/lib/data";
 
 import {

@@ -3,7 +3,7 @@ import { AtSymbolIcon } from "@heroicons/react/24/outline";
 import { ArrowRightIcon } from "@heroicons/react/20/solid";
 import { Button } from "@/components/ui/button";
 import { useFormState, useFormStatus } from "react-dom";
-import { requestPasswordReset } from "@/lib/action";
+import { requestPasswordReset } from "@/lib/actionsAuth";
 import { RequestEmailFormState } from "@/lib/definitions";
 import Link from "next/link";
 // import { useRouter } from "next/navigation";

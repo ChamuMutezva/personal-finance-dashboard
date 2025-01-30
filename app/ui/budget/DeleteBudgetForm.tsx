@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 
-import { deleteBudget } from "@/lib/action";
+import { deleteBudget } from "@/lib/actionsBudgets";
 import { AlertDialogAction } from "@/components/ui/alert-dialog";
 
 export function DeleteBudget({ id }: Readonly<{ id: string }>) {

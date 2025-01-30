@@ -7,7 +7,7 @@ import {
 import { ArrowRightIcon } from "@heroicons/react/20/solid";
 import { Button } from "@/components/ui/button";
 import { useFormState, useFormStatus } from "react-dom";
-import { authenticate } from "@/lib/action";
+import { authenticate } from "@/lib/actionsAuth";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";

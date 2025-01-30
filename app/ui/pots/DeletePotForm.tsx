@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 import { Pot } from "@/lib/definitions";
-import { deletePot } from "@/lib/action";
+import { deletePot } from "@/lib/actionsPots";
 import { AlertDialogAction } from "@/components/ui/alert-dialog";
 
 export function DeletePot({ pot }: Readonly<{ pot: Pot }>) {

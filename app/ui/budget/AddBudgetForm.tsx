@@ -12,7 +12,7 @@ import {
     SelectTrigger,
     SelectValue,
 } from "@/components/ui/select";
-import { createBudget } from "@/lib/action";
+import { createBudget } from "@/lib/actionsBudgets";
 import { categories, colors } from "@/lib/data";
 import { BudgetFormSchema, BudgetState, Budget } from "@/lib/definitions";
 

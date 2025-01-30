@@ -3,7 +3,7 @@ import { AtSymbolIcon, KeyIcon, UserIcon } from "@heroicons/react/24/outline";
 import { ArrowRightIcon } from "@heroicons/react/20/solid";
 import { Button } from "@/components/ui/button";
 import { useFormState, useFormStatus } from "react-dom";
-import { createUser } from "@/lib/action";
+import { createUser } from "@/lib/actionsAuth";
 import Link from "next/link";
 
 const INITIAL_STATE = {

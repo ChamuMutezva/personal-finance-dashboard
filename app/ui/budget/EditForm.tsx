@@ -11,7 +11,7 @@ import {
     SelectTrigger,
     SelectValue,
 } from "@/components/ui/select";
-import { updateBudget } from "@/lib/action";
+import { updateBudget } from "@/lib/actionsBudgets";
 
 import {
     Form,
