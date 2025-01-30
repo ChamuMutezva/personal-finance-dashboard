@@ -1,6 +1,7 @@
 "use client";
 import { AtSymbolIcon } from "@heroicons/react/24/outline";
 import { ArrowRightIcon } from "@heroicons/react/20/solid";
+import { AlertCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useFormState, useFormStatus } from "react-dom";
 import { requestPasswordReset } from "@/lib/actionsAuth";
@@ -9,43 +10,80 @@ import Link from "next/link";
 // import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 
-
 const initialState: RequestEmailFormState = {
     errors: {},
     message: "",
     success: false,
-  }
+};
 
 export default function ForgotPasswordForm() {
-    const [state, formAction] = useFormState(requestPasswordReset, initialState);
-   // const router = useRouter();
+    const [state, formAction] = useFormState(
+        requestPasswordReset,
+        initialState
+    );
+    // const router = useRouter();
 
     useEffect(() => {
         if (state?.success) {
-          // Option 1: Redirect to another page
-          // router.push('/password-reset-requested')
-          // Option 2: Show success message on the same page (implemented below)
+            // Option 1: Redirect to another page
+            // router.push('/password-reset-requested')
+            // Option 2: Show success message on the same page (implemented below)
         }
-      }, [state?.success])
+    }, [state?.success]);
 
-      if (state?.success) {
+    if (state?.success) {
         return (
-          <div className="max-w-[35rem] w-full p-4">
-            <div className="rounded-lg bg-green-50 dark:bg-green-900 p-4">
-              <h2 className="mb-3 text-preset-1 leading-tight font-bold text-green-800 dark:text-green-200">
-                Password Reset Email Sent
-              </h2>
-              <p className="mb-4 text-sm text-green-700 dark:text-green-300">{state.message}</p>             
-              <Link
-                href="/login"
-                className="font-bold text-preset-4 text-[hsl(var(--grey-900)) mt-4 px-4 py-2 rounded-md  transition-colors"
-              >
-                Return to Login
-              </Link>
+            <div className="max-w-[35rem] w-full p-4">
+                <div className="rounded-lg bg-green-50 dark:bg-green-900 p-4">
+                    <h2 className="mb-3 text-preset-1 leading-tight font-bold text-green-800 dark:text-green-200">
+                        Password Reset Email Sent
+                    </h2>
+                    <p className="mb-4 text-sm text-green-700 dark:text-green-300">
+                        {state.message}
+                    </p>
+                    <Link
+                        href="/login"
+                        className="font-bold text-preset-4 text-[hsl(var(--grey-900)) mt-4 px-4 py-2 rounded-md  transition-colors"
+                    >
+                        Return to Login
+                    </Link>
+                </div>
             </div>
-          </div>
-        )
-      }
+        );
+    }
+
+    // Show message when a valid reset token exists
+    if (state?.message && !state.success) {
+        return (
+            <div className="max-w-[35rem] w-full p-4">
+                <div className="rounded-lg bg-gray-50 dark:bg-gray-900 p-4">
+                    <div className="flex items-center gap-3 mb-3">
+                        <AlertCircle className="h-5 w-5 text-yellow-800 dark:text-yellow-200" />
+                        <h2 className="text-preset-1 leading-tight font-bold text-yellow-800 dark:text-yellow-200">
+                            Reset Link Already Sent
+                        </h2>
+                    </div>
+                    <p className="mb-4 text-sm text-yellow-700 dark:text-yellow-300">
+                        {state.message}
+                    </p>
+                    <div className="flex gap-4 mt-4">
+                        <Link
+                            href="/login"
+                            className="font-bold text-preset-4 text-[hsl(var(--grey-900))] px-4 py-2 rounded-md border border-yellow-300 dark:border-yellow-600 transition-colors hover:bg-yellow-100 dark:hover:bg-yellow-800"
+                        >
+                            Return to Login
+                        </Link>
+                        <Button
+                            onClick={() => window.location.reload()}
+                            className="font-bold text-preset-4 bg-yellow-100 dark:bg-yellow-800 text-yellow-800 dark:text-yellow-100 hover:bg-yellow-200 dark:hover:bg-yellow-700"
+                        >
+                            Try Again
+                        </Button>
+                    </div>
+                </div>
+            </div>
+        );
+    }
 
     return (
         <form action={formAction} className="max-w-[35rem] w-full p-4">

@@ -186,16 +186,38 @@ export async function requestPasswordReset(
             };
         }
 
-        //5. Generate a password reset token
+        const currentUser = user.rows[0];
+        const currentTime = new Date();
+
+        //5. Check if the existing reset token has expired
+        console.log(currentUser.reset_token_expiry, currentTime);
+        if (
+            currentUser.reset_token_expiry &&
+            new Date(currentUser.reset_token_expiry) > currentTime
+        ) {
+            console.log("Valid token exists, not sending new email");
+            return {
+                message:
+                    "A password reset link has already been sent. You still have a valid token. Please check your email or try again later.",
+                success: false,
+            };
+        }
+
+        console.log(
+            "No valid token exists or token has expired, generating new token"
+        );
+        //6. Generate a password reset token
         const resetToken = crypto.randomUUID();
         const resetTokenExpiry = new Date(Date.now() + 3600000); // Token expires in 1 hour
 
-        //6. Save the reset token and expiry in the database
+        const offset = resetTokenExpiry.getTimezoneOffset() * 60000;
+        const adjustedExpiry = new Date(resetTokenExpiry.getTime() - offset);
+        //7. Save the reset token and expiry in the database
         console.log("Attempting SQL update");
         try {
             await sql`
             UPDATE users
-            SET reset_token = ${resetToken}, reset_token_expiry = ${resetTokenExpiry.toISOString()}
+            SET reset_token = ${resetToken}, reset_token_expiry = ${adjustedExpiry.toISOString()}
             WHERE email = ${email}
         `;
         } catch (sqlError) {
@@ -203,8 +225,9 @@ export async function requestPasswordReset(
             throw new Error("Database update failed");
         }
 
-        console.log(resetToken, resetTokenExpiry);
-        //7. Send password reset email
+        console.log("New reset token:", resetToken);
+        console.log("New reset token expiry:", resetTokenExpiry);
+        //8. Send password reset email
         await sendPasswordResetEmail(email, resetToken);
 
         return {
