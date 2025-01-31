@@ -20,8 +20,7 @@ export default function ForgotPasswordForm() {
     const [state, formAction] = useFormState(
         requestPasswordReset,
         initialState
-    );
-    // const router = useRouter();
+    );  
 
     useEffect(() => {
         if (state?.success) {

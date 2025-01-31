@@ -79,8 +79,8 @@ export default function LoginForm() {
                                 Password
                             </label>
                             <Link
-                                href="/forgot-password"
-                                className="text-xs mb-3 mt-5 text-[hsl(var(--red))] font-bold hover:underline"
+                                href="/forgot-password"                               
+                                className="text-xs mb-3 mt-5 text-[hsl(var(--grey-500))] font-bold hover:text-[hsl(var(--grey-700))] transition-colors"
                             >
                                 Forgot password?
                             </Link>
@@ -129,7 +129,7 @@ export default function LoginForm() {
                         <>
                             <ExclamationCircleIcon className="h-5 w-5 text-red-500" />
                             <p id={"errors"} className="text-sm text-red-500">
-                                {state.errors.general || state.message}
+                                {state.errors.general ?? state.message}
                             </p>
                         </>
                     )}
@@ -138,8 +138,8 @@ export default function LoginForm() {
             <p className="text-center my-2 text-preset-4 text-[hsl(var(--grey-500))]">
                 Need to create an account?{" "}
                 <Link
-                    href={"/sign-up"}
-                    className="font-bold text-[hsl(var(--grey-900))]"
+                    href={"/sign-up"}                   
+                    className="font-bold text-[hsl(var(--grey-900))] hover:text-[hsl(var(--grey-700))] transition-colors"
                 >
                     Sign up
                 </Link>
