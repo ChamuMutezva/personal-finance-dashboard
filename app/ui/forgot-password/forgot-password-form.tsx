@@ -7,7 +7,7 @@ import { useFormState, useFormStatus } from "react-dom";
 import { requestPasswordReset } from "@/lib/actionsAuth";
 import { RequestEmailFormState } from "@/lib/definitions";
 import Link from "next/link";
-// import { useRouter } from "next/navigation";
+ import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 
 const initialState: RequestEmailFormState = {
@@ -22,11 +22,14 @@ export default function ForgotPasswordForm() {
         initialState
     );  
 
+    const router = useRouter();
+
     useEffect(() => {
         if (state?.success) {
             // Option 1: Redirect to another page
             // router.push('/password-reset-requested')
             // Option 2: Show success message on the same page (implemented below)
+            router.refresh()
         }
     }, [state?.success]);
 
@@ -52,6 +55,7 @@ export default function ForgotPasswordForm() {
     }
 
     // Show message when a valid reset token exists
+    
     if (state?.message && !state.success) {
         return (
             <div className="max-w-[35rem] w-full p-4">

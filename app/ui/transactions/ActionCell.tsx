@@ -116,18 +116,19 @@ export function ActionCell({
                 open={isCustomerDetailsDialogOpen}
                 onOpenChange={setIsCustomerDetailsDialogOpen}
             >
-                <DialogContent className="w-11/12 rounded-sm">
+                <DialogContent className="w-11/12 rounded-sm place-items-center">
                     <DialogHeader>
-                        <DialogTitle>Customer Details</DialogTitle>
+                        <DialogTitle className="text-center">Customer Details</DialogTitle>
                         <DialogDescription>
                             Here are the details of the selected Customer.
                         </DialogDescription>
                     </DialogHeader>
-                    <div className="mt-4">
+                    <div className="mt-4 flex justify-between items-center gap-2">
                         <p>
                             <strong>Name:</strong> {transaction.name}
                         </p>
                         <Image
+                            className="rounded-[50%]"
                             src={transaction.avatar}
                             alt=""
                             width={30}
