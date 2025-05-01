@@ -8,6 +8,7 @@ import { DataTable } from "./data-table";
 import { columns } from "./columns";
 import { auth } from "@/auth";
 import { Metadata } from "next";
+import SortBy from "@/app/ui/transactions/SortBy";
 
 export const metadata: Metadata = {
     title: "Transactions",
@@ -19,6 +20,7 @@ export default async function Page({
     searchParams?: {
         query?: string;
         page?: string;
+        sortBy?: string;
     };
 }>) {
     const session = await auth();
@@ -26,7 +28,8 @@ export default async function Page({
     const query = searchParams?.query ?? "";
     const currentPage = Number(searchParams?.page) || 1;
     const totalPages = await fetchTransactionsPages(query);
-    const data = await fetchFilteredTransactions(query, currentPage);
+    const sortBy = (searchParams?.sortBy as "Latest" | "Oldest" | "A to Z" | "Z to A" | "Highest" | "Lowest") ?? "Latest";
+    const data = await fetchFilteredTransactions(query, currentPage, sortBy);
 
     return (
         <>
@@ -44,13 +47,14 @@ export default async function Page({
             <div className={"w-full lg:mb-0"}>
                 <div className="flex justify-between gap-2">
                     <Search placeholder="Search transactions" />
+                    <SortBy />
                     <CategoryFilter />
                 </div>
                 <Suspense
                     key={query + currentPage}
                     fallback={<SkeletonLoader />}
                 >
-                    <DataTable columns={columns} data={data} />
+                    <DataTable columns={columns} data={data} sortBy={sortBy} />
                 </Suspense>
                 <div className="mt-5 mb-8 flex w-full justify-center">
                     <Pagination totalPages={totalPages} />

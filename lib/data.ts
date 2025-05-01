@@ -99,7 +99,7 @@ export async function fetchByCategoryExtendedExp(query: string) {
     }
 }
 export async function fetchByCategory() {
-    try {        
+    try {
         const diningCategoryPromise =
             await sql<Transaction>`SELECT * FROM transactions WHERE category = 'Dining Out'`;
         const personalCategoryPromise =
@@ -165,9 +165,20 @@ export async function fetchByCategory() {
 const ITEMS_PER_PAGE = 10;
 export async function fetchFilteredTransactions(
     query: string,
-    currentPage: number
+    currentPage: number,
+    sortBy: string
 ) {
     const offset = (currentPage - 1) * ITEMS_PER_PAGE;
+
+    // Map frontend sort options to SQL clauses
+    const sortMapping: { [key: string]: string } = {
+        Latest: "transactions.date DESC",
+        Oldest: "transactions.date ASC",
+        "A to Z": "transactions.name ASC",
+        "Z to A": "transactions.name DESC",
+        Highest: "transactions.amount DESC",
+        Lowest: "transactions.amount ASC",
+    };
 
     try {
         const transactions = await sql<Transaction>`
@@ -178,8 +189,7 @@ export async function fetchFilteredTransactions(
              transactions.amount::text ILIKE ${`%${query}%`} OR
              transactions.date::text ILIKE ${`%${query}%`} OR
              transactions.recurring::text ILIKE ${`%${query}%`}
-        ORDER BY
-              transactions.date DESC        
+        ORDER BY ${sortMapping[sortBy] || "transactions.date DESC"}      
         LIMIT ${ITEMS_PER_PAGE} OFFSET ${offset}
     `;
 

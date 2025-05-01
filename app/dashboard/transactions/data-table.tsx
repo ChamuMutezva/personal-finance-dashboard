@@ -25,23 +25,38 @@ import {
     TableHeader,
     TableRow,
 } from "@/components/ui/table";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 
 interface DataTableProps<TData, TValue> {
     columns: ColumnDef<TData, TValue>[];
     data: TData[];
+    sortBy: "Latest" | "Oldest" | "A to Z" | "Z to A" | "Highest" | "Lowest";
 }
 
 export function DataTable<TData, TValue>({
     columns,
     data,
+    sortBy,
 }: Readonly<DataTableProps<TData, TValue>>) {
-    const [sorting, setSorting] = useState<SortingState>([]);
+    const sortMapping = {
+        Latest: [{ id: "date", desc: true }],
+        Oldest: [{ id: "date", desc: false }],
+        "A to Z": [{ id: "name", desc: false }],
+        "Z to A": [{ id: "name", desc: true }],
+        Highest: [{ id: "amount", desc: true }],
+        Lowest: [{ id: "amount", desc: false }],
+    };
+
+    const [sorting, setSorting] = useState(sortMapping[sortBy] || []);
     const [columnVisibility, setColumnVisibility] = useState<VisibilityState>(
         {}
     );
     const [rowSelection, setRowSelection] = useState({});
+
+    useEffect(() => {
+        setSorting(sortMapping[sortBy] || []);
+    }, [sortBy]);
 
     const table = useReactTable({
         data,
@@ -57,7 +72,7 @@ export function DataTable<TData, TValue>({
             rowSelection,
         },
     });
-
+   
     return (
         <div>
             <DropdownMenu>
@@ -94,7 +109,10 @@ export function DataTable<TData, TValue>({
                             <TableRow key={headerGroup.id}>
                                 {headerGroup.headers.map((header) => {
                                     return (
-                                        <TableHead key={header.id} className="p-1">
+                                        <TableHead
+                                            key={header.id}
+                                            className="p-1"
+                                        >
                                             {header.isPlaceholder
                                                 ? null
                                                 : flexRender(
@@ -118,7 +136,10 @@ export function DataTable<TData, TValue>({
                                     }
                                 >
                                     {row.getVisibleCells().map((cell) => (
-                                        <TableCell key={cell.id} className="p-1">
+                                        <TableCell
+                                            key={cell.id}
+                                            className="p-1"
+                                        >
                                             {flexRender(
                                                 cell.column.columnDef.cell,
                                                 cell.getContext()

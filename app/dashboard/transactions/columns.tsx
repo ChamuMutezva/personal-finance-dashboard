@@ -67,6 +67,7 @@ export const columns: ColumnDef<Transaction>[] = [
                 </div>
             );
         },
+        enableHiding: false,
     },
     {
         accessorKey: "category",
