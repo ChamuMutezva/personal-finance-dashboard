@@ -24,6 +24,7 @@ export default async function Page({
     searchParams?: {
         query?: string;
         page?: string;
+        sortBy?: string;
     };
 }>) {
     const session = await auth();
@@ -37,6 +38,7 @@ export default async function Page({
 
     const query = searchParams?.query ?? "";
     const currentPage = Number(searchParams?.page) || 1;
+    const sortBy = (searchParams?.sortBy as "Latest" | "Oldest" | "A to Z" | "Z to A" | "Highest" | "Lowest") ?? "Latest";
     const budgets = await fetchBudgets();
     const category = await fetchByCategory();
     const {
@@ -163,6 +165,7 @@ export default async function Page({
                 <TransactionTableOverview
                     query={query}
                     currentPage={currentPage}
+                    sortBy={sortBy}
                 />
                 {/* GRID CHILD 4 */}
                 <DonutOverview
