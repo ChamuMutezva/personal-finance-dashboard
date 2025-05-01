@@ -38,7 +38,14 @@ export default async function Page({
 
     const query = searchParams?.query ?? "";
     const currentPage = Number(searchParams?.page) || 1;
-    const sortBy = (searchParams?.sortBy as "Latest" | "Oldest" | "A to Z" | "Z to A" | "Highest" | "Lowest") ?? "Latest";
+    const sortBy =
+        (searchParams?.sortBy as
+            | "Latest"
+            | "Oldest"
+            | "A to Z"
+            | "Z to A"
+            | "Highest"
+            | "Lowest") ?? "Latest";
     const budgets = await fetchBudgets();
     const category = await fetchByCategory();
     const {
