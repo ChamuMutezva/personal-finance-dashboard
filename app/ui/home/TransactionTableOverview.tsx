@@ -19,12 +19,14 @@ import {
 export default async function TransactionTableOverview({
     query,
     currentPage,
+    sortBy
 }: Readonly<{
     query: string;
     currentPage: number;
+    sortBy: string;
 }>) {
     const transactions = (
-        await fetchFilteredTransactions(query, currentPage)
+        await fetchFilteredTransactions(query, currentPage, sortBy)
     ).slice(0, 5);
 
     const totals = transactions.reduce((accumulator, transaction) => {

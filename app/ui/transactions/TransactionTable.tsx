@@ -16,13 +16,14 @@ import {
 
 export default async function TransactionTable({
     query,
-    currentPage,
+    currentPage,    
 }: Readonly<{
     query: string;
     currentPage: number;
+    
 }>) {
-   
-    const transactions = await fetchFilteredTransactions(query, currentPage)  
+    const sortBy: "Latest" | "Oldest" | "A to Z" | "Z to A" | "Highest" | "Lowest" = "Latest";
+    const transactions = await fetchFilteredTransactions(query, currentPage, sortBy)  
     const totals = transactions.reduce((accumulator, transaction) => {
         return Number(accumulator) + Number(transaction.amount);
     }, 0);
