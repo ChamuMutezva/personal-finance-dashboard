@@ -52,18 +52,27 @@ export const columns: ColumnDef<Transaction>[] = [
         },
         cell: ({ row }) => {
             const transaction = row.original;
-
+            const category = transaction.category;
             return (
-                <div className="flex flex-col justify-start gap-2 items-start sm:flex-row sm:items-center font-medium">
+                <div className="flex flex-row justify-start gap-2 items-center sm:items-center font-medium">
                     <Image
                         src={transaction.avatar}
                         width={32}
                         height={32}
                         alt=""
-                        className="rounded-[50%] hidden sm:block"
+                        className="rounded-[50%]"
                         unoptimized
                     />
-                    <span className="text-preset-5 md:text-preset-4">{transaction.name}</span>
+                    <div className="flex flex-col sm:flex-row sm:items-center">
+                        {/* Name */}
+                        <span className="text-preset-5 md:text-preset-4">
+                            {transaction.name}
+                        </span>
+                        {/* Category: Show on mobile only, hide on sm and up */}
+                        <span className="block sm:hidden text-xs text-gray-500">
+                            {category}
+                        </span>
+                    </div>
                 </div>
             );
         },
@@ -76,7 +85,9 @@ export const columns: ColumnDef<Transaction>[] = [
                 <Button
                     variant="ghost"
                     className="md:text-preset-4 font-bold"
-                    onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+                    onClick={() =>
+                        column.toggleSorting(column.getIsSorted() === "asc")
+                    }
                 >
                     Category
                     <ArrowUpDown className="ml-2 h-4 w-4" />
@@ -86,7 +97,7 @@ export const columns: ColumnDef<Transaction>[] = [
         cell: ({ row }) => {
             const category = row.getValue("category") as string;
             return (
-                <div className="text-preset-5 md:text-preset-4 text-[hsl(var(--grey-500))] text-left">
+                <div className="hidden sm:block text-preset-5 md:text-preset-4 text-[hsl(var(--grey-500))] text-left">
                     {category}
                 </div>
             );

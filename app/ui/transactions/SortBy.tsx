@@ -1,7 +1,7 @@
 "use client";
 
 import { useSearchParams, useRouter, usePathname } from "next/navigation";
-import { ArrowDownWideNarrow, Check, ChevronDown } from "lucide-react";
+import { Check, ChevronDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
     Command,
@@ -18,6 +18,7 @@ import {
 } from "@/components/ui/popover";
 import { cn } from "@/lib/utils";
 import { useState } from "react";
+import Image from "next/image";
 
 const sortOptions = [
     { value: "Latest", label: "Latest" },
@@ -59,7 +60,13 @@ export default function SortBy() {
                             className="sm:hidden"
                             aria-label="Sort options"
                         >
-                            <ArrowDownWideNarrow className="h-8 w-8" />
+                            <Image
+                                src={"/assets/images/icon-sort-mobile.svg"}
+                                width={16}
+                                height={15}
+                                alt=""
+                                className="dark:invert"
+                            />
                         </Button>
 
                         {/* Desktop: Full combobox */}
