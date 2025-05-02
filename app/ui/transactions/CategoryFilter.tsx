@@ -18,6 +18,7 @@ import {
 } from "@/components/ui/popover";
 import { cn } from "@/lib/utils";
 import { useState } from "react";
+import Image from "next/image";
 
 const categories = [
     "All",
@@ -70,7 +71,13 @@ export default function CategoryFilter() {
                             className="sm:hidden"
                             aria-label="Filter categories"
                         >
-                            <Filter className="h-8 w-8" />
+                            <Image
+                                src={"/assets/images/icon-filter-mobile.svg"}
+                                width={18}
+                                height={16}
+                                alt=""
+                                className="dark:invert"
+                            />
                         </Button>
 
                         {/* Desktop: Full combobox */}

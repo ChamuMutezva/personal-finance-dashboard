@@ -152,7 +152,7 @@ export function DataTable<TData, TValue>({
                                     className="border-b p-2"
                                 >
                                     <div className="flex">
-                                        <div className="w-1/4 p-1">
+                                        <div className="w-auto p-1 flex items-center justify-center">
                                             {flexRender(
                                                 firstColumnCell.column.columnDef
                                                     .cell,
