@@ -74,7 +74,7 @@ export default function SortBy() {
                             variant="outline"
                             role="combobox"
                             aria-expanded={open}
-                            className="hidden sm:flex w-[180px] justify-between"
+                            className="hidden sm:flex md:min-w-20 lg:min-w-44 justify-between"
                         >
                             {currentSort
                                 ? sortOptions.find(

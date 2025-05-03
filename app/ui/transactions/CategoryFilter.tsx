@@ -85,7 +85,7 @@ export default function CategoryFilter() {
                             variant="outline"
                             role="combobox"
                             aria-expanded={open}
-                            className="hidden sm:flex w-[180px] justify-between"
+                            className="hidden sm:flex md:min-w-20 lg:min-w-44 justify-between"
                         >
                             {currentCategory}
                             <ChevronDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
