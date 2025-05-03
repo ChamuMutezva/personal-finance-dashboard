@@ -140,15 +140,17 @@ export default async function Page() {
 
     return (
         <>
-            <div className="flex justify-between items-center mb-4 sm:pr-4">
+            <div className="flex justify-between items-center mb-4 sm:pr-4 relative">
+                <p className="absolute -top-3 text-xs md:text-sm text-[hsl(var(--grey-900))]">
+                    {user} logged in
+                </p>
+
                 <h1
                     className={`text-preset-1 font-bold text-[hsl(var(--grey-900))]`}
                 >
                     Budgets
                 </h1>
-                <p className="text-xs md:text-sm text-[hsl(var(--grey-900))]">
-                    {user} logged in
-                </p>
+
                 {/* Dialog component */}
                 <AddBudgetForm budgets={budgets} />
             </div>
